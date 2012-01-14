@@ -1,0 +1,137 @@
+
+Titanium.include 'Const.js'
+S = Const
+header_height = 0
+row_height = S.ICON+S.MARGIN*4
+
+styles =
+	header_height:header_height
+	######## list view ######################################################
+	# #### headerVewi ####
+	# header:
+	# 	backgroundColor:'#ddd'
+	# 	height:S.ICON*3/4
+	# 	opacity:0.8
+	# 	
+	# counter:
+	# 	top:0
+	# 	left:0
+	# 	width:S.ICON*3/4
+	# 	height:S.ICON*3/4
+	# 	clickName:'counter'
+	# 	backgroundGradient:
+	# 		type:'linear',
+	# 		colors:[{color:'#d4d4d4', position:0.0}, {color:'#c4c4c4', position:0.50}, {color:'#e4e4e4', position:1.0}]					
+	# counter_text:
+	# 	text:'1'
+	# 	fontsize:25
+	# 	textAlign:'center'
+	# 	clickName:'counter'
+	######## list view ######################################################
+	#### headerVewi ####	# 
+		# title:
+		# 	backgroundcolor:'#fff'
+		# 	top:0
+		# 	left:S.MARGIN+S.ICON*3/4
+		# 	height:S.ICON*3/4
+		# 	width:'auto'
+		# 	clickName:'user'
+		# 	text:''
+		# title_text:
+		# 	color:'#576996'
+		# 	font:{fontSize:15,fontWeight:'bold',fontFamily:'Arial'}
+		# 	top:0
+		# 	left:0
+		# 	height:S.ICON*3/4
+		# 	width:'auto'
+		# 	clickName:'title_text'
+		# 	text:''
+	### row ###
+	row:
+		height:row_height
+		hasChild:true
+		backgroundColor:S.rowColor
+	view:
+		height:header_height
+		width:S.WIDTH
+		top:0
+		clickName:'view'
+		borderRadius:0
+		backgroundGradient:
+			type:'linear',
+			colors:[{color:'#d4d4d4', position:0.0}, {color:'#c4c4c4', position:0.50}, {color:'#e4e4e4', position:1.0}]			
+	
+	icon:
+		backgroundImage:'../images/user.png'
+		top:S.MARGIN*2
+		left:S.MARGIN
+		width:S.ICON
+		height:S.ICON
+		borderRadius:4
+		clickName:'icon'
+	
+	support:
+		backgroundcolor:'#fff'
+		bottom:S.MARGIN
+		left:S.MARGIN*2+S.ICON
+		height:S.TITTLE_H
+		width:200
+		clickName:'user'
+		text:''
+	support_text:
+		color:'gray'
+		font:{fontSize:11,fontWeight:'bold',fontFamily:'Arial'}
+		top:1
+		left:1
+		height:S.TITTLE_H-2
+		width:190
+		clickName:'support_text'
+		text:'supporter:5'
+		
+	developer:
+		color:'#555'
+		font:{fontSize:12,fontWeight:'bold',fontFamily:'Arial'}
+		top:S.MARGIN
+		left:S.MARGIN*2+S.ICON
+		height:22
+		width:100 # variable by length of name 
+		clickName:'user'
+		text:'name'
+	# comment:
+	# 	backgroundcolor:'#ddd'
+	# 	top:S.MARGIN + 22
+	# 	left:S.MARGIN*2+S.ICON
+	# 	height:30
+	# 	width:200
+	# 	clickName:'user'
+	# 	text:''
+	title:
+		color:'#555'
+		font:{fontSize:15,fontWeight:'bold',fontFamily:'Arial'}
+		top:S.MARGIN*2+11
+		left:S.MARGIN*2+S.ICON
+		height:22
+		width:190
+		clickName:'title'
+		text:''
+	support_button:
+		backgroundColor:'blue' 
+		borderRadius:4 
+		bottom:S.MARGIN
+		right:S.MARGIN 
+		width:44 
+		height:22 
+		clickName:'button'
+	support_button_text:
+		color:'#fff' 
+		font:
+			fontSize:9
+			fontWeight:'normal'  
+			fontFamily:'Arial'  
+		left:1
+		top:1
+		height:20 
+		width:42
+		clickName:'support_text' 
+		text:'support' 
+		textAlign:'center'

@@ -1,0 +1,10 @@
+var win;
+win = Titanium.UI.currentWindow;
+Titanium.include('../Util.js');
+Titanium.include('../lib/ServerAPI.js');
+Titanium.include('../styles/ReportDetail_style.js');
+Titanium.include('../modules/ReportDetail_module.js');
+win.title = 'project title';
+alert(JSON.stringify(Ti.App.Selected_Report));
+win.add(tt.UI.tableView);
+tt.UI.loadTimeline();
