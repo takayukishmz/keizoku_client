@@ -1,4 +1,4 @@
-var listview, win;
+var lastDistance, listview, win;
 win = Titanium.UI.currentWindow;
 Titanium.include('../Util.js');
 Titanium.include('../lib/ServerAPI.js');
@@ -13,7 +13,7 @@ Ti.App.update_tl = true;
 listview = Ti.UI.createView({});
 listview.add(tt.UI.tableView);
 win.add(listview);
-tt.UI.setCreateNewButton(function() {
+tt.UI.setRightButton(function() {
   var w;
   if (Ti.App.selectDialog_flg) {
     return;
@@ -30,6 +30,11 @@ tt.UI.setCreateNewButton(function() {
     url: '../controller/SelectTimeline.js'
   });
   tt.UI.create2DMatrixDialog(w);
+}, {
+  title: 'Filter',
+  width: 10,
+  height: 10,
+  color: 'black'
 });
 /* call API */
 win.addEventListener('focus', function() {
@@ -42,6 +47,18 @@ win.addEventListener('focus', function() {
 /* eventListener */
 tt.UI.tableView.addEventListener('click', function(e) {
   info(JSON.stringify(e));
-  info('table event');
+  info('timeline -- table event');
   tt.module.rowEventController(e);
+});
+lastDistance = 0;
+listview.addEventListener('scroll', function(e) {
+  var distance, height, offset, theEnd, total;
+  offset = e.contentOffset.y;
+  height = e.size.height;
+  total = offset + height;
+  theEnd = e.contentSize.height;
+  distance = theEnd - total;
+  if (distance < lastDistance) {
+    return info_obj(e);
+  }
 });

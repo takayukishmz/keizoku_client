@@ -2,7 +2,7 @@ var S, header_height, row_height, styles;
 Titanium.include('Const.js');
 S = Const;
 header_height = S.MARGIN * 2 + 22;
-row_height = 103;
+row_height = 133;
 styles = {
   header_height: header_height,
   bonus_box: {
@@ -23,7 +23,6 @@ styles = {
     backgroundColor: S.barColor
   },
   header: {
-    backgroundColor: '#ddd',
     height: S.ICON * 3 / 4,
     opacity: 0.8
   },
@@ -54,7 +53,7 @@ styles = {
     text: ''
   },
   title_text: {
-    color: '#576996',
+    color: S.FONTCOLOR,
     font: {
       fontSize: 15,
       fontWeight: 'bold',
@@ -70,9 +69,9 @@ styles = {
   /* row */
   row: {
     height: row_height,
-    hasChild: true,
     backgroundColor: S.rowColor,
-    backgroundImage: '../images/UI/base_pink.png'
+    backgroundImage: '../images/UI/' + Const.ROWBACKGROUND,
+    selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
   },
   view: {
     height: header_height,
@@ -127,7 +126,7 @@ styles = {
     text: 'supporter:5'
   },
   user: {
-    color: '#555',
+    color: S.FONTCOLOR,
     font: {
       fontSize: 12,
       fontWeight: 'bold',
@@ -150,7 +149,7 @@ styles = {
     text: ''
   },
   comment_text: {
-    color: '#555',
+    color: S.FONTCOLOR,
     font: {
       fontSize: 15,
       fontWeight: 'bold',

@@ -24,13 +24,11 @@ do ->
 			row.report = report
 			
 			icon = Ti.UI.createView styles.icon
-			user = Titanium.UI.createLabel styles.user
-			text = Titanium.UI.createLabel styles.text
-			
-			user.text =report.nickname
+			text = Titanium.UI.createLabel styles.title
+				
+			text.text = report.comment
 			row.add icon
-			row.add user
-			
+			row.add text			
 			section.add row
 			
 			return section

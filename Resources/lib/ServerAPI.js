@@ -1,8 +1,15 @@
 var API;
 Titanium.include('ServerConst.js');
+Titanium.include('ActivityIndicator.js');
 API = {};
+API.filter = function(json) {
+  if (json.profile) {
+    Ti.App.user = json.profile;
+  }
+};
 API.callAPI = function(method, requestType, params, callbackOnLoad) {
   var url, xhr;
+  indicator.show();
   Ti.API.info('API:method=' + method);
   Ti.API.info('API:requestType=' + requestType);
   Ti.API.info('API:params=' + JSON.stringify(params));
@@ -16,12 +23,16 @@ API.callAPI = function(method, requestType, params, callbackOnLoad) {
   xhr.open(method, url, false);
   xhr.onload = function() {
     var json;
+    indicator.hide();
     json = 　JSON.parse(xhr.responseText);
+    API.filter(json);
     Ti.API.info('requestType:' + requestType + '\n' + 'responseText:' + xhr.responseText);
     callbackOnLoad(json);
   };
   xhr.onerror = function(error) {
-    alert(error);
+    indicator.hide();
+    alert(TEXT.ERROR_MESSAGE.SERVER);
+    info_obj(error);
   };
   if (method === 'POST') {
     xhr.send(params);

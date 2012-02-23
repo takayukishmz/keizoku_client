@@ -31,7 +31,7 @@ listview.add tt.UI.tableView
 win.add listview
 
 
-tt.UI.setCreateNewButton () ->
+tt.UI.setRightButton () ->
 	# when dialog already opened
 	if Ti.App.selectDialog_flg
 		return
@@ -52,6 +52,16 @@ tt.UI.setCreateNewButton () ->
 
 	tt.UI.create2DMatrixDialog w
 	return
+,	{
+	title:'Filter'
+	# color:'red'
+	width:10
+	height:10
+	color:'black'
+	# image:'../images/UI/base_pink.png'
+}
+
+
 ### call API #################################################################
 
 win.addEventListener 'focus',() ->
@@ -64,6 +74,19 @@ win.addEventListener 'focus',() ->
 ### eventListener #############################################
 tt.UI.tableView.addEventListener 'click',(e) ->
 	info JSON.stringify e
-	info 'table event'
+	info 'timeline -- table event'
 	tt.module.rowEventController e
 	return
+	
+lastDistance = 0
+listview.addEventListener 'scroll', (e) ->
+
+	offset = e.contentOffset.y
+	height = e.size.height
+	total = offset + height
+	theEnd = e.contentSize.height
+	distance = theEnd - total
+
+	if (distance < lastDistance)
+		info_obj e
+

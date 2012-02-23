@@ -1,6 +1,7 @@
-var S, bointbar_max_text, button_checkin, checkin_question, checkin_text, dayOnRibbon, height_bottom, height_middle, height_top, icon, name, point_base, point_title, pointbar_max, pointbar_now, pointbar_now_text, ribbon, star0, star0_text, star1, star1_text, star2, star2_text, star3, star3_text, star4, star4_text, star5, star5_text, star6, star6_text, styles, week_base, week_title;
+var S, bointbar_max_text, button_checkin, checkin_question, checkin_text, dayOnRibbon, height_bottom, height_middle, height_top, icon, name, point_base, point_title, pointbar_max, pointbar_now, pointbar_now_text, ribbon, star0, star0_text, star1, star1_text, star2, star2_text, star3, star3_text, star4, star4_text, star5, star5_text, star6, star6_text, stars, styles, week_base, week_title;
 Titanium.include('Const.js');
 S = Const;
+stars = [];
 height_top = S.MARGIN * 3 + S.ICON * 2.5;
 height_middle = S.MARGIN * 6 + S.ICON;
 height_bottom = S.Device.Height - height_top - height_middle;
@@ -15,22 +16,22 @@ styles = {
   name: {
     left: 57,
     top: 16,
-    width: 62,
+    width: 200,
     height: 21,
     text: 'person1',
     color: '#000000'
   },
   ribbon: {
-    right: 0,
+    right: -30,
     top: 10,
     width: 132,
     height: 34,
     backgroundImage: '../images/UI/ribbon.png'
   },
   dayOnRibbon: {
-    right: 10,
+    right: 0,
     top: 10,
-    width: 132,
+    width: 80,
     height: 34,
     text: 'days / 21',
     color: '#000000',
@@ -73,7 +74,7 @@ styles = {
     left: 0,
     width: 10,
     height: 16,
-    backgroundColor: '#0080ff'
+    backgroundColor: '#008aff'
   },
   pointbar_now_text: {
     right: 2,
@@ -260,14 +261,14 @@ styles = {
       fontSize: 15
     },
     color: '#324f85',
-    backgroundImage: '../images/button/checkin4.png'
+    backgroundImage: '../images/button/checkin3.png'
   },
   checkin_text: {
     left: 0,
     top: 22,
     width: 300,
     height: 22,
-    text: 'Check in & Get Star!',
+    text: '記録する',
     color: "#fff",
     textAlign: 'center',
     font: {
@@ -329,6 +330,13 @@ star5 = Titanium.UI.createView(styles.star5);
 week_base.add(star5);
 star6 = Titanium.UI.createView(styles.star6);
 week_base.add(star6);
+stars.push(star0);
+stars.push(star1);
+stars.push(star2);
+stars.push(star3);
+stars.push(star4);
+stars.push(star5);
+stars.push(star6);
 win.add(week_base);
 button_checkin = Titanium.UI.createButton(styles.button_checkin);
 checkin_text = Titanium.UI.createLabel(styles.checkin_text);

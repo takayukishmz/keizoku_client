@@ -1,11 +1,28 @@
 var Const, STYLE;
 Titanium.include('../TextConst.js');
 Const = {
+  BACKGROUND: "base_pink.png",
+  ROWBACKGROUND: "timeline_bg.png",
+  BARCOLOR: ' #555',
+  FONTCOLOR: "#222",
+  wday: {
+    Sun: 0,
+    Mon: 1,
+    Tues: 2,
+    Wed: 3,
+    Thurs: 4,
+    Fri: 5,
+    Sat: 6
+  },
+  BARIMAGE: 'gray_wave.png',
   COLOR_MAIN: '#ddd',
-  rowColor: "#f6f6f6",
+  rowColor: "#eee",
   rowColor_black: "#505050",
   backgroundColor: '#fff',
   barColor: '#00ff11',
+  DEFALT: {
+    USER: 'user.png'
+  },
   barImage: '../images/titlebar_red.png',
   MARGIN: 5,
   ICON: 44,
@@ -64,5 +81,3 @@ STYLE = {
     clickName: 'bigstar'
   }
 };
-win.backgroundImage = '../images/UI/base_pink.png';
-win.barColor = Const.COLOR_MAIN;

@@ -2,10 +2,10 @@ var tt;
 tt = {};
 tt.UI = {};
 tt.module = {};
+Titanium.include('../Common_module.js');
 (function() {
   tt.UI.pointDetail = function() {
-    var box, i, point_label, point_num, _results;
-    _results = [];
+    var box, i, point_label, point_num;
     for (i = 0; i <= 2; i++) {
       info('tt.UI.pointDetail');
       info(i);
@@ -15,12 +15,10 @@ tt.module = {};
       point_num = Titanium.UI.createLabel(styles.point_num);
       box.add(point_label);
       box.add(point_num);
-      _results.push(point.add(box));
+      point.add(box);
     }
-    return _results;
   };
   return tt.UI.SupporterList = function() {
-    return info('call api and get supporter list');
+    info('call api and get supporter list');
   };
 })();
-Titanium.include('../Common_module.js');

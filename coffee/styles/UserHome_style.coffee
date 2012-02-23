@@ -7,95 +7,38 @@ styles=
 		top:0
 		showVerticalScrollIndicator:true
 	base:
-		height:440
+		height:400
 		backgroundImage:'../images/UI/base_pink.png'
 	icon:
 		left: 5,
 		top: 5,
 		width: 44,
 		height: 44,
-		backgroundImage:'../images/user.png'
+		image:'../images/user.png'
+		borderRadius:3
 	name:
 		left: 57,
 		top: 16,
-		width: 62,
+		width: 200,
 		height: 21,
 		text: 'person1',
 		color: '#000000'
-	status_base:
-		left: 5,
-		top: 57,
-		width: 310,
-		height: 79,
-		backgroundImage: '../images/UI/status_base.png'
-	day_text:
-		left: 30,
-		top: 47,
-		width: 42,
-		height: 21,
-		text: 'days'
-	day_count:
-		left: 30,
-		top: 10,
-		width: 42,
-		height: 21,
-		text: '15'
-	score_count:
-		left: 134,
-		top: 10,
-		width: 42,
-		height: 21,
-		text: '100'
-	challenge_count:
-		left: 237,
-		top: 10,
-		width: 42,
-		height: 21,
-		text: '20'
-	score_text:
-		left: 133,
-		top: 47,
-		width: 45,
-		height: 21,
-		text: 'Score'
-	challenge_text:
-		left: 220,
-		top: 47,
-		width: 77,
-		height: 21,
-		text: 'Challenge'
-	view32:
-		left: 9,
-		top: 39,
-		width: 83,
-		height: 6,
-		backgroundColor: '#007cff'
-	view33:
-		left: 113,
-		top: 39,
-		width: 83,
-		height: 6,
-		backgroundColor: '#007cff'
-	view34:
-		left: 216,
-		top: 39,
-		width: 83,
-		height: 6,
-		backgroundColor: '#007cff'
 	week_base:
 		left: 5,
-		top: 157,
+		top: 152,
 		width: 310,
 		height: 63
 		backgroundImage: '../images/UI/week_base.png'
+
 	week_title:
 		left: 5,
-		top: 0,
+		top: 132,
 		width: 114,
 		height: 20,
-		text: 'This Week:'
+		text: 'Weekly Record'
 		color: '#999'
-		font: {fontFamily: 'Helvetica', fontSize: 12}
+		color: '#777'
+		font: {fontFamily: 'Helvetica', fontSize: 14}
 	star0_text:
 		left: 36,
 		top: 41,
@@ -191,268 +134,91 @@ styles=
 		width: 26,
 		height: 26,
 		backgroundImage:'../images/star/green.png'
-	button41:
-		left: 228,
-		top: 9,
-		width: 72,
-		height: 37,
-		font: {fontFamily: 'Helvetica-Bold', fontSize: 15},
-		color: '#324f85'
-	rank:
-		left: 5,
-		top: 228,
-		width: 310,
-		height: 44,
-		color: '#324f85'
-		backgroundImage:'../images/UI/bar_plain.png'
-	collection:
-		left: 5,
-		top: 280,
-		width: 310,
-		height: 44,
-		color: '#324f85'
-		backgroundImage:'../images/UI/bar_plain.png'
-	challenge:
-		left: 5,
-		top: 332,
-		width: 310,
-		height: 44,
-		color: '#324f85'
-		backgroundImage:'../images/UI/bar_plain.png'
-	support:
-		left: 5,
-		top: 386,
-		width: 153,
-		height: 44,
-		title: 'Support',
-		color: '#324f85'
-		backgroundImage:'../images/UI/bar_white_short_155x44.png'
-	supporter:
-		left: 162,
-		top: 386,
-		width: 153,
-		height: 44,
-		title: 'Supporter',
-		color: '#324f85'
-		backgroundImage:'../images/UI/bar_white_short_155x44.png'
-	rank_title:
-		left: 20,
-		top: 239,
-		width: 42,
-		height: 21,
-		text: 'Rank'
-	rank_text:
-		left: 243,
-		top: 238,
-		width: 42,
-		height: 21,
-		text: 'Rank'
-	collection_title:
-		left: 20,
-		top: 291,
-		width: 84,
-		height: 21,
-		text: 'Collections'
-	collection_text:
-		left: 201,
-		top: 291,
-		width: 84,
-		height: 21,
-		text: 'Collections'
-	challenge_title:
-		left: 20,
-		top: 343,
-		width: 86,
-		height: 21,		
-		text: 'Challenges'
-	challenge_text:
-		left: 199,
-		top: 342,
-		width: 86,
-		height: 21,
-		text: 'Challenges'
+
 
 view = Titanium.UI.createView styles.base
-#
-#profile
-#
-icon = Titanium.UI.createView styles.icon
+icon = Titanium.UI.createImageView styles.icon
 view.add icon
 name = Titanium.UI.createLabel styles.name
 view.add name 
 
-#
-#status
-#
-# status_base = Titanium.UI.createView styles.status_base
-# day_text = Titanium.UI.createLabel styles.day_text
-# status_base.add day_text 
-# day_count = Titanium.UI.createLabel styles.day_count
-# status_base.add day_count 
-# score_count = Titanium.UI.createLabel styles.score_count
-# status_base.add score_count 
-# challenge_count = Titanium.UI.createLabel styles.challenge_count
-# status_base.add challenge_count 
-# score_text = Titanium.UI.createLabel styles.score_text
-# status_base.add score_text 
-# challenge_text = Titanium.UI.createLabel styles.challenge_text
-# status_base.add challenge_text 
-# view32 = Titanium.UI.createView styles.view32
-# status_base.add view32 
-# view33 = Titanium.UI.createView styles.view33
-# status_base.add view33 
-# view34 = Titanium.UI.createView styles.view34
-# status_base.add view34 
-# view.add status_base 
-
-collectionbar_base = Titanium.UI.createView
-    left: 5,
-    top: 60,
-    width: 310,
-    height: 44,
-    backgroundImage:'../images/UI/bar_base.png'
-
-collectionbar_max = Titanium.UI.createView
-    left: 10,
-    top: 20,
-    width: 290,
-    height: 19,
-    backgroundColor: '#cacaca'
-
-
-collectionbar_now = Titanium.UI.createView
-    left:0
-    width: 10,
-    height: 19,
-    backgroundColor: '#66ccff'
-
-
-collection_now_text = Titanium.UI.createLabel
-    right:5,
-    top: 1,
-    width: 42,
-    height: 16,
-    text: '12',
-    textAlign:'right'
-    color: '#ffffff'
-
-collectionbar_now.add collection_now_text 
-
-collectionbar_max.add collectionbar_now 
-
-collection_max_text = Titanium.UI.createLabel
-    right:5,
-    top: 0,
-    width: 42,
-    height: 21,
-    text: '21',
-    color: '#000000'
-    textAlign:'right'
-
-collectionbar_max.add collection_max_text 
-
-collectionbar_base.add collectionbar_max 
-
-collection_title = Titanium.UI.createLabel
-    left: 10,
-    top: 0,
-    width: 75,
-    height: 21,
-    text: 'Collection',
-    font: {fontFamily: 'Helvetica', fontSize: 14}
-
-collectionbar_base.add collection_title 
-
-collection_status_text = Titanium.UI.createLabel
-    right:15,
-    top: 0,
-    width: 88,
-    height: 21,
-    text: '12 / 21'
-    textAlign:'right'
-    font: {fontFamily: 'Helvetica', fontSize: 14}
-
-
-collectionbar_base.add collection_status_text 
-
-view.add collectionbar_base 
-
 pointbar_base = Titanium.UI.createView
-    left: 5,
-    top: 108,
-    width: 310,
-    height: 44,
-    backgroundImage:'../images/UI/bar_base.png'
+	 left: 5,
+	 top: 80,
+	 width: 310,
+	 height: 40,
+	 backgroundImage:'../images/UI/bar_base.png'
 
 pointbar_max = Titanium.UI.createView
-    left: 10,
-    top: 20,
-    width: 290,
-    height: 16,
-    backgroundColor: '#cacaca'
+	 left: 10,
+	 top: 12,
+	 width: 250,
+	 height: 16,
+	 backgroundColor: '#f2f2f2f0'
 
 
 pointbar_now = Titanium.UI.createView
-    left:0
-    width: 20,
-    height: 16,
-    backgroundColor: '#66ccff'
+	 left:0
+	 width: 20,
+	 height: 16,
+	 backgroundColor: '#008aff'
 
 
 point_now_text = Titanium.UI.createLabel
-    right:5,
-    top: 0,
-    width: 42,
-    height: 16,
-    text: '30'
-    textAlign:'right'
-    color: '#ffffff'
+	 right:5,
+	 top: 0,
+	 width: 42,
+	 height: 16,
+	 text: '30'
+	 textAlign:'right'
+	 color: '#ffffff'
 
 pointbar_now.add point_now_text
 
 pointbar_max.add pointbar_now
 
 point_max_text = Titanium.UI.createLabel
-    right:5,
-    top: 0,
-    width: 42,
-    height: 16,
-    text: '99'
-    textAlign:'right'
+	left:260,
+	top: 0,
+	width: 50,
+	height: 40,
+	text: '99'
+	textAlign:'center'
 
-pointbar_max.add point_max_text 
+pointbar_base.add point_max_text 
 
 pointbar_base.add pointbar_max 
 
 point_title = Titanium.UI.createLabel
-    left: 10,
-    top: 0,
-    width: 100,
-    height: 21,
-    text: 'Weekly Point'
-    font: {fontFamily: 'Helvetica', fontSize: 14}
+	left: 10,
+	top: 60,
+	width: 100,
+	height: 21,
+	text: 'Weekly Point'
+	color: '#777'
+	font: {fontFamily: 'Helvetica', fontSize: 14}
 
-pointbar_base.add point_title 
+view.add point_title 
 
 point_record_text = Titanium.UI.createLabel
-    right:15,
-    top: 0,
-    width: 78,
-    height: 21,
-    text: 'record'
-    textAlign:'right'
-    font: {fontFamily: 'Helvetica', fontSize: 14}
+	 left:260,
+	 top: 0,
+	 width: 50,
+	 height: 10,
+	 text: 'record'
+	 textAlign:'center'
+	 color: '#777'
+	 font: {fontFamily: 'Helvetica', fontSize: 12}
 
 pointbar_base.add point_record_text 
 
 view.add pointbar_base 
 
 
-#week status
-#
+
 week_base = Titanium.UI.createButton styles.week_base
 week_title = Titanium.UI.createLabel styles.week_title	
-week_base.add week_title 
+view.add week_title 
 star0_text = Titanium.UI.createLabel styles.star0_text
 week_base.add star0_text 
 star1_text = Titanium.UI.createLabel styles.star1_text
@@ -484,33 +250,115 @@ week_base.add star6
 view.add week_base 
 
 
-button41 = Titanium.UI.createButton styles.button41
-view.add button41 
-rank = Titanium.UI.createButton styles.rank
-view.add rank 
-collection = Titanium.UI.createButton styles.collection
-view.add collection 
-challenge = Titanium.UI.createButton styles.challenge
-view.add challenge 
-support = Titanium.UI.createButton styles.support
-view.add support 
-supporter = Titanium.UI.createButton styles.supporter
-view.add supporter 
-rank_title = Titanium.UI.createLabel styles.rank_title
-view.add rank_title 
-rank_text = Titanium.UI.createLabel styles.rank_text
-view.add rank_text 
-collection_title = Titanium.UI.createLabel styles.collection_title
-view.add collection_title 
-collection_text = Titanium.UI.createLabel styles.collection_text
-view.add collection_text 
-challenge_title = Titanium.UI.createLabel styles.challenge_title
-view.add challenge_title 
-challenge_text = Titanium.UI.createLabel styles.challenge_text
-view.add challenge_text 
-#
-#scrollView
-#
+stars.push star0
+stars.push star1
+stars.push star2
+stars.push star3
+stars.push star4
+stars.push star5
+stars.push star6
+
+
+
+supporter = Titanium.UI.createButton
+	left: 5,
+	top: 310,
+	width: 100,
+	height: 44,
+	color: '#324f85'
+	backgroundImage:'../images/UI/bar_white_short_155x44.png'
+
+
+view.add supporter
+
+supporting = Titanium.UI.createButton
+	left: 110,
+	top: 310,
+	width: 100,
+	height: 44,
+	color: '#324f85'
+	backgroundImage:'../images/UI/bar_white_short_155x44.png'
+
+
+view.add supporting 
+
+like = Titanium.UI.createButton
+	left: 214,
+	top: 310,
+	width: 100,
+	height: 44,
+	color: '#324f85'
+	backgroundImage:'../images/UI/bar_white_short_155x44.png'
+
+
+view.add like 
+
+history = Titanium.UI.createButton
+	left: 5,
+	top: 250,
+	width: 310,
+	height: 44,
+	color: '#324f85'
+	backgroundImage:'../images/UI/bar_white_310x44.png'
+
+view.add history 
+
+history_title = Titanium.UI.createLabel
+	left:5,
+	top: 230,
+	width: 155,
+	height: 16,
+	text: 'Learning History'
+	textAlign:'left'
+	color: '#777'
+	font: {fontFamily: 'Helvetica', fontSize: 14}
+	
+view.add history_title
+
+history_text = Titanium.UI.createLabel
+	left: 20,
+	top: 0,
+	width: 127,
+	height: 44,
+	text: '-- Records'
+
+history.add history_text 
+
+supporter_text = Titanium.UI.createLabel
+	left: 0,
+	top: 11,
+	width: 100,
+	height: 22,
+	textAlign:'center'
+	text: 'Supporter'
+	font: {fontFamily: 'Helvetica', fontSize: 14}
+
+supporter.add supporter_text 
+
+supporting_text = Titanium.UI.createLabel
+	left: 0,
+	top: 11,
+	width: 100,
+	height: 22,
+	textAlign:'center'
+	text: 'Support'
+	font: {fontFamily: 'Helvetica', fontSize: 14}	
+
+supporting.add supporting_text 
+
+like_text = Titanium.UI.createLabel
+	left: 0,
+	top: 11,
+	width: 100,
+	height: 22,
+	textAlign:'center'
+	text: 'My Like'
+	font: {fontFamily: 'Helvetica', fontSize: 14}
+	
+like.add like_text 
+
+
 scrollView = Titanium.UI.createScrollView styles.scrollview
 scrollView.add view
 win.add scrollView
+

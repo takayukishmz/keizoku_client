@@ -22,17 +22,21 @@ Titanium.include('../../lib/Twitter.js');
       time: 10,
       challenge_flg: 0
     };
+    win.setRightNavButton(actInd);
+    actInd.show();
     API.callAPI('GET', 'countUpResult', params, function(json) {
       var newWindow, point;
-      info('countUpResult json:' + JSON.stringify(json));
-      point = json.point;
+      actInd.hide();
+      tt.UI.setRightButton(tt.execCountUp);
       if (json.success) {
+        point = json.point;
         info('success');
         newWindow = Ti.UI.createWindow({
           title: 'congratulations!',
           backgroundColor: '#fff',
           url: '../../controller/checkin/GetPoint.js',
-          data: point
+          data: point,
+          barColor: Const.BARCOLOR
         });
         Ti.App.nav.open(newWindow, {
           animated: true
@@ -42,12 +46,4 @@ Titanium.include('../../lib/Twitter.js');
       }
     });
   };
-  tt.UI.createGetPointWindow = function() {
-    Ti.API.info("createGetPointWindow");
-    return newWindow;
-  };
-  tt.UI.setLeftButton(function() {
-    info('SelectNewWay.js close');
-    rootWindow.close();
-  });
 })();

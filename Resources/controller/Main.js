@@ -1,7 +1,6 @@
-var win;
+var stars, win;
 win = Titanium.UI.currentWindow;
-win.backgroundImage = '../images/UI/base_pink.png';
-win.barColor = '#1e8dd7ff';
+stars = [];
 Titanium.include('../Util.js');
 Titanium.include('../lib/ServerAPI.js');
 Titanium.include('../modules/Main_module.js');
@@ -16,6 +15,19 @@ week_base.addEventListener('click', function(event) {
 });
 win.addEventListener('focus', function(e) {
   Ti.API.info('userHome focus');
-  return tt.UI.updateView();
+  indicator.setStatus(false);
+  if (Ti.App.checkInUpdate) {
+    Ti.App.checkInUpdate = false;
+    return tt.UI.updateView();
+  }
+});
+win.addEventListener('blur', function(e) {
+  Ti.API.info('userHome blur');
+  return indicator.setStatus(true);
 });
 /* loadView */
+tt.UI.setRightButton(function() {
+  API.callAPI('GET', 'testsession', {}, function(json) {
+    alert(JSON.stringify(json));
+  });
+});

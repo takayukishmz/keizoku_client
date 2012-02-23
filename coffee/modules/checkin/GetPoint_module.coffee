@@ -1,7 +1,8 @@
-
 tt = {}
 tt.UI = {}
 tt.module = {}
+
+Titanium.include('../Common_module.js');
 do ->
 	tt.UI.pointDetail = () ->
 		for i in [0..2]
@@ -17,11 +18,10 @@ do ->
 			box.add point_label
 			box.add point_num
 			point.add box
-
+		return
 	
 	tt.UI.SupporterList = () ->
 		info 'call api and get supporter list'
-
+		return
 	
 
-Titanium.include('../Common_module.js');

@@ -1,9 +1,22 @@
-info('common_module');
+var tt;
+tt = {};
+tt.UI = {};
 tt.module = {};
+info('common');
 (function() {
   tt.UI.tableView = Titanium.UI.createTableView();
-  tt.UI.setRightButton = function(callback) {
-    var activity, rightBotton;
+  tt.UI.setRightButton = function(callback, style) {
+    var activity, rightButton;
+    if (!callback) {
+      alert('You have to set callback func ');
+    }
+    if (!style) {
+      style = {
+        title: '再読込',
+        systemButton: Titanium.UI.iPhone.SystemButton.REFRESH,
+        backgroundColor: 'black'
+      };
+    }
     if (Titanium.Platform.osname === 'android') {
       activity = Titanium.Android.currentActivity;
       if (activity) {
@@ -14,25 +27,34 @@ tt.module = {};
             title: "再読込"
           });
           menuItem.setIcon("dark_refresh.png");
-          return menuItem.addEventListener("click", function(e) {
-            return callback;
+          menuItem.addEventListener("click", function(e) {
+            callback;
           });
         };
       }
     } else {
-      rightBotton = Titanium.UI.createButton({
-        title: '再読込',
-        systemButton: Titanium.UI.iPhone.SystemButton.REFRESH
-      });
-      win.rightNavButton = rightBotton;
-      rightBotton.addEventListener('click', function() {
+      info("### style ### ");
+      info_obj(style);
+      rightButton = Titanium.UI.createButton(style);
+      win.rightNavButton = rightButton;
+      rightButton.addEventListener('click', function() {
         Ti.API.info('click right button:' + callback);
         callback();
       });
+      return rightButton;
     }
   };
-  tt.UI.setLeftButton = function(callback) {
-    var activity, leftBotton;
+  tt.UI.setLeftButton = function(callback, style) {
+    var activity, leftButton;
+    if (!callback) {
+      alert('You have to set callback func ');
+    }
+    if (!style) {
+      style = {
+        title: 'update',
+        systemButton: Titanium.UI.iPhone.SystemButton.REFRESH
+      };
+    }
     if (Titanium.Platform.osname === 'android') {
       activity = Titanium.Android.currentActivity;
       if (activity) {
@@ -49,11 +71,9 @@ tt.module = {};
         };
       }
     } else {
-      leftBotton = Titanium.UI.createButton({
-        title: 'cancel'
-      });
-      win.leftNavButton = leftBotton;
-      leftBotton.addEventListener('click', function() {
+      leftButton = Titanium.UI.createButton(style);
+      win.leftNavButton = leftButton;
+      leftButton.addEventListener('click', function() {
         Ti.API.info('click right button:' + callback);
         callback();
       });
@@ -81,15 +101,6 @@ tt.module = {};
     });
     win.open(a);
   };
-  tt.UI.gotoUserDetail = function(report) {
-    var newWindow;
-    Ti.API.info("open UserDetailWindow");
-    newWindow = Ti.UI.createWindow({
-      backgroundColor: '#fff',
-      url: '../controller/UserDetail.js'
-    });
-    return newWindow;
-  };
   tt.validateText = function(text, min, max, not_null) {
     var textLength;
     info('target text:' + text);
@@ -110,21 +121,67 @@ tt.module = {};
     var newWindow;
     Ti.API.info("createCollectionWindow");
     newWindow = Ti.UI.createWindow({
+      title: setTT("APPTITLE"),
       backgroundColor: '#fff',
       url: '../controller/Collection.js',
       navBarHidden: true,
-      modal: true
+      modal: true,
+      barColor: Const.BARCOLOR
     });
     return newWindow;
   };
-  tt.UI.createUserHomeView = function(user) {
+  tt.UI.createUserHomeView = function(user_id) {
     var newWindow;
-    Ti.API.info("createUserHomeView");
     newWindow = Ti.UI.createWindow({
       backgroundColor: '#fff',
       url: '../controller/UserHome.js',
-      data: user
+      barColor: Const.BARCOLOR,
+      data: user_id
     });
     return newWindow;
+  };
+  tt.module.move = function(targetBar, startWidth, endWidth) {
+    var move;
+    info('--------move---------');
+    while (targetBar.width > startWidth) {
+      targetBar.width = startWidth;
+    }
+    info(targetBar.width);
+    info(startWidth);
+    info(endWidth);
+    move = function() {
+      var limit, rest, speed;
+      if (targetBar.width >= endWidth) {
+        info('----------move complete----------');
+        return;
+      }
+      speed = 50;
+      limit = Number(endWidth);
+      rest = endWidth - startWidth;
+      targetBar.width += rest / speed;
+      setTimeout(move, 10);
+    };
+    move();
+  };
+  tt.module.updateUserData = function(json) {
+    var endWidth, i, profile, recordPoint, weeklyPoint, weeklyRecord, _i, _len;
+    info('updateUserData');
+    profile = json.profile;
+    icon.image = profile.picture_url ? profile.picture_url : '../images/' + Const.DEFALT.USER;
+    name.text = profile.nickname;
+    weeklyPoint = 50;
+    recordPoint = 100;
+    endWidth = pointbar_max.width * (weeklyPoint / recordPoint);
+    tt.module.move(pointbar_now, 0, endWidth);
+    info(json.weekly_record);
+    weeklyRecord = json.weekly_record;
+    for (_i = 0, _len = weeklyRecord.length; _i < _len; _i++) {
+      i = weeklyRecord[_i];
+      info(i);
+      if (i.wday !== null) {
+        info(i);
+        stars[i.wday].backgroundImage = '../images/star/' + i.color_id + '.png';
+      }
+    }
   };
 })();

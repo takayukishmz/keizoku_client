@@ -21,30 +21,45 @@ Titanium.include('Common_module.js');
     });
   };
   tt.UI.createNoticeRow = function(notice) {
-    var icon, row, text, user;
+    var icon, message, row;
     info('createNoticeRow');
     row = Titanium.UI.createTableViewRow(styles.row);
     row.notice = notice;
-    icon = Ti.UI.createView(styles.icon);
-    user = Titanium.UI.createLabel(styles.user);
-    text = Titanium.UI.createLabel(styles.text);
-    user.text = notice.nickname + ' san ga';
+    icon = Ti.UI.createImageView(styles.icon);
+    icon.image = notice.picture_url;
+    message = Titanium.UI.createLabel(styles.title);
+    notice.type = "support";
     switch (notice.type) {
       case 'share':
+        message.text = setTT('NOTICE_SHARE', [notice.nickname, notice.point]);
+        message.clickName = 'share';
+        row.clickName = 'share';
+        break;
+      case 'support':
+        message.text = setTT('NOTICE_SUPPORT', [notice.nickname]);
+        message.clickName = 'support';
+        row.clickName = 'support';
+        break;
+      case 'like':
+        message.text = 'like your puroject:' + notice.pjt_name;
+    }
+    row.add(icon);
+    row.add(message);
+    return row;
+  };
+  tt.module.rowEventController = function(e) {
+    switch (e.source.clickName) {
+      case 'share':
         info('share');
-        text.text = 'done \'' + notice.pjt_name + '\' ' + notice.count + ' times and share ' + notice.point / 4 + ' points';
         break;
       case 'support':
         info('support');
-        text.text = 'became your supporter';
+        Titanium.UI.currentTab.open(tt.UI.createUserHomeView(e.rowData.notice.user_id, {
+          animated: true
+        }));
         break;
-      case 'like':
-        info('like');
-        text.text = 'like your puroject:' + notice.pjt_name;
+      default:
+        info('else');
     }
-    row.add(icon);
-    row.add(user);
-    row.add(text);
-    return row;
   };
 })();

@@ -17,23 +17,27 @@ styles =
 		backgroundGradient:
 			type:'linear'
 			colors:[{color:'#d4d4d4', position:0.0}, {color:'#c4c4c4', position:0.50}, {color:'#e4e4e4', position:1.0}]
-	user:
+	message:
 		color:'#576996'
-		font:{fontSize:16,fontWeight:'bold',fontFamily:'Arial'}
+		font:{fontSize:12,fontFamily:'Arial'}
 		left:S.MARGIN*2+S.ICON
 		top:S.MARGIN
 		height:S.ICON
 		width:'auto'
-		clickName:'user'
-		text:'user name'
+		clickName:'message'
+		textAlign:'left'
 	icon:
 		backgroundImage:'../images/user.png'
 		top:S.MARGIN
 		left:S.MARGIN
 		width:S.ICON
 		height:S.ICON
-	text:
-		top:S.MARGIN+22
+		borderRadius:3
+	title:
+		font:{fontSize:12,fontFamily:'Arial'}
 		left:S.MARGIN*2+S.ICON
+		top:S.MARGIN
+		height:S.ICON
 		width:'auto'
-		height:44
+		clickName:'text'
+		textAlign:'left'

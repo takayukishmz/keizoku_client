@@ -9,10 +9,7 @@ info('Nitice.js');
 /* UI */
 win.add(tt.UI.tableView);
 /* call API */
-win.addEventListener('focus', function() {
-  info('focus - Timeline');
-  tt.UI.loadListView();
-});
+tt.UI.loadListView();
 /* eventListener */
 tt.UI.tableView.addEventListener('click', function(e) {
   info(JSON.stringify(e));

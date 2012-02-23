@@ -11,16 +11,18 @@ Titanium.include '../modules/SupportList_module.js'
 win.add tt.UI.tableView
 
 ### call API #################################################################
+listType = win.data.listType
+user_id = win.data.user_id
+tt.UI.loadListView(listType,user_id)
 
-win.addEventListener 'focus',() ->
-	listType = win.data.listType
-	user_id = win.data.user_id
-	tt.UI.loadListView(listType,user_id)
-
-	
 ### eventListener #############################################
 tt.UI.tableView.addEventListener 'click',(e) ->
 	info JSON.stringify e
 	info 'table event'
-	tt.module.rowEventController e
+	
+	#change user_id 
+	#UserHome.jsのインターフェースに合わせるため
+
+	Titanium.UI.currentTab.open tt.UI.createUserHomeView e.rowData.user.support_user_id ,{animated:true}
+	
 	return

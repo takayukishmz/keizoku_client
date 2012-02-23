@@ -1,16 +1,36 @@
 Titanium.include '../TextConst.js'
 
+
 Const = 
-	# COLOR_MAIN:'#9b1400'
-	# COLOR_MAIN:'#c3c3c3'
+	BACKGROUND:"base_pink.png"
+	ROWBACKGROUND:"timeline_bg.png"
+	# ROWBACKGROUND:""
+	BARCOLOR:' #555'	
+	FONTCOLOR:"#222"
 	
+	wday :
+		Sun:0
+		Mon:1
+		Tues:2
+		Wed:3
+		Thurs:4
+		Fri:5
+		Sat:6			
+	
+	
+	BARIMAGE:'gray_wave.png'
+	# BARCOLOR:' #6d060a' #winered
+
 	COLOR_MAIN:'#ddd'
-	rowColor:"#f6f6f6"
+	
+	rowColor:"#eee"
 	rowColor_black:"#505050"
 	backgroundColor:'#fff'
 	barColor:'#00ff11'
 		# barColor:'#f89924'
 		
+	DEFALT:
+		USER:'user.png'
 	
 	barImage:'../images/titlebar_red.png'
 	MARGIN:5
@@ -72,8 +92,11 @@ STYLE =
 
 # win.barImage = Const.barImage
 
-win.backgroundImage = '../images/UI/base_pink.png'
-win.barColor = Const.COLOR_MAIN
+# win.backgroundImage = '../images/UI/base_pink.png'
+# win.barColor = 'red'
+# win.barImage = '../images/gray_wave.png'
+# win.barImage = '../images/UI/base_pink.png'
+# win.barColor = Const.COLOR_MAIN
 # win.barColor = '#fff'
 	
 	

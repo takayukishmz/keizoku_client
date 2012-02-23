@@ -1,21 +1,22 @@
 rootWindow = Titanium.UI.currentWindow
-win = Ti.UI.createWindow 
-	title:'share'
-	backgroundImage:'../../images/UI/base_pink.png'
-	# backgroundColor:'#fff'
-
-
-
-#dryrun for socialmedia
-Ti.App.dryrun = true
+Ti.App.rootWindow = rootWindow
 
 Titanium.include '../../Util.js'
 Titanium.include '../../lib/ServerAPI.js'
-Titanium.include '../../modules/checkin/CheckIn_module.js'
 Titanium.include '../../styles/checkin/CheckIn_style.js'
+Titanium.include '../../modules/checkin/CheckIn_module.js'
 
-
+### variables ################################################################
+share_facebook = false;
+share_twitter = false;
 ### UI #######################################################################
+win = Ti.UI.createWindow 
+	title:'share'
+	backgroundImage:'../../images/UI/base_pink.png'
+	barColor: Const.BARCOLOR
+
+
+
 inputData = []
 
 comment = Ti.UI.createTableViewRow {height:40}
@@ -23,9 +24,6 @@ text = Titanium.UI.createTextField styles.text
 comment.header = 'comment'
 
 comment.add text
-
-
-
 
 term = Ti.UI.createTableViewRow {
 	height:37
@@ -93,19 +91,23 @@ rootWindow.add Ti.App.nav
 
 ### modules ##################################################################
 # right button
-tt.UI.setRightButton(tt.execCountUp)
+tt.UI.setRightButton tt.execCountUp,{title:'記録する'} 
+
+tt.UI.setLeftButton () ->
+	rootWindow.close()
+	return
+, {title:setTT("CANCEL")}
+
 ### listener #################################################################
 win.addEventListener 'focus',(e)->
-	# Ti.App.CheckIn_focus = true
 	Ti.API.info 'CheckIn focus'
-	#case after'getpoint'
-	if Ti.App.CheckIn_flg
-		info 'CheckIn window close'
+	indicator.setStatus(false)
 	return
 
 
 win.addEventListener 'blur',(e)->
 	Ti.API.info 'CheckIn blur'
+	indicator.setStatus(true)
 	return
 
 #facebook
@@ -131,7 +133,3 @@ switch_tw.addEventListener 'change',(e) ->
 		Ti.App.twitterApi.init()
     
 
-
-tt.UI.setLeftButton () ->
-	rootWindow.close()
-	return

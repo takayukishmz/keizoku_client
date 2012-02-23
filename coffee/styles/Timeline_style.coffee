@@ -1,7 +1,7 @@
 Titanium.include 'Const.js'
 S = Const
 header_height = S.MARGIN*2+22
-row_height = 103
+row_height = 133
 styles =
 	header_height:header_height
 	bonus_box:
@@ -22,7 +22,8 @@ styles =
 	######## list view ######################################################
 	#### headerVewi ####
 	header:
-		backgroundColor:'#ddd'
+		# backgroundImage:'../images/UI/' + S.ROWBACKGROUND
+		# backgroundColor:'#ddd'
 		height:S.ICON*3/4
 		opacity:0.8
 		
@@ -55,7 +56,7 @@ styles =
 		clickName:'user'
 		text:''
 	title_text:
-		color:'#576996'
+		color:S.FONTCOLOR
 		font:{fontSize:15,fontWeight:'bold',fontFamily:'Arial'}
 		top:0
 		left:0
@@ -66,9 +67,10 @@ styles =
 	### row ###
 	row:
 		height:row_height
-		hasChild:true
+		# hasChild:true
 		backgroundColor:S.rowColor
-		backgroundImage:'../images/UI/base_pink.png'
+		backgroundImage:'../images/UI/'+Const.ROWBACKGROUND
+		selectionStyle:Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	view:
 		height:header_height
 		width:S.WIDTH
@@ -106,7 +108,7 @@ styles =
 		text:'supporter:5'
 
 	user:
-		color:'#555'
+		color:S.FONTCOLOR
 		font:{fontSize:12,fontWeight:'bold',fontFamily:'Arial'}
 		top:S.MARGIN
 		left:S.MARGIN*3/2+S.ICON
@@ -123,7 +125,7 @@ styles =
 		clickName:'user'
 		text:''
 	comment_text:
-		color:'#555'
+		color:S.FONTCOLOR
 		font:{fontSize:15,fontWeight:'bold',fontFamily:'Arial'}
 		top:1
 		left:1

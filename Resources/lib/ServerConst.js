@@ -2,7 +2,8 @@ var Request;
 Request = {};
 Request = {
   HOST: {
-    sakuraVPS: 'http://49.212.124.181:5000/'
+    sakuraVPS: 'http://49.212.124.181:5000/',
+    localhost: 'http://192.168.56.101:5000/'
   },
   getRequestURL: function(api, params) {
     var url;

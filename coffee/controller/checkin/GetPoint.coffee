@@ -2,14 +2,22 @@ win = Titanium.UI.currentWindow
 Titanium.include '../../Util.js'
 Titanium.include '../../lib/ServerAPI.js'
 Titanium.include '../../styles/checkin/GetPoint_style.js'
+Titanium.include '../../modules/checkin/GetPoint_module.js'
 
-
-info_obj win.data
-
+# ----------------------------------------------------------------------------
+Ti.App.checkInUpdate = true
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+tt.UI.setLeftButton () ->
+	Ti.App.rootWindow.close()
+	return
+, {title:setTT("CLOSE")}
+# ----------------------------------------------------------------------------
 point_number.text = win.data.total + "pt"
 
 pointList = win.data.lists
-info_obj pointList
+
+
 for i in [0..pointList.length-1]
 	info i
 	info 'loop'	
@@ -26,8 +34,6 @@ for i in [0..pointList.length-1]
 	win.add base_white
 	
 
-
-
-tt.UI.setLeftButton () ->
-	rootWindow.close()
-	return
+# tt.UI.setRightButton () ->
+# 	Ti.App.rootWindow.close()
+# 	return

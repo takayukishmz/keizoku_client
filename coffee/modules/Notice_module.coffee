@@ -24,31 +24,41 @@ do ->
 		info 'createNoticeRow'
 		row = Titanium.UI.createTableViewRow styles.row
 		row.notice = notice
-			# backgroundColor:'#fff'
 		
-		icon = Ti.UI.createView styles.icon
-		user = Titanium.UI.createLabel styles.user
-		text = Titanium.UI.createLabel styles.text
+		icon = Ti.UI.createImageView styles.icon
+		icon.image = notice.picture_url
 		
-		user.text = notice.nickname+ ' san ga'
-		
+		message = Titanium.UI.createLabel styles.title	
+		#debug
+		notice.type = "support"
 		
 		switch notice.type
 			when 'share'
-				info 'share'
-				text.text = 'done \''+notice.pjt_name+'\' '+notice.count+' times and share '+notice.point/4+' points'
-				
+				message.text = setTT('NOTICE_SHARE', [notice.nickname, notice.point])
+				message.clickName = 'share'
+				row.clickName = 'share'
 			when 'support'
-				info 'support'
-				text.text = 'became your supporter'
+				message.text = setTT('NOTICE_SUPPORT', [notice.nickname])
+				message.clickName = 'support'
+				row.clickName = 'support'
 			when 'like'
-				info 'like'
-				text.text = 'like your puroject:'+notice.pjt_name
+				message.text = 'like your puroject:'+notice.pjt_name
 		row.add icon
-		row.add user
-		row.add text
+		row.add message
 		
 		return row
+		
+	tt.module.rowEventController = (e) ->
+		switch e.source.clickName
+			when 'share'
+				info 'share'
+			when 'support'
+				info 'support'
+				Titanium.UI.currentTab.open tt.UI.createUserHomeView e.rowData.notice.user_id ,{animated:true}
+			else
+				info 'else'
+		return
+				
 	return
 
 

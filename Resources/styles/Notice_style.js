@@ -29,31 +29,37 @@ styles = {
       ]
     }
   },
-  user: {
+  message: {
     color: '#576996',
     font: {
-      fontSize: 16,
-      fontWeight: 'bold',
+      fontSize: 12,
       fontFamily: 'Arial'
     },
     left: S.MARGIN * 2 + S.ICON,
     top: S.MARGIN,
     height: S.ICON,
     width: 'auto',
-    clickName: 'user',
-    text: 'user name'
+    clickName: 'message',
+    textAlign: 'left'
   },
   icon: {
     backgroundImage: '../images/user.png',
     top: S.MARGIN,
     left: S.MARGIN,
     width: S.ICON,
-    height: S.ICON
+    height: S.ICON,
+    borderRadius: 3
   },
-  text: {
-    top: S.MARGIN + 22,
+  title: {
+    font: {
+      fontSize: 12,
+      fontFamily: 'Arial'
+    },
     left: S.MARGIN * 2 + S.ICON,
+    top: S.MARGIN,
+    height: S.ICON,
     width: 'auto',
-    height: 44
+    clickName: 'text',
+    textAlign: 'left'
   }
 };

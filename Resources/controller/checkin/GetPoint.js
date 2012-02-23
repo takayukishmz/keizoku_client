@@ -3,10 +3,15 @@ win = Titanium.UI.currentWindow;
 Titanium.include('../../Util.js');
 Titanium.include('../../lib/ServerAPI.js');
 Titanium.include('../../styles/checkin/GetPoint_style.js');
-info_obj(win.data);
+Titanium.include('../../modules/checkin/GetPoint_module.js');
+Ti.App.checkInUpdate = true;
+tt.UI.setLeftButton(function() {
+  Ti.App.rootWindow.close();
+}, {
+  title: setTT("CLOSE")
+});
 point_number.text = win.data.total + "pt";
 pointList = win.data.lists;
-info_obj(pointList);
 for (i = 0, _ref = pointList.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
   info(i);
   info('loop');
@@ -20,6 +25,3 @@ for (i = 0, _ref = pointList.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <=
   base_white.add(point_num);
   win.add(base_white);
 }
-tt.UI.setLeftButton(function() {
-  rootWindow.close();
-});

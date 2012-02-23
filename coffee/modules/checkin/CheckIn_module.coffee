@@ -24,17 +24,22 @@ do ->
 			challenge_flg:0
 			
 		#call API
+		win.setRightNavButton actInd
+		actInd.show()
+
+		# Ti.App.nav.open messageWin,{animated:true}
 		API.callAPI 'GET','countUpResult',params, (json) ->
-			info 'countUpResult json:'+JSON.stringify json	
-			point = json.point
+			actInd.hide()
+			tt.UI.setRightButton(tt.execCountUp)
 			if json.success
+				point = json.point
 				info 'success'
-				newWindow = Ti.UI.createWindow  
+				newWindow = Ti.UI.createWindow 
 					title:'congratulations!' 
 					backgroundColor:'#fff'
 					url:'../../controller/checkin/GetPoint.js'
 					data:point
-					
+					barColor: Const.BARCOLOR	
 				Ti.App.nav.open newWindow,{animated:true}
 				return
 				
@@ -42,18 +47,7 @@ do ->
 				info 'false'
 				return
 		return
-		
-	tt.UI.createGetPointWindow = () ->
-		Ti.API.info "createGetPointWindow"
 
-		return newWindow
-	
-	tt.UI.setLeftButton () ->
-		info 'SelectNewWay.js close'
-		# win.close()
-		rootWindow.close()
-		return
-	
 	return
 
 

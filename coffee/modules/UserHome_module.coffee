@@ -2,91 +2,102 @@ tt = {}
 tt.UI = {}	
 
 collection_all = 21
-# Ti.App.Selected_pjt = {}
 Titanium.include('Common_module.js');
 do ->
-	tt.UI.updateView = (user_id) ->
-		user_id = Ti.App.user_id
-		API.callAPI 'GET','getUserData',{user_id:user_id}, (json) ->
-			profile = json.profile
-			name.text = profile.nickname
-			# dayOnRibbon.text = profile.count_total + 'days / 21'
-			weeklyPoint = 50
-			recordPoint = 100
-			tt.module.move collectionbar_max, collectionbar_now, (collectionbar_max.width * (profile.count_total / collection_all))
-			tt.module.move pointbar_max, pointbar_now, (pointbar_max.width * (weeklyPoint / recordPoint))
-
-			# point_count.text = profile.point_total
-			# challenge_count.text = profile.challenge_total
+	tt.UI.updateView = (user_id,selected_user_id) ->
+		API.callAPI 'GET','getUserData',{user_id:user_id, selected_user_id:selected_user_id}, (json) ->
+			
+			if json.isSupport and Number user_id != Number selected_user_id
+				rightButton.title = setTT("SUPPORTING")
+				user.isSupport = true
+			
+			tt.module.updateUserData json
 			return
 	
-	tt.UI.createRecordListView = (user) -> 
+	
+	#サポートボタンを押したときの処理
+	tt.module.SupportButton = () ->
+		
+		params = 
+			user_id:Ti.App.user_id
+			support_user_id:user.user_id
+		
+		#---------
+		#Remove
+		#---------
+		if user.isSupport
+			API.callAPI 'GET','remove', params, (json) ->
+				if json.remove_success
+					rightButton.title = setTT("SUPPORT")
+					user.isSupport = false #サポートしていない	
+
+				if json.message
+					alert json.message
+					return
+				return
+		#---------
+		# Support
+		#---------
+		else
+			API.callAPI 'GET','execSupport',params, (json) ->
+				if json.support_success
+					rightButton.title = setTT("SUPPORTING")
+					user.isSupport = true #サポートしている	
+
+				if json.message
+					alert json.message
+					return
+				return
+		return
+
+	
+	
+	tt.UI.createRecordListView = (user_id) -> 
 		Ti.API.info "createRecordListView"
 		newWindow = Ti.UI.createWindow  
 			title:'~ project' 
 			backgroundColor:'#fff'
 			url:'../controller/UserRecordList.js'
-			data:user
-			
+			user_id:user_id
+			barColor: Const.BARCOLOR
 		Ti.App.CheckInWindow = newWindow
 		return newWindow
 	
-	
-	tt.UI.createCheckinView = (project) -> 
-		Ti.API.info "createCompleteWindow"
-		newWindow = Ti.UI.createWindow  
-			title:'~ project' 
-			backgroundColor:'#fff'
-			url:'../controller/CheckIn.js'
-			
-		# Ti.App.Selected_pjt = project
-		Ti.App.CheckInWindow = newWindow
-		return newWindow
-	
+
 	tt.UI.createSuppotListView = (listType,user_id) -> 
 		Ti.API.info "createSupportListWindow"
 		newWindow = Ti.UI.createWindow  
 			title:listType
 			backgroundColor:'#fff'
 			url:'../controller/SupportList.js'
+			barColor: Const.BARCOLOR
 			data:
 				listType:listType
 				user_id:user_id
 		
 		return newWindow
 	
-	tt.UI.getUserData = (user_id) ->
-		API.callAPI 'GET','getUserData',{user_id:user_id}, (json) ->
-			info 'callback getUserData'
-			info JSON.stringify json
-			info JSON.stringify point_cnt
-			profile = json.profile
-			user.text = profile.nickname
-			point_cnt.text = profile.point_total
-			day_cnt_total.text = profile.count_total
-			support_cnt.text = profile.bonus_total
-			return
-		return	
-	tt.module.move = (baseBar,statusBar,number)->
-		pointbar_flg = true
-		
-		move = ()->
-			if !pointbar_flg
-				info 'move complete'
-				return
-			
-			speed = 50
-			limit = Number baseBar.width
-			rest = baseBar.width - statusBar.width
-			statusBar.width += rest / speed
-			setTimeout move, 10
-			
-			if statusBar.width > number
-				pointbar_flg = false
-				
-			return
 
-		move()
-		return
+	# tt.module.move = (targetBar,maxWidth,targetWidth)->
+	# 	pointbar_flg = true
+	# 	
+	# 	move = ()->
+	# 		if !pointbar_flg
+	# 			info 'move complete'
+	# 			return
+	# 		
+	# 		speed = 50
+	# 		limit = Number maxWidth
+	# 		rest = maxWidth - targetWidth
+	# 		targetBar.width += rest / speed
+	# 		setTimeout move, 10
+	# 		
+	# 		if targetBar.width >= targetWidth
+	# 			pointbar_flg = false
+	# 			
+	# 		return
+	# 
+	# 	move()
+	# 	return
 	
 	return

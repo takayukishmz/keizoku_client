@@ -33,20 +33,19 @@ do ->
 			section = Ti.UI.createTableViewSection()
 			
 			row = Titanium.UI.createTableViewRow styles.row
-			row.userData = userData
+			row.user = userData
 			
 			icon = Ti.UI.createView styles.icon
-			user = Titanium.UI.createLabel styles.user
-			text = Titanium.UI.createLabel styles.text
-			
+			user = Titanium.UI.createLabel styles.title
 			user.text = userData.nickname
+			
 			row.add icon
 			row.add user
 			
 			section.add row
 			
 			return section
-			
+	
 	
 	return
 	

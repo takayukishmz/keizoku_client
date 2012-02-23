@@ -1,15 +1,19 @@
-var chenge, comment, fb, header_name, inputData, rootWindow, switch_fb, switch_tw, tableView, term, term_content, text, tw, win;
+var chenge, comment, fb, header_name, inputData, rootWindow, share_facebook, share_twitter, switch_fb, switch_tw, tableView, term, term_content, text, tw, win;
 rootWindow = Titanium.UI.currentWindow;
-win = Ti.UI.createWindow({
-  title: 'share',
-  backgroundImage: '../../images/UI/base_pink.png'
-});
-Ti.App.dryrun = true;
+Ti.App.rootWindow = rootWindow;
 Titanium.include('../../Util.js');
 Titanium.include('../../lib/ServerAPI.js');
-Titanium.include('../../modules/checkin/CheckIn_module.js');
 Titanium.include('../../styles/checkin/CheckIn_style.js');
+Titanium.include('../../modules/checkin/CheckIn_module.js');
+/* variables */
+share_facebook = false;
+share_twitter = false;
 /* UI */
+win = Ti.UI.createWindow({
+  title: 'share',
+  backgroundImage: '../../images/UI/base_pink.png',
+  barColor: Const.BARCOLOR
+});
 inputData = [];
 comment = Ti.UI.createTableViewRow({
   height: 40
@@ -70,16 +74,22 @@ Ti.App.nav = Ti.UI.iPhone.createNavigationGroup({
 });
 rootWindow.add(Ti.App.nav);
 /* modules */
-tt.UI.setRightButton(tt.execCountUp);
+tt.UI.setRightButton(tt.execCountUp, {
+  title: '記録する'
+});
+tt.UI.setLeftButton(function() {
+  rootWindow.close();
+}, {
+  title: setTT("CANCEL")
+});
 /* listener */
 win.addEventListener('focus', function(e) {
   Ti.API.info('CheckIn focus');
-  if (Ti.App.CheckIn_flg) {
-    info('CheckIn window close');
-  }
+  indicator.setStatus(false);
 });
 win.addEventListener('blur', function(e) {
   Ti.API.info('CheckIn blur');
+  indicator.setStatus(true);
 });
 switch_fb.addEventListener('change', function(e) {
   info('change switch_fb');
@@ -100,7 +110,4 @@ switch_tw.addEventListener('change', function(e) {
     Ti.App.twitterLogin = true;
     return Ti.App.twitterApi.init();
   }
-});
-tt.UI.setLeftButton(function() {
-  rootWindow.close();
 });
