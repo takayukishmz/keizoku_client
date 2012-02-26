@@ -1,0 +1,98 @@
+================================================================================
+Appcelerator Titanium Diagnostics Build Log
+The contents of this file are useful to send to Appcelerator Support if
+reporting an issue to help us understand your environment, build settings
+and aid in debugging. Please attach this log to any issue that you report.
+================================================================================
+
+Starting build at 02/26/12 23:53
+
+Build details:
+
+   timestamp=07/21/11 09:36
+   version=1.7.2
+   githash=97c3689
+
+
+Script arguments:
+   /Library/Application Support/Titanium/mobilesdk/osx/1.7.2/iphone/builder.py
+   run
+   StepUpWith
+
+Building from: /Library/Application Support/Titanium/mobilesdk/osx/1.7.2/iphone
+Platform: Darwin Kernel Version 10.8.0: Tue Jun  7 16:33:36 PDT 2011; root:xnu-1504.15.3~1/RELEASE_I386
+
+Xcode path is: /Developer
+
+
+githash=97c3689, existing_git_hash=97c3689
+writing contents of /Users/shimizutakayuki/Documents/Titanium Studio Workspace/StepUpWith/build/iphone/project.xcconfig:
+
+TI_VERSION=1.7.2
+TI_SDK_DIR=/Library/Application Support/Titanium/mobilesdk/osx/$(TI_VERSION)/iphone
+TI_APPID=com.keizoku
+OTHER_LDFLAGS[sdk=iphoneos*]=$(inherited) -weak_framework iAd
+OTHER_LDFLAGS[sdk=iphonesimulator*]=$(inherited) -weak_framework iAd
+#include "module"
+
+old contents
+
+
+Generated the following stylecode code:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>classes</key>
+		<dict>
+</dict>
+
+		<key>classes_density</key>
+		<dict>
+</dict>
+
+		<key>ids</key>
+		<dict>
+</dict>
+
+		<key>ids_density</key>
+		<dict>
+</dict>
+
+		<key>tags</key>
+		<dict>
+</dict>
+
+		<key>tags_density</key>
+		<dict>
+</dict>
+
+	</dict>
+</plist>
+Starting Xcode compile with the following arguments:
+
+    xcodebuild
+    -target
+    StepUpWith
+    -configuration
+    Debug
+    -sdk
+    iphonesimulator4.2
+    GCC_PREPROCESSOR_DEFINITIONS=__LOG__ID__=a3b2d7bf-6e7b-414d-a318-3b60310d8c76 DEPLOYTYPE=development TI_DEVELOPMENT=1 DEBUG=1 TI_VERSION=1.7.2 
+    IPHONEOS_DEPLOYMENT_TARGET=3.1
+    TARGETED_DEVICE_FAMILY=1
+
+app_id = com.keizoku
+
+
+
+Exception detected in script:
+Traceback (most recent call last):
+  File "/Library/Application Support/Titanium/mobilesdk/osx/1.7.2/iphone/builder.py", line 1148, in main
+    execute_xcode("iphonesimulator%s" % link_version,["GCC_PREPROCESSOR_DEFINITIONS=__LOG__ID__=%s DEPLOYTYPE=development TI_DEVELOPMENT=1 DEBUG=1 TI_VERSION=%s %s" % (log_id,sdk_version,debugstr)],False)
+  File "/Library/Application Support/Titanium/mobilesdk/osx/1.7.2/iphone/builder.py", line 1066, in execute_xcode
+    output = run.run(args,False,False,o)
+  File "/Library/Application Support/Titanium/mobilesdk/osx/1.7.2/iphone/run.py", line 12, in run
+    for line in proc.stdout.readlines():
+KeyboardInterrupt
