@@ -1,0 +1,1 @@
+StepUpWith/Resources/controller/test_GetPoint.js

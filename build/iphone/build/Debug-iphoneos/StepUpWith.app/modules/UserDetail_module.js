@@ -1,0 +1,1 @@
+StepUpWith/Resources/modules/UserDetail_module.js

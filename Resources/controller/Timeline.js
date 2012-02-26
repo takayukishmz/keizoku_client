@@ -1,64 +1,318 @@
-var lastDistance, listview, win;
-win = Titanium.UI.currentWindow;
-Titanium.include('../Util.js');
-Titanium.include('../lib/ServerAPI.js');
-Titanium.include('../styles/Timeline_style.js');
-Titanium.include('../modules/Timeline_module.js');
+var LikeButton, Timeline, Util, styles;
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Ti.API.info('timeline.js');
-info('Util check');
 /* const */
 Ti.App.timeline_type = '';
 Ti.App.update_tl = true;
 /* UI */
-listview = Ti.UI.createView({});
-listview.add(tt.UI.tableView);
-win.add(listview);
-tt.UI.setRightButton(function() {
-  var w;
-  if (Ti.App.selectDialog_flg) {
-    return;
+Util = require('modules/Util').Util;
+LikeButton = require('ui/LikeButton').LikeButton;
+styles = require('styles/Timeline_style').styles;
+Timeline = (function() {
+  Timeline.prototype.Stat = {
+    ISLIKE: 'isLike',
+    NOLIKE: 'noLike'
+  };
+  function Timeline() {
+    this.rowEventController = __bind(this.rowEventController, this);
+    this.createListViewRow = __bind(this.createListViewRow, this);
+    this.setEvent = __bind(this.setEvent, this);    this.SelectedIndex = 0;
+    this.SelectedRow = '';
+    this.win = Titanium.UI.createWindow({
+      backgroundColor: '#fff',
+      title: 'timeline',
+      barColor: Const.BARCOLOR
+    });
+    this.view = Ti.UI.createView();
+    this.tableview = Titanium.UI.createTableView();
+    this.setButton();
+    this.setEvent();
+    this.view.add(this.tableview);
+    this.win.add(this.view);
+    this.loadTimeline();
+    return this.win;
   }
-  Ti.App.selectDialog_flg = true;
-  w = Titanium.UI.createWindow({
-    backgroundColor: '#336699',
-    borderWidth: 2,
-    borderColor: '#999',
-    height: 400,
-    width: 300,
-    borderRadius: 5,
-    opacity: 0.92,
-    url: '../controller/SelectTimeline.js'
-  });
-  tt.UI.create2DMatrixDialog(w);
-}, {
-  title: 'Filter',
-  width: 10,
-  height: 10,
-  color: 'black'
-});
-/* call API */
-win.addEventListener('focus', function() {
-  info('focus - Timeline');
-  if (Ti.App.update_tl) {
-    Ti.App.update_tl = false;
-    return tt.UI.loadTimeline();
-  }
-});
-/* eventListener */
-tt.UI.tableView.addEventListener('click', function(e) {
-  info(JSON.stringify(e));
-  info('timeline -- table event');
-  tt.module.rowEventController(e);
-});
-lastDistance = 0;
-listview.addEventListener('scroll', function(e) {
-  var distance, height, offset, theEnd, total;
-  offset = e.contentOffset.y;
-  height = e.size.height;
-  total = offset + height;
-  theEnd = e.contentSize.height;
-  distance = theEnd - total;
-  if (distance < lastDistance) {
-    return info_obj(e);
-  }
-});
+  Timeline.prototype.setButton = function() {
+    return Util.setRightButton(this.win, function() {
+      var w;
+      if (Ti.App.selectDialog_flg) {
+        return;
+      }
+      Ti.App.selectDialog_flg = true;
+      w = Titanium.UI.createWindow({
+        backgroundColor: '#336699',
+        borderWidth: 2,
+        borderColor: '#999',
+        height: 400,
+        width: 300,
+        borderRadius: 5,
+        opacity: 0.92,
+        url: '../controller/SelectTimeline.js'
+      });
+      Util.create2DMatrixDialog(w);
+    }, {
+      title: 'Filter',
+      width: 10,
+      height: 10,
+      color: 'black'
+    });
+  };
+  Timeline.prototype.setEvent = function() {
+    /* call API */
+    var lastDistance;
+    this.win.addEventListener('focus', __bind(function() {
+      info('focus - Timeline');
+      if (Ti.App.update_tl) {
+        Ti.App.update_tl = false;
+        return this.loadTimeline();
+      }
+    }, this));
+    /* eventListener */
+    this.tableview.addEventListener('click', __bind(function(e) {
+      info(JSON.stringify(e));
+      info('timeline -- table event');
+      this.rowEventController(e);
+    }, this));
+    lastDistance = 0;
+    return this.view.addEventListener('scroll', __bind(function(e) {
+      var distance, height, offset, theEnd, total;
+      offset = e.contentOffset.y;
+      height = e.size.height;
+      total = offset + height;
+      theEnd = e.contentSize.height;
+      distance = theEnd - total;
+      if (distance < lastDistance) {
+        return info_obj(e);
+      }
+    }, this));
+  };
+  Timeline.prototype.loadTimeline = function() {
+    var params;
+    info(info(Ti.App.timeline_type));
+    params = {
+      category: Ti.App.timeline_type,
+      user_id: Ti.App.user_id
+    };
+    globals.API.callAPI('GET', 'getTimeline', params, __bind(function(json) {
+      var data, i, isLike, reports, _ref;
+      Ti.App.timeline_type = '';
+      info('get api response');
+      reports = json.reports;
+      data = [];
+      isLike = false;
+      if (reports[0]) {
+        for (i = 0, _ref = reports.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+          info('create row:' + i);
+          data.push(this.createListViewRow(reports[i], isLike, false));
+        }
+      }
+      this.tableview.data = data;
+    }, this));
+  };
+  Timeline.prototype.execLike = function(report_id, user_id, unDo) {
+    var api, params;
+    api = unDo ? "cancelLike" : "execLike";
+    params = {
+      user_id: user_id,
+      report_id: report_id
+    };
+    API.callAPI('GET', api, params, function(json) {
+      var row;
+      if (json.success) {
+        info('message ' + json.message);
+        switch (json.message) {
+          case TEXT.ALREADY_LIKED:
+            info(TEXT.ALREADY_LIKED);
+            row = this.createListViewRow(this.SelectedRow, 0, this.Stat.ISLIKE);
+            this.tableview.updateRow(this.SelectedIndex, row);
+            break;
+          case TEXT.NOT_LIKE_YET:
+            info(TEXT.NOT_LIKE_YET);
+            row = this.createListViewRow(this.SelectedRow, 0, this.Stat.NOLIKE);
+            this.tableview.updateRow(this.SelectedIndex, row);
+            break;
+          default:
+            info('OK! no error');
+        }
+      } else {
+        alert('server error');
+      }
+    });
+  };
+  Timeline.prototype.createRowContent = function(report) {
+    var color, comment, commentBox, dayCnt, dot, icon, isComment, message, name, ribon, row, star, starID, star_shadow, time;
+    info('createRowContent');
+    row = Titanium.UI.createTableViewRow(styles.row);
+    row.report = report;
+    icon = Titanium.UI.createImageView({
+      left: 5,
+      top: 5,
+      width: 33,
+      height: 33,
+      borderRadius: 3
+    });
+    icon.image = report.picture_url ? report.picture_url : 'images/' + Const.DEFALT.USER;
+    row.add(icon);
+    name = Titanium.UI.createLabel({
+      left: 85,
+      top: -1,
+      width: 200,
+      height: 44,
+      color: Const.FONTCOLOR,
+      font: {
+        fontFamily: 'Helvetica',
+        fontSize: 12
+      }
+    });
+    name.text = report.nickname;
+    row.add(name);
+    star_shadow = Titanium.UI.createView({
+      left: 34,
+      top: 0,
+      width: 44,
+      height: 44,
+      backgroundImage: 'images/star/shadow.png'
+    });
+    star = Titanium.UI.createView({
+      left: 9,
+      top: 9,
+      width: 27,
+      height: 27
+    });
+    starID = Number(report.day_first) ? report.color_id : 0;
+    star.backgroundImage = "images/star/" + starID + ".png";
+    if (!starID) {
+      dot = Titanium.UI.createView({
+        left: 52,
+        top: 15,
+        width: 11,
+        height: 11,
+        backgroundImage: "images/UI/dot.png"
+      });
+      row.add(dot);
+    } else {
+      star_shadow.add(star);
+      row.add(star_shadow);
+    }
+    time = Titanium.UI.createLabel({
+      left: 77,
+      bottom: 5,
+      width: 222,
+      height: 17,
+      text: '~ min ago',
+      textAlign: 'left',
+      color: "#999",
+      font: {
+        fontFamily: 'Helvetica',
+        fontSize: 12
+      }
+    });
+    row.add(time);
+    message = Titanium.UI.createLabel({
+      color: Const.FONTCOLOR,
+      left: 86,
+      top: 30,
+      width: 200,
+      height: 44,
+      text: 'learned 15 min & get 15pt',
+      font: {
+        fontFamily: 'Helvetica',
+        fontSize: 12
+      }
+    });
+    row.add(message);
+    isComment = 1;
+    if (isComment) {
+      commentBox = Titanium.UI.createView({
+        left: 63,
+        top: 70,
+        width: 200,
+        height: 33,
+        backgroundImage: 'images/UI/commentBox.png'
+      });
+      comment = Titanium.UI.createLabel({
+        left: 12,
+        top: 6,
+        width: 192,
+        height: 21,
+        color: '#4c4c4c',
+        font: {
+          fontFamily: 'Helvetica',
+          fontSize: 12
+        }
+      });
+      comment.text = report.comment;
+      commentBox.add(comment);
+      row.add(commentBox);
+    }
+    if (!isComment) {
+      row.height -= 33;
+    }
+    color = Number(report.day_first) ? report.color_id : 0;
+    ribon = Titanium.UI.createView({
+      right: -10,
+      top: 5,
+      width: 69,
+      height: 38,
+      backgroundImage: 'images/UI/ribon' + color + '.png'
+    });
+    dayCnt = Titanium.UI.createLabel({
+      left: 20,
+      top: 6,
+      width: 100,
+      height: 21,
+      text: '4days',
+      color: '#4c4c4c',
+      font: {
+        fontFamily: 'Helvetica',
+        fontSize: 12
+      }
+    });
+    ribon.add(dayCnt);
+    row.add(ribon);
+    return row;
+  };
+  Timeline.prototype.createListViewRow = function(report, pushLikeButton, responseFlg) {
+    var isLike, likeButton, likeCnt, likeStar, row;
+    info('createListViewRow');
+    likeButton = new LikeButton();
+    isLike = likeButton.calcLikeFlag(pushLikeButton, report.isLike, responseFlg);
+    report.isLike = isLike;
+    likeButton.switchView(isLike);
+    if (pushLikeButton) {
+      if (isLike) {
+        report.likeCount = Number(report.likeCount) + 1;
+      } else {
+        report.likeCount = Number(report.likeCount) - 1;
+      }
+    }
+    row = this.createRowContent(report);
+    likeStar = likeButton.likeStar;
+    likeCnt = likeButton.likeCnt;
+    likeCnt.setText(Number(report.likeCount));
+    row.add(likeButton.button);
+    return row;
+  };
+  Timeline.prototype.rowEventController = function(e) {
+    var pushLikeButton, row, unDo;
+    switch (e.source.clickName) {
+      case 'likebutton':
+        this.SelectedIndex = e.index;
+        this.SelectedRow = e.rowData.report;
+        pushLikeButton = true;
+        row = this.createListViewRow(e.rowData.report, pushLikeButton);
+        this.tableview.updateRow(e.index, row);
+        unDo = e.rowData.report.isLike ? true : false;
+        return this.execLike(e.rowData.report.report_id, Ti.App.user_id, unDo);
+      case 'icon':
+        return info('icon ckicked');
+      default:
+        info('window open');
+        return globals.tabs.currentTab.open(Util.createUserHomeView(e.rowData.report.user_id, {
+          animated: true
+        }));
+    }
+  };
+  return Timeline;
+})();
+exports.Timeline = Timeline;

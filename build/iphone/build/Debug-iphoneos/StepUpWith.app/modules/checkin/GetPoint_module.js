@@ -1,0 +1,1 @@
+StepUpWith/Resources/modules/checkin/GetPoint_module.js

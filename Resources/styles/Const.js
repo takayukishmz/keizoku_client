@@ -1,5 +1,4 @@
 var Const, STYLE;
-Titanium.include('../TextConst.js');
 Const = {
   BACKGROUND: "base_pink.png",
   ROWBACKGROUND: "timeline_bg.png",

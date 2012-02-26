@@ -1,12 +1,14 @@
-Titanium.include 'Const.js'
-S = Const
-header_height = S.MARGIN*2+22
+header_height = Const.MARGIN*2+22
 row_height = 133
-styles =
+
+info 'timeline_style'
+
+
+exports.styles =
 	header_height:header_height
 	bonus_box:
-		top:S.MARGIN
-		left:S.MARGIN
+		top:Const.MARGIN
+		left:Const.MARGIN
 		width:300
 		height:22
 		backgroundColor:'#333'
@@ -18,21 +20,21 @@ styles =
 		left:4
 		width:200
 		height:16
-		backgroundColor:S.barColor
+		backgroundColor:Const.barColor
 	######## list view ######################################################
 	#### headerVewi ####
 	header:
-		# backgroundImage:'../images/UI/' + S.ROWBACKGROUND
+		# backgroundImage:'images/UI/' + Const.ROWBACKGROUND
 		# backgroundColor:'#ddd'
-		height:S.ICON*3/4
+		height:Const.ICON*3/4
 		opacity:0.8
 		
 	counter:
 		top:0
-		left:S.MARGIN
-		backgroundImage:'../images/star/red.png'
-		width:S.ICON*3/4
-		height:S.ICON*3/4
+		left:Const.MARGIN
+		backgroundImage:'images/star/red.png'
+		width:Const.ICON*3/4
+		height:Const.ICON*3/4
 		clickName:'counter'
 		# backgroundGradient:
 		# 	type:'linear',
@@ -40,8 +42,8 @@ styles =
 	counter_text:
 		text:'1'
 		fontsize:25
-		width:S.ICON*3/4
-		height:S.ICON*3/4
+		width:Const.ICON*3/4
+		height:Const.ICON*3/4
 		textAlign:'center'
 		clickName:'counter'
 		color:'#222'
@@ -50,17 +52,17 @@ styles =
 	title:
 		backgroundcolor:'#fff'
 		top:0
-		left:S.MARGIN+S.ICON*3/4
-		height:S.ICON*3/4
+		left:Const.MARGIN+Const.ICON*3/4
+		height:Const.ICON*3/4
 		width:'auto'
 		clickName:'user'
 		text:''
 	title_text:
-		color:S.FONTCOLOR
-		font:{fontSize:15,fontWeight:'bold',fontFamily:'Arial'}
+		color:Const.FONTCOLOR
+		font:{fontConstize:15,fontWeight:'bold',fontFamily:'Arial'}
 		top:0
 		left:0
-		height:S.ICON*3/4
+		height:Const.ICON*3/4
 		width:'auto'
 		clickName:'title_text'
 		text:''
@@ -68,12 +70,12 @@ styles =
 	row:
 		height:row_height
 		# hasChild:true
-		backgroundColor:S.rowColor
-		backgroundImage:'../images/UI/'+Const.ROWBACKGROUND
+		backgroundColor:Const.rowColor
+		backgroundImage:'images/UI/'+Const.ROWBACKGROUND
 		selectionStyle:Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	view:
 		height:header_height
-		width:S.WIDTH
+		width:Const.WIDTH
 		top:0
 		clickName:'view'
 		borderRadius:0
@@ -82,51 +84,51 @@ styles =
 			colors:[{color:'#d4d4d4', position:0.0}, {color:'#c4c4c4', position:0.50}, {color:'#e4e4e4', position:1.0}]			
 	
 	icon:
-		# backgroundImage:'../images/user.png'
-		top:S.MARGIN
-		left:S.MARGIN
-		width:S.ICON*3/4
-		height:S.ICON*3/4
+		# backgroundImage:'images/user.png'
+		top:Const.MARGIN
+		left:Const.MARGIN
+		width:Const.ICON*3/4
+		height:Const.ICON*3/4
 		clickName:'icon'
 	
 	support:
 		backgroundcolor:'#fff'
-		bottom:S.MARGIN
-		left:S.MARGIN*2+S.ICON
-		height:S.TITTLE_H
+		bottom:Const.MARGIN
+		left:Const.MARGIN*2+Const.ICON
+		height:Const.TITTLE_H
 		width:200
 		clickName:'user'
 		text:''
 	support_text:
 		color:'gray'
-		font:{fontSize:11,fontWeight:'bold',fontFamily:'Arial'}
+		font:{fontConstize:11,fontWeight:'bold',fontFamily:'Arial'}
 		top:1
 		left:1
-		height:S.TITTLE_H-2
+		height:Const.TITTLE_H-2
 		width:190
 		clickName:'support_text'
 		text:'supporter:5'
 
 	user:
-		color:S.FONTCOLOR
-		font:{fontSize:12,fontWeight:'bold',fontFamily:'Arial'}
-		top:S.MARGIN
-		left:S.MARGIN*3/2+S.ICON
+		color:Const.FONTCOLOR
+		font:{fontConstize:12,fontWeight:'bold',fontFamily:'Arial'}
+		top:Const.MARGIN
+		left:Const.MARGIN*3/2+Const.ICON
 		height:22
 		width:100 # variable by length of name 
 		clickName:'user'
 		text:'name'
 	comment:
 		backgroundcolor:'#ddd'
-		top:S.MARGIN + S.ICON*3/4
-		left:S.MARGIN*3/2+S.ICON
+		top:Const.MARGIN + Const.ICON*3/4
+		left:Const.MARGIN*3/2+Const.ICON
 		height:30
 		width:200
 		clickName:'user'
 		text:''
 	comment_text:
-		color:S.FONTCOLOR
-		font:{fontSize:15,fontWeight:'bold',fontFamily:'Arial'}
+		color:Const.FONTCOLOR
+		font:{fontConstize:15,fontWeight:'bold',fontFamily:'Arial'}
 		top:1
 		left:1
 		height:20
@@ -136,15 +138,15 @@ styles =
 	support_button:
 		backgroundColor:'blue' 
 		borderRadius:4 
-		bottom:S.MARGIN
-		right:S.MARGIN 
+		bottom:Const.MARGIN
+		right:Const.MARGIN 
 		width:44 
 		height:22 
 		clickName:'button'
 	support_button_text:
 		color:'#fff' 
 		font:
-			fontSize:9
+			fontConstize:9
 			fontWeight:'normal'  
 			fontFamily:'Arial'  
 		left:1

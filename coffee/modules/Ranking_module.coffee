@@ -14,27 +14,34 @@ graphSpace = {
 	
 }
 
-tt.api = {}
-do ->
-	tt.maxRatio = 0
-	tt.maxIndex = 0		
-	tt.box_h = graphSpace.height / passdNumOfDays
-	tt.margin = (tt.box_h - 28) / 2
+class WeeklyTotalGraph
+	@maxRatio : 0
+	@maxIndex : 0		
+	@box_h : graphSpace.height / passdNumOfDays
+	@margin : (@box_h - 28) / 2
 	
-	tt.api.getWeeklyTotalData = () ->
+	constructor : () ->
+		@win = Ti.UI.createWindow
+			title:'graph'
+			
+		Util.setRightButton @win, @updateWeeklyTotalData
+		
+		return @win
+		
+	@getWeeklyTotalData : () ->
 		info 'tt.UI.update'
-		API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
+		globals.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
 			total_data = json.weekly_total_data
-			tt.UI.createGraph(total_data)
+			@createGraph(total_data)
 			return
 	
-	tt.api.updateWeeklyTotalData = () ->
-		API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
+	@updateWeeklyTotalData : () ->
+		globals.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
 			total_data = json.weekly_total_data;
-			tt.UI.updateGraph(total_data)
+			@updateGraph(total_data)
 			return
 			
-	tt.UI.createGraph = (data) ->
+	@createGraph : (data) ->
 		ratios = []
 		
 		data = {
@@ -49,12 +56,12 @@ do ->
 		      "count_5" : "5"
 		}	
 		#check day which num is the highest of all
-		ratios = tt.module.calcRatio(data)		
+		ratios = @calcRatio(data)		
 		
 		for i in [1..passdNumOfDays]
 
-			height = graphSpace.top + tt.margin * 2 * (i-1) + tt.margin * i + 28 *(i-1) 
-			width = graphSpace.width*(ratios[i - 1] / tt.maxRatio)
+			height = graphSpace.top + @margin * 2 * (i-1) + @margin * i + 28 *(i-1) 
+			width = graphSpace.width*(ratios[i - 1] / @maxRatio)
 
 			bar = Titanium.UI.createView styles.bar
 			bar.top = height
@@ -69,19 +76,17 @@ do ->
 			per_num.top = height
 			per_num.text = ratios[i-1] + "%"
 
-			win.add day_num
-			win.add bar 
-			win.add per_num		
+			@win.add day_num
+			@win.add bar 
+			@win.add per_num		
 			
 			bars.push bar
 			percents.push per_num
 			
-			tt.module.move bar, 0, width
+			@move bar, 0, width
 		return
-	
-
 			
-	tt.UI.updateGraph = (data) ->
+	@updateGraph : (data) ->
 		ratios = []
 		
 		data = {
@@ -97,25 +102,24 @@ do ->
 		}
 		#check day which num is the highest of all
 		
-		ratios = tt.module.calcRatio(data)
+		ratios = @calcRatio(data)
 
 		for i in [0..bars.length-1]
 			percents[i].text = ratios[i] + "%"
-			height = graphSpace.top + tt.margin * 2 * (i) + tt.margin * i + 28 *(i) 
-			width = graphSpace.width*(ratios[i] / tt.maxRatio)
-			tt.module.move bars[i], 0, width		
+			height = graphSpace.top + @margin * 2 * (i) + @margin * i + 28 *(i) 
+			width = graphSpace.width*(ratios[i] / @maxRatio)
+			@move bars[i], 0, width		
 		return
 	
-
-	tt.module.calcRatio = (data) ->
+		
+	@calcRatio : (data) ->
 		ratios = []
 		for i in [1..passdNumOfDays]
 			ratio = data["count_"+i] / data.num_all * 100
-			if ratio > tt.maxRatio
-				tt.maxRatio = ratio
-				tt.maxIndex = i
+			if ratio > @maxRatio
+				@maxRatio = ratio
+				@maxIndex = i
 			ratios.push(ratio)
 		return ratios
 		
-	return
 	

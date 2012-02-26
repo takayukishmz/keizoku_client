@@ -1,0 +1,1 @@
+StepUpWith/Resources/styles/Detail_style.js

@@ -1,4 +1,4 @@
-Titanium.include '../TextConst.js'
+# Titanium.include 'TextConst.js'
 
 
 Const = 

@@ -1,4 +1,4 @@
-var bars, color, graphSpace, passdNumOfDays, percents, week_id;
+var WeeklyTotalGraph, bars, color, graphSpace, passdNumOfDays, percents, week_id;
 Titanium.include('Common_module.js');
 week_id = 1;
 passdNumOfDays = 7;
@@ -11,32 +11,38 @@ graphSpace = {
   width: 200,
   height: 220
 };
-tt.api = {};
-(function() {
-  tt.maxRatio = 0;
-  tt.maxIndex = 0;
-  tt.box_h = graphSpace.height / passdNumOfDays;
-  tt.margin = (tt.box_h - 28) / 2;
-  tt.api.getWeeklyTotalData = function() {
+WeeklyTotalGraph = (function() {
+  WeeklyTotalGraph.maxRatio = 0;
+  WeeklyTotalGraph.maxIndex = 0;
+  WeeklyTotalGraph.box_h = graphSpace.height / passdNumOfDays;
+  WeeklyTotalGraph.margin = (WeeklyTotalGraph.box_h - 28) / 2;
+  function WeeklyTotalGraph() {
+    this.win = Ti.UI.createWindow({
+      title: 'graph'
+    });
+    Util.setRightButton(this.win, this.updateWeeklyTotalData);
+    return this.win;
+  }
+  WeeklyTotalGraph.getWeeklyTotalData = function() {
     info('tt.UI.update');
-    return API.callAPI('GET', 'getWeeklyTotalData', {
+    return globals.API.callAPI('GET', 'getWeeklyTotalData', {
       week_id: week_id
     }, function(json) {
       var total_data;
       total_data = json.weekly_total_data;
-      tt.UI.createGraph(total_data);
+      this.createGraph(total_data);
     });
   };
-  tt.api.updateWeeklyTotalData = function() {
-    return API.callAPI('GET', 'getWeeklyTotalData', {
+  WeeklyTotalGraph.updateWeeklyTotalData = function() {
+    return globals.API.callAPI('GET', 'getWeeklyTotalData', {
       week_id: week_id
     }, function(json) {
       var total_data;
       total_data = json.weekly_total_data;
-      tt.UI.updateGraph(total_data);
+      this.updateGraph(total_data);
     });
   };
-  tt.UI.createGraph = function(data) {
+  WeeklyTotalGraph.createGraph = function(data) {
     var bar, day_num, height, i, per_num, ratios, width;
     ratios = [];
     data = {
@@ -50,10 +56,10 @@ tt.api = {};
       "count_4": "15",
       "count_5": "5"
     };
-    ratios = tt.module.calcRatio(data);
+    ratios = this.calcRatio(data);
     for (i = 1; 1 <= passdNumOfDays ? i <= passdNumOfDays : i >= passdNumOfDays; 1 <= passdNumOfDays ? i++ : i--) {
-      height = graphSpace.top + tt.margin * 2 * (i - 1) + tt.margin * i + 28 * (i - 1);
-      width = graphSpace.width * (ratios[i - 1] / tt.maxRatio);
+      height = graphSpace.top + this.margin * 2 * (i - 1) + this.margin * i + 28 * (i - 1);
+      width = graphSpace.width * (ratios[i - 1] / this.maxRatio);
       bar = Titanium.UI.createView(styles.bar);
       bar.top = height;
       bar.backgroundColor = color[i - 1];
@@ -63,15 +69,15 @@ tt.api = {};
       per_num = Titanium.UI.createLabel(styles.per_num);
       per_num.top = height;
       per_num.text = ratios[i - 1] + "%";
-      win.add(day_num);
-      win.add(bar);
-      win.add(per_num);
+      this.win.add(day_num);
+      this.win.add(bar);
+      this.win.add(per_num);
       bars.push(bar);
       percents.push(per_num);
-      tt.module.move(bar, 0, width);
+      this.move(bar, 0, width);
     }
   };
-  tt.UI.updateGraph = function(data) {
+  WeeklyTotalGraph.updateGraph = function(data) {
     var height, i, ratios, width, _ref;
     ratios = [];
     data = {
@@ -85,25 +91,26 @@ tt.api = {};
       "count_4": "15",
       "count_5": "5"
     };
-    ratios = tt.module.calcRatio(data);
+    ratios = this.calcRatio(data);
     for (i = 0, _ref = bars.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
       percents[i].text = ratios[i] + "%";
-      height = graphSpace.top + tt.margin * 2 * i + tt.margin * i + 28 * i;
-      width = graphSpace.width * (ratios[i] / tt.maxRatio);
-      tt.module.move(bars[i], 0, width);
+      height = graphSpace.top + this.margin * 2 * i + this.margin * i + 28 * i;
+      width = graphSpace.width * (ratios[i] / this.maxRatio);
+      this.move(bars[i], 0, width);
     }
   };
-  tt.module.calcRatio = function(data) {
+  WeeklyTotalGraph.calcRatio = function(data) {
     var i, ratio, ratios;
     ratios = [];
     for (i = 1; 1 <= passdNumOfDays ? i <= passdNumOfDays : i >= passdNumOfDays; 1 <= passdNumOfDays ? i++ : i--) {
       ratio = data["count_" + i] / data.num_all * 100;
-      if (ratio > tt.maxRatio) {
-        tt.maxRatio = ratio;
-        tt.maxIndex = i;
+      if (ratio > this.maxRatio) {
+        this.maxRatio = ratio;
+        this.maxIndex = i;
       }
       ratios.push(ratio);
     }
     return ratios;
   };
+  return WeeklyTotalGraph;
 })();

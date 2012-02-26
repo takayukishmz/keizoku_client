@@ -1,4 +1,4 @@
-var ImageTab, Tab, TabGroup, Window, log, tab1, tab2, tab3, tabGroup;
+var ImageTab, Tab, TabGroup, log, tab1, tab2, tab3, tabGroup;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,6 +7,9 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+exports.hoge = function() {
+  alert('hoge');
+};
 log = function(obj) {
   return Titanium.API.log(obj);
 };
@@ -17,16 +20,6 @@ TabGroup = (function() {
     return this.tabGroup;
   }
   return TabGroup;
-})();
-Window = (function() {
-  function Window(title) {
-    this.title = title;
-    return Titanium.UI.createWindow({
-      title: this.title,
-      backgroundColor: '#fff'
-    });
-  }
-  return Window;
 })();
 Tab = (function() {
   function Tab(title, icon) {

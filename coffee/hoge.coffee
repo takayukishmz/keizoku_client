@@ -1,11 +1,7 @@
-# exports.hoge = {
-# 	
-# 	init:() ->
-# 	  alert 'hoge'
-# 	  return
-# 
-# 	
-# }
+exports.hoge = () ->
+	alert 'hoge'
+	return
+
 
 # Titaniumオブジェクトを返すクラスを作るときは、
 # メソッド名がTitaniumが定義しているものとかぶらないように注意
@@ -21,11 +17,6 @@ class TabGroup
 		@tabGroup = Titanium.UI.createTabGroup()
 		return @tabGroup
 
-class Window
-	constructor: (@title) ->
-		return Titanium.UI.createWindow
-			title:@title
-			backgroundColor:'#fff'
 
 class Tab
 	constructor: (@title, @icon) ->
@@ -84,7 +75,7 @@ class ImageTab extends Tab
 			images: imgs
 			backgroundColor: '#000'
 
-		# 画像選択時のイベント
+		# 画像選択時のイベント 
 		#Function binding
 		@view.addEventListener 'click', (e) => # => と書くと this を渡せる
 			log "image clicked: #{e.index}, selected is #{@view.selected}"

@@ -1,0 +1,1 @@
+StepUpWith/Resources/views/GetPoint_view.js

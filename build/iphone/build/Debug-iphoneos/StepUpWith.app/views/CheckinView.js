@@ -1,0 +1,1 @@
+StepUpWith/Resources/views/CheckinView.js
