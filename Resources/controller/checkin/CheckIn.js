@@ -1,7 +1,6 @@
-var chenge, comment, fb, header_name, inputData, rootWindow, share_facebook, share_twitter, switch_fb, switch_tw, tableView, term, term_content, text, tw, win;
-rootWindow = Titanium.UI.currentWindow;
+var chenge, comment, fb, header_name, inputData, share_facebook, share_twitter, switch_fb, switch_tw, tableView, term, term_content, text, tw, win;
+this.rootWindow = Titanium.UI.currentWindow;
 Ti.App.rootWindow = rootWindow;
-Titanium.include('../../Util.js');
 Titanium.include('../../lib/ServerAPI.js');
 Titanium.include('../../styles/checkin/CheckIn_style.js');
 Titanium.include('../../modules/checkin/CheckIn_module.js');

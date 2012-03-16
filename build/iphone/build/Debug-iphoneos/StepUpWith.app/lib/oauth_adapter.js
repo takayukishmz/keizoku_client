@@ -1,1 +1,0 @@
-StepUpWith/Resources/lib/oauth_adapter.js

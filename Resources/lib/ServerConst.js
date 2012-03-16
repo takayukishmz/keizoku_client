@@ -7,7 +7,7 @@ Request = {
   },
   getRequestURL: function(api, params) {
     var url;
-    url = this.HOST.sakuraVPS + api + "?" + this.parseParams(params);
+    url = this.HOST.localhost + api + "?" + this.parseParams(params);
     Ti.API.info('HOST:' + url);
     return url;
   },

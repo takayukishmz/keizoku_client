@@ -1,4 +1,5 @@
-info('common');
+var UserHome;
+UserHome = require('ui/window/UserHome').UserHome;
 exports.Util = {
   alert: function(args) {
     return alert(args);
@@ -41,7 +42,7 @@ exports.Util = {
       return rightButton;
     }
   },
-  setLeftButton: function(callback, style) {
+  setLeftButton: function(win, callback, style) {
     var activity, leftButton;
     if (!callback) {
       alert('You have to set callback func ');
@@ -129,12 +130,7 @@ exports.Util = {
   },
   createUserHomeView: function(user_id) {
     var newWindow;
-    newWindow = Ti.UI.createWindow({
-      backgroundColor: '#fff',
-      url: '../controller/UserHome.js',
-      barColor: Const.BARCOLOR,
-      data: user_id
-    });
+    newWindow = new UserHome(user_id);
     return newWindow;
   },
   move: function(targetBar, startWidth, endWidth) {

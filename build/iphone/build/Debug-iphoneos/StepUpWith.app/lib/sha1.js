@@ -1,1 +1,0 @@
-StepUpWith/Resources/lib/sha1.js

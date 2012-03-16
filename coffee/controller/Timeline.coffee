@@ -1,13 +1,17 @@
+
+
 Ti.API.info 'timeline.js'
 ### const ####################################################################
 Ti.App.timeline_type = '';
 Ti.App.update_tl = true
 ### UI #######################################################################
-Util 		= require('modules/Util').Util
+
 LikeButton 	= require('ui/LikeButton').LikeButton
 styles 		= require('styles/Timeline_style').styles
+BaseWindow 		= require('ui/common/BaseWindow').BaseWindow
 
-class Timeline
+
+class Timeline extends BaseWindow
 	Stat : 
 		ISLIKE:'isLike'
 		NOLIKE:'noLike'	
@@ -15,28 +19,26 @@ class Timeline
 	constructor : ()->
 			@SelectedIndex = 0
 			@SelectedRow = ''
+			@rowData = []
 			
-			@win = Titanium.UI.createWindow
-				backgroundColor:'#fff'
-				title:'timeline'
-				barColor: Const.BARCOLOR
-			
-			@view = Ti.UI.createView()
-			@tableview = Titanium.UI.createTableView() 
-			
-			@setButton()
-			@setEvent()
-			
-			@view.add @tableview
-			@win.add @view
-			
-			@loadTimeline()
+			super {title:'timeline'}
+						
 			
 			return @win
 	
+	setView : () ->
+		@view = Ti.UI.createView()
+		@view.backgroundImage = Const.BACKGROUND
+		@tableview = Titanium.UI.createTableView
+			backgroundColor:'transparent',
+			# separatorColor:'#390A0E'
+			
+		@view.add @tableview
 
+		@win.add @view
+			
 	setButton :() ->
-		Util.setRightButton @win, () ->
+		$.Util.setRightButton @win, () ->
 			# when dialog already opened
 			if Ti.App.selectDialog_flg
 				return
@@ -55,7 +57,7 @@ class Timeline
 				# transform:t
 				url:'../controller/SelectTimeline.js'
 		
-			Util.create2DMatrixDialog w
+			$.Util.create2DMatrixDialog w
 			return
 		,	{
 			title:'Filter'
@@ -66,13 +68,14 @@ class Timeline
 			# image:'images/UI/base_pink.png'
 		}
 	
-
+	
 	setEvent : () =>
 		### call API #########################################################
 		@win.addEventListener 'focus',() =>
 			info 'focus - Timeline'
 			if Ti.App.update_tl
 				Ti.App.update_tl = false
+				alert 'focus'
 				@loadTimeline()
 		### eventListener ####################################################
 		@tableview.addEventListener 'click',(e) =>
@@ -88,46 +91,81 @@ class Timeline
 			total = offset + height
 			theEnd = e.contentSize.height
 			distance = theEnd - total
+			# 
+			# info offset
+			# info height
+			# info total
+			# info_obj e
 			
 			if (distance < lastDistance)
 				info_obj e
 	
-
-	loadTimeline : ()->
-		info info Ti.App.timeline_type
-		# @win.rightBotton.title = Ti.App.timeline_type
-		# if !Ti.App.timeline_type
-		# 	rightBotton.title = 'new'
+	
+	loadTimeline : ()=>
 		params = 
-			category:Ti.App.timeline_type
+			# category:Ti.App.timeline_type
 			user_id:Ti.App.user_id
-		globals.API.callAPI 'GET','getTimeline',params, (json) =>
+			top_report_id:100000000000
+			top_date:100000000000
+			bottom_report_id:1
+			bottom_date:1
+			
+		$.API.callAPI 'GET','getTimeline',params, (json) =>
 			Ti.App.timeline_type = ''
 			
 			info 'get api response'
-			reports = json.reports
+			reports = json.lists
 			data = []
 			isLike = false
 			if reports[0]
 				for i in [0..reports.length-1]
 					info 'create row:'+i
-					
+					@rowData.push reports[i]
+					info 'rowData ' + @rowData.length
 					data.push @createListViewRow reports[i], isLike, false
 			
 			@tableview.data = data
 			
 			return
+		
+		return
+	
+	
+	insertAfter : () ->
+		info '#------------------ INSERT AFTER ------------------#'
+		params = 
+			# category:Ti.App.timeline_type
+			user_id:Ti.App.user_id
+			top_report_id:100000000000
+			top_date:100000000000
+			bottom_report_id:1
+			bottom_date:1
+			
+		$.API.callAPI 'GET','getTimeline',params, (json) =>
+			Ti.App.timeline_type = ''
+			info 'get api response'
+			reports = json.lists
+			isLike = false
+			if reports[0]
+				for i in [0..reports.length-1]
+					index = @rowData.length
+					row = @createListViewRow reports[i], isLike, false
+					@tableview.insertRowAfter index-1,row,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN}
+			return
+			
 		return
 		
-	execLike : (report_id, user_id, unDo) ->
 		
+		
+	execLike : (report_id, user_id, unDo) ->
+		info '--------------------execLike--------------------'
 		api = if unDo then "cancelLike" else "execLike"
 		
 		params = 
 			user_id:user_id,
 			report_id:report_id,
 		
-		API.callAPI 'GET',api,params, (json) ->			
+		$.API.callAPI 'GET',api,params, (json) ->			
 			if json.success
 				info 'message ' + json.message
 				switch json.message
@@ -146,6 +184,7 @@ class Timeline
 			
 			return
 		return
+	
 	
 	
 	createRowContent : (report)->
@@ -242,13 +281,13 @@ class Timeline
 				top: 70,		
 				width: 200,
 				height: 33,
-				backgroundImage:'images/UI/commentBox.png'
+				backgroundImage:'images/UI/commentbox.png'
 			
 			
 			comment = Titanium.UI.createLabel
-				left: 12,
-				top: 6,
-				width: 192,
+				left: 15,
+				top: 4,
+				width: 190,
 				height: 21,
 				color: '#4c4c4c'
 				font: {fontFamily: 'Helvetica', fontSize: 12},
@@ -262,23 +301,23 @@ class Timeline
 			row.height -= 33
 		
 		
-		color = if Number report.day_first then report.color_id else 0
+		color = if Number report.day_first then report.color_id else 3
 		
 		ribon = Titanium.UI.createView
 			right: -10,
 			top: 5,
-			width: 69,
-			height: 38,
-			backgroundImage:'images/UI/ribon'+color+'.png'
+			width: 64,
+			height: 32,
+			backgroundImage:'images/UI/ribon/'+color+'.png'
 		
 		
 		dayCnt = Titanium.UI.createLabel
-			left: 20,
-			top: 6,
+			left: 12,
+			top: 4,
 			width: 100,
-			height: 21,
-			text: '4days',
-			color: '#4c4c4c'
+			height: 24,
+			text: '4 days',
+			color: '#fff'
 			font: {fontFamily: 'Helvetica', fontSize: 12},
 		
 		ribon.add dayCnt 
@@ -293,25 +332,29 @@ class Timeline
 		likeButton = new LikeButton()
 		isLike = likeButton.calcLikeFlag pushLikeButton, report.isLike, responseFlg		
 		report.isLike = isLike
-		likeButton.switchView isLike
+		
+		#-------------------------------------#
 		#if push likeButton, 
-		#like count number need to be changed
+		#  like count number need to be changed
+		#-------------------------------------#
 		if pushLikeButton
 			if isLike
 				report.likeCount = Number(report.likeCount)+1
 			else
 				report.likeCount = Number(report.likeCount)-1
+		
 		#create row
+		likeButton.likeCnt.setText(Number(report.likeCount))
+		#switch view
+		likeButton.switchView isLike		
+		
 		row = @createRowContent(report)
-		likeStar = likeButton.likeStar
-		likeCnt = likeButton.likeCnt
-		likeCnt.setText(Number(report.likeCount))
 		
 		row.add likeButton.button
 		return	row
 	
 	
-	rowEventController : (e) =>		
+	rowEventController : (e) =>	
 		switch e.source.clickName
 			when 'likebutton'
 					@SelectedIndex = e.index
@@ -327,6 +370,9 @@ class Timeline
 			
 			else
 				info 'window open'
-				globals.tabs.currentTab.open Util.createUserHomeView e.rowData.report.user_id ,{animated:true}
-				
+				$.tabs.currentTab.open $.Util.createUserHomeView e.rowData.report.user_id ,{animated:true}
+	
+
+	
+	
 exports.Timeline = Timeline

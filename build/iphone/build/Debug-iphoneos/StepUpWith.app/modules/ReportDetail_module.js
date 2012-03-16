@@ -1,1 +1,0 @@
-StepUpWith/Resources/modules/ReportDetail_module.js

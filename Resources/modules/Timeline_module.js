@@ -361,7 +361,7 @@ Titanium.include('Common_module.js');
         break;
       default:
         info('window open');
-        Titanium.UI.currentTab.open(tt.UI.createUserHomeView(e.rowData.report.user_id, {
+        $.currentTab.open(tt.UI.createUserHomeView(e.rowData.report.user_id, {
           animated: true
         }));
     }

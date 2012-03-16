@@ -1,20 +1,18 @@
 
-Titanium.include('Common_module.js');
-
 Ti.App.main_pointbar_flg = true
 	
 
 do ->
-	tt.UI.updateView = () ->
+	updateView : () ->
 		API.callAPI 'GET','getUserData',{user_id:Ti.App.user_id}, (json) ->
 			
 			dayOnRibbon.text =  json.profile.day_total + ' days '
 
-			tt.module.updateUserData json
+			$.Util.updateUserData json
 			return
 	
 		return
-	tt.UI.createCheckInView = () ->
+	createCheckInView : () ->
 		Ti.API.info "createCheckInWindow"
 		newWindow = Ti.UI.createWindow 
 			# title:'~ CheckIn' 

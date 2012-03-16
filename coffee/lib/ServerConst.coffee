@@ -10,7 +10,7 @@ Request =
 	
 	
 	getRequestURL:(api,params) ->
-		url = @HOST.sakuraVPS+ api + "?" + @parseParams params
+		url = @HOST.localhost+ api + "?" + @parseParams params
 		Ti.API.info 'HOST:'+ url
 		return url
 	

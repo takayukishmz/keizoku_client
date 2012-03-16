@@ -1,1 +1,0 @@
-StepUpWith/Resources/styles/checkin/CheckIn_style.js

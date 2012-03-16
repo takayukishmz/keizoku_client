@@ -1,1 +1,0 @@
-StepUpWith/Resources/styles/Ranking_style.js

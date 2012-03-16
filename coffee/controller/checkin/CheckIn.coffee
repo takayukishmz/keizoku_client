@@ -1,7 +1,7 @@
-rootWindow = Titanium.UI.currentWindow
+@rootWindow = Titanium.UI.currentWindow
 Ti.App.rootWindow = rootWindow
 
-Titanium.include '../../Util.js'
+
 Titanium.include '../../lib/ServerAPI.js'
 Titanium.include '../../styles/checkin/CheckIn_style.js'
 Titanium.include '../../modules/checkin/CheckIn_module.js'

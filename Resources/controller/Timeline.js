@@ -1,14 +1,22 @@
-var LikeButton, Timeline, Util, styles;
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var BaseWindow, LikeButton, Timeline, styles;
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
 Ti.API.info('timeline.js');
 /* const */
 Ti.App.timeline_type = '';
 Ti.App.update_tl = true;
 /* UI */
-Util = require('modules/Util').Util;
 LikeButton = require('ui/LikeButton').LikeButton;
 styles = require('styles/Timeline_style').styles;
+BaseWindow = require('ui/common/BaseWindow').BaseWindow;
 Timeline = (function() {
+  __extends(Timeline, BaseWindow);
   Timeline.prototype.Stat = {
     ISLIKE: 'isLike',
     NOLIKE: 'noLike'
@@ -16,24 +24,26 @@ Timeline = (function() {
   function Timeline() {
     this.rowEventController = __bind(this.rowEventController, this);
     this.createListViewRow = __bind(this.createListViewRow, this);
+    this.loadTimeline = __bind(this.loadTimeline, this);
     this.setEvent = __bind(this.setEvent, this);    this.SelectedIndex = 0;
     this.SelectedRow = '';
-    this.win = Titanium.UI.createWindow({
-      backgroundColor: '#fff',
-      title: 'timeline',
-      barColor: Const.BARCOLOR
+    this.rowData = [];
+    Timeline.__super__.constructor.call(this, {
+      title: 'timeline'
     });
-    this.view = Ti.UI.createView();
-    this.tableview = Titanium.UI.createTableView();
-    this.setButton();
-    this.setEvent();
-    this.view.add(this.tableview);
-    this.win.add(this.view);
-    this.loadTimeline();
     return this.win;
   }
+  Timeline.prototype.setView = function() {
+    this.view = Ti.UI.createView();
+    this.view.backgroundImage = Const.BACKGROUND;
+    this.tableview = Titanium.UI.createTableView({
+      backgroundColor: 'transparent'
+    });
+    this.view.add(this.tableview);
+    return this.win.add(this.view);
+  };
   Timeline.prototype.setButton = function() {
-    return Util.setRightButton(this.win, function() {
+    return $.Util.setRightButton(this.win, function() {
       var w;
       if (Ti.App.selectDialog_flg) {
         return;
@@ -49,7 +59,7 @@ Timeline = (function() {
         opacity: 0.92,
         url: '../controller/SelectTimeline.js'
       });
-      Util.create2DMatrixDialog(w);
+      $.Util.create2DMatrixDialog(w);
     }, {
       title: 'Filter',
       width: 10,
@@ -64,6 +74,7 @@ Timeline = (function() {
       info('focus - Timeline');
       if (Ti.App.update_tl) {
         Ti.App.update_tl = false;
+        alert('focus');
         return this.loadTimeline();
       }
     }, this));
@@ -88,35 +99,67 @@ Timeline = (function() {
   };
   Timeline.prototype.loadTimeline = function() {
     var params;
-    info(info(Ti.App.timeline_type));
     params = {
-      category: Ti.App.timeline_type,
-      user_id: Ti.App.user_id
+      user_id: Ti.App.user_id,
+      top_report_id: 100000000000,
+      top_date: 100000000000,
+      bottom_report_id: 1,
+      bottom_date: 1
     };
-    globals.API.callAPI('GET', 'getTimeline', params, __bind(function(json) {
+    $.API.callAPI('GET', 'getTimeline', params, __bind(function(json) {
       var data, i, isLike, reports, _ref;
       Ti.App.timeline_type = '';
       info('get api response');
-      reports = json.reports;
+      reports = json.lists;
       data = [];
       isLike = false;
       if (reports[0]) {
         for (i = 0, _ref = reports.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
           info('create row:' + i);
+          this.rowData.push(reports[i]);
+          info('rowData ' + this.rowData.length);
           data.push(this.createListViewRow(reports[i], isLike, false));
         }
       }
       this.tableview.data = data;
     }, this));
   };
+  Timeline.prototype.insertAfter = function() {
+    var params;
+    info('#------------------ INSERT AFTER ------------------#');
+    params = {
+      user_id: Ti.App.user_id,
+      top_report_id: 100000000000,
+      top_date: 100000000000,
+      bottom_report_id: 1,
+      bottom_date: 1
+    };
+    $.API.callAPI('GET', 'getTimeline', params, __bind(function(json) {
+      var i, index, isLike, reports, row, _ref;
+      Ti.App.timeline_type = '';
+      info('get api response');
+      reports = json.lists;
+      isLike = false;
+      if (reports[0]) {
+        for (i = 0, _ref = reports.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+          index = this.rowData.length;
+          row = this.createListViewRow(reports[i], isLike, false);
+          this.tableview.insertRowAfter(index - 1, row, {
+            animationStyle: Titanium.UI.iPhone.RowAnimationStyle.DOWN
+          });
+        }
+      }
+    }, this));
+  };
   Timeline.prototype.execLike = function(report_id, user_id, unDo) {
     var api, params;
+    info('--------------------execLike--------------------');
     api = unDo ? "cancelLike" : "execLike";
     params = {
       user_id: user_id,
       report_id: report_id
     };
-    API.callAPI('GET', api, params, function(json) {
+    $.API.callAPI('GET', api, params, function(json) {
       var row;
       if (json.success) {
         info('message ' + json.message);
@@ -228,12 +271,12 @@ Timeline = (function() {
         top: 70,
         width: 200,
         height: 33,
-        backgroundImage: 'images/UI/commentBox.png'
+        backgroundImage: 'images/UI/commentbox.png'
       });
       comment = Titanium.UI.createLabel({
-        left: 12,
-        top: 6,
-        width: 192,
+        left: 15,
+        top: 4,
+        width: 190,
         height: 21,
         color: '#4c4c4c',
         font: {
@@ -248,21 +291,21 @@ Timeline = (function() {
     if (!isComment) {
       row.height -= 33;
     }
-    color = Number(report.day_first) ? report.color_id : 0;
+    color = Number(report.day_first) ? report.color_id : 3;
     ribon = Titanium.UI.createView({
       right: -10,
       top: 5,
-      width: 69,
-      height: 38,
-      backgroundImage: 'images/UI/ribon' + color + '.png'
+      width: 64,
+      height: 32,
+      backgroundImage: 'images/UI/ribon/' + color + '.png'
     });
     dayCnt = Titanium.UI.createLabel({
-      left: 20,
-      top: 6,
+      left: 12,
+      top: 4,
       width: 100,
-      height: 21,
-      text: '4days',
-      color: '#4c4c4c',
+      height: 24,
+      text: '4 days',
+      color: '#fff',
       font: {
         fontFamily: 'Helvetica',
         fontSize: 12
@@ -273,12 +316,11 @@ Timeline = (function() {
     return row;
   };
   Timeline.prototype.createListViewRow = function(report, pushLikeButton, responseFlg) {
-    var isLike, likeButton, likeCnt, likeStar, row;
+    var isLike, likeButton, row;
     info('createListViewRow');
     likeButton = new LikeButton();
     isLike = likeButton.calcLikeFlag(pushLikeButton, report.isLike, responseFlg);
     report.isLike = isLike;
-    likeButton.switchView(isLike);
     if (pushLikeButton) {
       if (isLike) {
         report.likeCount = Number(report.likeCount) + 1;
@@ -286,10 +328,9 @@ Timeline = (function() {
         report.likeCount = Number(report.likeCount) - 1;
       }
     }
+    likeButton.likeCnt.setText(Number(report.likeCount));
+    likeButton.switchView(isLike);
     row = this.createRowContent(report);
-    likeStar = likeButton.likeStar;
-    likeCnt = likeButton.likeCnt;
-    likeCnt.setText(Number(report.likeCount));
     row.add(likeButton.button);
     return row;
   };
@@ -308,7 +349,7 @@ Timeline = (function() {
         return info('icon ckicked');
       default:
         info('window open');
-        return globals.tabs.currentTab.open(Util.createUserHomeView(e.rowData.report.user_id, {
+        return $.tabs.currentTab.open($.Util.createUserHomeView(e.rowData.report.user_id, {
           animated: true
         }));
     }

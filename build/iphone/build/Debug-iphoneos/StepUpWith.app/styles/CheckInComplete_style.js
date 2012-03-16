@@ -1,1 +1,0 @@
-StepUpWith/Resources/styles/CheckInComplete_style.js

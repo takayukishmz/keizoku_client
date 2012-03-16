@@ -1,6 +1,10 @@
 var LikeButton;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 LikeButton = (function() {
+  LikeButton.prototype.Stat = {
+    ISLIKE: 'isLike',
+    NOLIKE: 'noLike'
+  };
   function LikeButton() {
     this.switchView = __bind(this.switchView, this);    info('LikeButton init');
     this.button = Titanium.UI.createButton({
@@ -36,7 +40,7 @@ LikeButton = (function() {
     this.button.add(this.likeCnt);
   }
   LikeButton.prototype.switchView = function(isLike) {
-    info('switchView');
+    info('--------------------switchView--------------------');
     info(isLike);
     info(this.likeCnt.text);
     if (isLike) {
@@ -47,8 +51,8 @@ LikeButton = (function() {
       this.likeCnt.setColor('e6e6e6');
     } else if (Number(this.likeCnt.text)) {
       info('has like');
-      button.width = 53;
-      button.backgroundImage = 'images/button/like_bg.png';
+      this.button.width = 53;
+      this.button.backgroundImage = 'images/button/like_bg.png';
       this.likeStar.backgroundImage = 'images/star/like.png';
       this.likeCnt.setColor('#b3b3b3');
     } else {
@@ -60,6 +64,10 @@ LikeButton = (function() {
     }
   };
   LikeButton.prototype.calcLikeFlag = function(pushFlag, isLike, responseFlg) {
+    info('--------------------execLike--------------------');
+    info(pushFlag);
+    info(isLike);
+    info(responseFlg);
     if (responseFlg) {
       if (responseFlg === this.Stat.ISLIKE) {
         isLike = true;

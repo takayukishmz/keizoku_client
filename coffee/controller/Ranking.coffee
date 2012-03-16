@@ -30,13 +30,13 @@ class WeeklyTotalGraph
 		
 	@getWeeklyTotalData : () ->
 		info 'tt.UI.update'
-		globals.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
+		$.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
 			total_data = json.weekly_total_data
 			@createGraph(total_data)
 			return
 	
 	@updateWeeklyTotalData : () ->
-		globals.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
+		$.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
 			total_data = json.weekly_total_data;
 			@updateGraph(total_data)
 			return

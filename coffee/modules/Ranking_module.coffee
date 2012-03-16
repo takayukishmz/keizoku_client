@@ -21,22 +21,24 @@ class WeeklyTotalGraph
 	@margin : (@box_h - 28) / 2
 	
 	constructor : () ->
-		@win = Ti.UI.createWindow
+		@view = Ti.UI.createView
 			title:'graph'
-			
-		Util.setRightButton @win, @updateWeeklyTotalData
+			top:100
+			left:35
+			width:200
+			height:220
 		
-		return @win
+		return @view
 		
 	@getWeeklyTotalData : () ->
 		info 'tt.UI.update'
-		globals.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
+		$.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
 			total_data = json.weekly_total_data
 			@createGraph(total_data)
 			return
 	
 	@updateWeeklyTotalData : () ->
-		globals.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
+		$.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) ->
 			total_data = json.weekly_total_data;
 			@updateGraph(total_data)
 			return
@@ -76,9 +78,9 @@ class WeeklyTotalGraph
 			per_num.top = height
 			per_num.text = ratios[i-1] + "%"
 
-			@win.add day_num
-			@win.add bar 
-			@win.add per_num		
+			@view.add day_num
+			@view.add bar 
+			@view.add per_num		
 			
 			bars.push bar
 			percents.push per_num

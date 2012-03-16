@@ -1,6 +1,6 @@
 var Const, STYLE;
 Const = {
-  BACKGROUND: "base_pink.png",
+  BACKGROUND: "images/UI/base_pink.png",
   ROWBACKGROUND: "timeline_bg.png",
   BARCOLOR: ' #555',
   FONTCOLOR: "#222",

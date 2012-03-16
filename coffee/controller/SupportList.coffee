@@ -24,5 +24,5 @@ tt.UI.tableView.addEventListener 'click',(e) ->
 	#UserHome.jsのインターフェースに合わせるため
 
 	Titanium.UI.currentTab.open tt.UI.createUserHomeView e.rowData.user.support_user_id ,{animated:true}
-	
+	$.tabs.currentTab.open $.Util.createUserHomeView e.rowData.report.user_id ,{animated:true}
 	return

@@ -1,1 +1,0 @@
-StepUpWith/Resources/modules/SelectNewWay_module.js

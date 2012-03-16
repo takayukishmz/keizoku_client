@@ -1,4 +1,6 @@
-info 'common'
+UserHome = require('ui/window/UserHome').UserHome
+
+
 
 exports.Util = 
 	alert : (args) ->
@@ -37,7 +39,7 @@ exports.Util =
 					return
 				return rightButton
 	
-	setLeftButton : (callback, style) ->
+	setLeftButton : (win,callback, style) ->
 			
 			if !callback
 				alert 'You have to set callback func '
@@ -125,14 +127,7 @@ exports.Util =
 		return newWindow
 	
 	createUserHomeView : (user_id) ->
-		newWindow = Ti.UI.createWindow
-			backgroundColor:'#fff'
-			url:'../controller/UserHome.js'
-			# navBarHidden:true
-			# modal:true
-			barColor: Const.BARCOLOR
-			data:user_id
-		
+		newWindow = new UserHome(user_id)
 		return newWindow	
 	
 	move : (targetBar,startWidth,endWidth)->

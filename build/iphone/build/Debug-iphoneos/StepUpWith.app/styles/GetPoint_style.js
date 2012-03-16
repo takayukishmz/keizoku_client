@@ -1,1 +1,0 @@
-StepUpWith/Resources/styles/GetPoint_style.js

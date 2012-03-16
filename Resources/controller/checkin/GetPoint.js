@@ -5,6 +5,7 @@ Titanium.include('../../lib/ServerAPI.js');
 Titanium.include('../../styles/checkin/GetPoint_style.js');
 Titanium.include('../../modules/checkin/GetPoint_module.js');
 Ti.App.checkInUpdate = true;
+info('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 tt.UI.setLeftButton(function() {
   Ti.App.rootWindow.close();
 }, {

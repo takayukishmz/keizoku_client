@@ -1,1 +1,0 @@
-StepUpWith/Resources/view/CheckinVew.js

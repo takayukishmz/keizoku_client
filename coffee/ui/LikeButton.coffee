@@ -1,4 +1,9 @@
 class LikeButton
+	
+	Stat : 
+		ISLIKE:'isLike'
+		NOLIKE:'noLike'	
+	
 	constructor: () ->
 		info 'LikeButton init'
 		@button = Titanium.UI.createButton
@@ -32,7 +37,7 @@ class LikeButton
 		
 	
 	switchView:(isLike)=>
-		info 'switchView'
+		info '--------------------switchView--------------------'
 		info isLike
 		info @likeCnt.text
 		#if you like or not
@@ -47,8 +52,8 @@ class LikeButton
 		#if you caneled your like of this row
 		else if Number @likeCnt.text
 			info 'has like'
-			button.width = 53
-			button.backgroundImage = 'images/button/like_bg.png'
+			@button.width = 53
+			@button.backgroundImage = 'images/button/like_bg.png'
 			@likeStar.backgroundImage = 'images/star/like.png'
 			@likeCnt.setColor '#b3b3b3'
 		#no one like this row
@@ -61,6 +66,11 @@ class LikeButton
 		return
 	
 	calcLikeFlag : (pushFlag, isLike, responseFlg)->
+		info '--------------------execLike--------------------'
+		info pushFlag
+		info isLike
+		info responseFlg
+		
 		if responseFlg
 			if responseFlg == @Stat.ISLIKE
 				isLike = true

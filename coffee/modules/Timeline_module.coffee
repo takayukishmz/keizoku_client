@@ -11,7 +11,7 @@ do ->
 		ISLIKE:'isLike'
 		NOLIKE:'noLike'
 	
-	tt.UI.loadTimeline = () ->		
+	tt.UI.loadTimeline = () ->	
 		info info Ti.App.timeline_type
 		rightBotton.title = Ti.App.timeline_type
 		if !Ti.App.timeline_type
@@ -636,6 +636,7 @@ do ->
 		
 		API.callAPI 'GET','execSupport',params, (json) ->
 			# support_success = json.support_success
+			
 			support_success = 1
 			if support_success
 				alert 'success'
@@ -677,7 +678,7 @@ do ->
 				info 'window open'
 				# Ti.App.Selected_pjt_id_timeline = e.rowData.report.pjt_id
 				# alert 'window open:'+JSON.stringify e
-				Titanium.UI.currentTab.open tt.UI.createUserHomeView e.rowData.report.user_id ,{animated:true}
+				$.currentTab.open tt.UI.createUserHomeView e.rowData.report.user_id ,{animated:true}
 
 		return
 	

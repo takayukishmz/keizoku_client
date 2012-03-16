@@ -2,7 +2,7 @@
 
 
 Const = 
-	BACKGROUND:"base_pink.png"
+	BACKGROUND:"images/UI/base_pink.png"
 	ROWBACKGROUND:"timeline_bg.png"
 	# ROWBACKGROUND:""
 	BARCOLOR:' #555'	

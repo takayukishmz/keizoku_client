@@ -17,15 +17,18 @@ WeeklyTotalGraph = (function() {
   WeeklyTotalGraph.box_h = graphSpace.height / passdNumOfDays;
   WeeklyTotalGraph.margin = (WeeklyTotalGraph.box_h - 28) / 2;
   function WeeklyTotalGraph() {
-    this.win = Ti.UI.createWindow({
-      title: 'graph'
+    this.view = Ti.UI.createView({
+      title: 'graph',
+      top: 100,
+      left: 35,
+      width: 200,
+      height: 220
     });
-    Util.setRightButton(this.win, this.updateWeeklyTotalData);
-    return this.win;
+    return this.view;
   }
   WeeklyTotalGraph.getWeeklyTotalData = function() {
     info('tt.UI.update');
-    return globals.API.callAPI('GET', 'getWeeklyTotalData', {
+    return $.API.callAPI('GET', 'getWeeklyTotalData', {
       week_id: week_id
     }, function(json) {
       var total_data;
@@ -34,7 +37,7 @@ WeeklyTotalGraph = (function() {
     });
   };
   WeeklyTotalGraph.updateWeeklyTotalData = function() {
-    return globals.API.callAPI('GET', 'getWeeklyTotalData', {
+    return $.API.callAPI('GET', 'getWeeklyTotalData', {
       week_id: week_id
     }, function(json) {
       var total_data;
@@ -69,9 +72,9 @@ WeeklyTotalGraph = (function() {
       per_num = Titanium.UI.createLabel(styles.per_num);
       per_num.top = height;
       per_num.text = ratios[i - 1] + "%";
-      this.win.add(day_num);
-      this.win.add(bar);
-      this.win.add(per_num);
+      this.view.add(day_num);
+      this.view.add(bar);
+      this.view.add(per_num);
       bars.push(bar);
       percents.push(per_num);
       this.move(bar, 0, width);

@@ -27,7 +27,7 @@ WeeklyTotalGraph = (function() {
   }
   WeeklyTotalGraph.getWeeklyTotalData = function() {
     info('tt.UI.update');
-    return globals.API.callAPI('GET', 'getWeeklyTotalData', {
+    return $.API.callAPI('GET', 'getWeeklyTotalData', {
       week_id: week_id
     }, function(json) {
       var total_data;
@@ -36,7 +36,7 @@ WeeklyTotalGraph = (function() {
     });
   };
   WeeklyTotalGraph.updateWeeklyTotalData = function() {
-    return globals.API.callAPI('GET', 'getWeeklyTotalData', {
+    return $.API.callAPI('GET', 'getWeeklyTotalData', {
       week_id: week_id
     }, function(json) {
       var total_data;

@@ -1,25 +1,5 @@
 Titanium.include 'Const.js'
 
-
-styles = 
-	bar:
-		left: 35,
-		height: 28
-		width:0
-		backgroundColor:'#345'
-		borderRadius:5
-	day_num:
-		left: 5,
-		width: 28,
-		height: 28,
-		textAlign:'center'
-	per_num:
-		right: 5,
-		width: 35,
-		height: 28,
-		textAlign: "right"
-		
-
 status_bg = Titanium.UI.createView
 	left: 5,
 	top: 26,
