@@ -1,5 +1,3 @@
-
-
 var $;
 Titanium.include('./styles/Const.js');
 Titanium.include('./TextConst.js');
