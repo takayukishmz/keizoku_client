@@ -15,12 +15,14 @@ TEXT =
 		SERVER: 'server error'
 	NOTICE_SHARE:'VAR0 is keep learning & share VAR1 Points! Let\'s get it! '
 	NOTICE_SUPPORT:'VAR0 became your supporter.'
+	NOTICE_LIKE:'VAR0さんが、あなたの投稿にいいね！しました'
 	
 	CANCEL:"Cancel"
 	CLOSE:"閉じる"
 	ALREADY_LIKED:'already_liked'
 	CANCEL_LIKE:'cancel_like'	
 	NOT_LIKE_YET:'not_like_yet'
+
 
 setTT = 　(key, arg) ->
 	text = TEXT[key]

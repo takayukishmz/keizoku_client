@@ -8,21 +8,25 @@ exports.PointBar = () ->
 	
 	point_title = Titanium.UI.createLabel styles.point_title
 	point_base = Titanium.UI.createView styles.point_base	
-	pointbar_max = Titanium.UI.createView styles.pointbar_max	
-	pointbar_now = Titanium.UI.createView styles.pointbar_now	
-	pointbar_now_text = Titanium.UI.createLabel styles.pointbar_now_text	
-	bointbar_max_text = Titanium.UI.createLabel styles.bointbar_max_text
+	@pointbar_max = Titanium.UI.createView styles.pointbar_max	
+	@pointbar_now = Titanium.UI.createView styles.pointbar_now	
+	@pointbar_now_text = Titanium.UI.createLabel styles.pointbar_now_text	
+	@bointbar_max_text = Titanium.UI.createLabel styles.bointbar_max_text
 	
-	pointbar_now.add pointbar_now_text 
-	pointbar_max.add pointbar_now 
-	pointbar_max.add bointbar_max_text 
-	point_base.add pointbar_max 
+	@pointbar_now.add @pointbar_now_text 
+	@pointbar_max.add @pointbar_now 
+	@pointbar_max.add @bointbar_max_text 
+	point_base.add @pointbar_max 
 
 	@view.add point_title
 	@view.add point_base
 	
-	@update = (args) ->
-		alert 'update'# body...
+	@update = (current, max) =>
+		width = Number(@pointbar_max.width) * (current / max)
+		$.Util.move @pointbar_now, 0,width
+		@pointbar_now_text.text = current
+		@bointbar_max_text.text = max
+		return
 	
 	@getNodeView = () =>
 		return @view

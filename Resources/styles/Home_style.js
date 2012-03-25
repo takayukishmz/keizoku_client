@@ -18,22 +18,6 @@ exports.styles = {
     text: 'person1',
     color: '#000000'
   },
-  ribbon: {
-    right: -5,
-    top: 10,
-    width: 77,
-    height: 39,
-    backgroundImage: 'images/UI/ribon/3.png'
-  },
-  dayOnRibbon: {
-    right: 0,
-    top: 10,
-    width: 80,
-    height: 34,
-    text: '',
-    color: '#fff',
-    textAlign: 'right'
-  },
   checkin_question: {
     left: 5,
     top: 237,

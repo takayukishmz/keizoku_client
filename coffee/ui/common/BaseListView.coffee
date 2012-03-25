@@ -4,8 +4,10 @@ BaseWindow 	= require('ui/common/BaseWindow').BaseWindow
 # TODO:
 #	1.set apiName
 #	2.set @apiParams
-#  
+row_height = Const.MARGIN*2+Const.ICON
+ 
 class BaseListView extends BaseWindow
+	
 	constructor : (@windowProperty) ->	
 		#set layout
 		@tableview = Titanium.UI.createTableView()
@@ -43,15 +45,15 @@ class BaseListView extends BaseWindow
 	createListView : (report) =>
 		throw new Error('overRide createListView')
 			
-	row_height : Const.MARGIN*2+Const.ICON
+	
 	
 	styles :
 		row:
 			# hasChild:true
-			height:@row_height
+			height:row_height
 			backgroundImage:'images/UI/base_pink.png'
 		view:
-			height:@row_height
+			height:row_height
 			width:Const.WIDTH
 			top:0
 			borderRadius:0

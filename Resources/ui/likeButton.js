@@ -21,44 +21,52 @@ LikeButton = (function() {
       clickName: 'likebutton'
     });
     this.likeStar = Titanium.UI.createView({
-      left: 4.5,
-      top: 4.5,
-      width: 19,
-      height: 19,
+      left: 7,
+      top: 7,
+      width: 14,
+      height: 14,
       backgroundImage: 'images/star/like.png',
       clickName: 'star'
     });
     this.button.add(this.likeStar);
-    this.likeCnt = Titanium.UI.createLabel({
-      left: 29.5,
-      top: 4.5,
-      width: 19,
-      height: 19,
-      text: "0",
-      color: '#b3b3b3'
+    this.likeText = Titanium.UI.createLabel({
+      left: 23,
+      top: 0,
+      width: 30,
+      height: 28,
+      text: "いいね!",
+      color: '#b3b3b3',
+      font: {
+        fontFamily: 'Helvetica-Bold',
+        fontSize: 8
+      }
     });
-    this.button.add(this.likeCnt);
+    this.button.add(this.likeText);
   }
   LikeButton.prototype.switchView = function(isLike) {
     info('--------------------switchView--------------------');
     info(isLike);
-    info(this.likeCnt.text);
+    info(this.likeText.text);
     if (isLike) {
       info('already liked');
       this.button.width = 53;
       this.button.backgroundImage = 'images/button/like_bg_on.png';
       this.likeStar.backgroundImage = 'images/star/like_on.png';
-      this.likeCnt.setColor('e6e6e6');
-    } else if (Number(this.likeCnt.text)) {
+      this.likeText.setColor('e6e6e6');
+    } else if (Number(this.likeText.text)) {
       info('has like');
       this.button.width = 53;
       this.button.backgroundImage = 'images/button/like_bg.png';
       this.likeStar.backgroundImage = 'images/star/like.png';
-      this.likeCnt.setColor('#b3b3b3');
+      this.likeText.setColor('#b3b3b3');
     } else {
       info('no like');
-      this.likeCnt.setVisible(false);
+      this.likeText.setVisible(false);
       this.button.width = 28;
+      this.likeStar.left = 5;
+      this.likeStar.top = 5;
+      this.likeStar.width = 18;
+      this.likeStar.height = 18;
       this.button.backgroundImage = 'images/button/like_bg.png';
       this.likeStar.backgroundImage = 'images/star/like.png';
     }
@@ -83,6 +91,7 @@ LikeButton = (function() {
     }
     return isLike;
   };
+  LikeButton.prototype.setCount = function(count) {};
   return LikeButton;
 })();
 exports.LikeButton = LikeButton;

@@ -1,4 +1,4 @@
-var BaseListView, BaseWindow;
+var BaseListView, BaseWindow, row_height;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -8,6 +8,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   return child;
 };
 BaseWindow = require('ui/common/BaseWindow').BaseWindow;
+row_height = Const.MARGIN * 2 + Const.ICON;
 BaseListView = (function() {
   __extends(BaseListView, BaseWindow);
   function BaseListView(windowProperty) {
@@ -42,14 +43,13 @@ BaseListView = (function() {
   BaseListView.prototype.createListView = function(report) {
     throw new Error('overRide createListView');
   };
-  BaseListView.prototype.row_height = Const.MARGIN * 2 + Const.ICON;
   BaseListView.prototype.styles = {
     row: {
-      height: BaseListView.row_height,
+      height: row_height,
       backgroundImage: 'images/UI/base_pink.png'
     },
     view: {
-      height: BaseListView.row_height,
+      height: row_height,
       width: Const.WIDTH,
       top: 0,
       borderRadius: 0,

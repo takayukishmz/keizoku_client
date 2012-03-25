@@ -130,26 +130,25 @@ exports.Util =
 		newWindow = new UserHome(user_id)
 		return newWindow	
 	
-	move : (targetBar,startWidth,endWidth)->
+	move : (target,startWidth,endWidth)->
 		info '--------move---------'
-
+		
 		#なぜか初期化されない時があるのでそれまで待つ
-		targetBar.width = startWidth while targetBar.width > startWidth
-
-		info targetBar.width
+		target.width = startWidth while target.width > startWidth
+		
+		info target.width
 		info startWidth
 		info endWidth
 		
 		move = ()->
-		
-			if targetBar.width >= endWidth
+			if target.width >= endWidth
 				info '----------move complete----------'
 				return
 			
 			speed = 50
 			limit = Number endWidth
 			rest = endWidth - startWidth
-			targetBar.width += rest / speed
+			target.width += rest / speed
 			setTimeout move, 10
 			
 			return

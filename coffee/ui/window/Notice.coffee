@@ -1,6 +1,13 @@
 BaseListView 	= require('ui/common/BaseListView').BaseListView
 
 class Notice extends BaseListView
+	
+	TYPE : 
+		SHARE:1
+		SUPPORT:2
+		LIKE:3
+		COMMENT:4
+		
 	constructor : () ->
 		@apiURL = 'getNotice'
 		@apiParams = { user_id:Ti.App.user_id }	
@@ -17,18 +24,22 @@ class Notice extends BaseListView
 		#debug
 		row.notice = notice
 		icon.image = notice.picture_url
-		notice.type = "support"
 		
+		info '-------------------NOTICE TYPE'+ notice.type+'------------------'
 		switch notice.type
-			when 'share'
+			when @TYPE.SHARE
 				message.text = setTT('NOTICE_SHARE', [notice.nickname, notice.point])
 				message.clickName = 'share'
 				row.clickName = 'share'
-			when 'support'
+			when @TYPE.SUPPORT
 				message.text = setTT('NOTICE_SUPPORT', [notice.nickname])
 				message.clickName = 'support'
 				row.clickName = 'support'
-			when 'like'
+			when @TYPE.LIKE
+				message.text = setTT('NOTICE_LIKE', [notice.nickname])
+				message.clickName = 'like'
+				row.clickName = 'like'
+			when @TYPE.COMMENT
 				message.text = 'like your puroject:'+notice.pjt_name
 		
 		row.add icon
@@ -45,13 +56,18 @@ class Notice extends BaseListView
 			switch e.source.clickName
 				when 'share'
 					info 'share'
+				when 'like'
+					info 'like'
 				when 'support'
 					info 'support'
 					$.tabs.currentTab.open $.Util.createUserHomeView e.rowData.notice.user_id ,{animated:true}
 				else
 					info 'else'
 			return
+	createDetailWindow : () ->
+		info 'createDetailWindow'
 
+	
 
 
 exports.Notice = Notice

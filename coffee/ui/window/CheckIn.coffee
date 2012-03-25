@@ -69,7 +69,7 @@ class CheckIn extends BaseWindow
 		
 	execCountUp : () =>
 		info  'tt/execCountUp'
-		if $.Util.validateText(@text.value,0,141,'not_null')
+		if $.Util.validateText(@text.value,0,141)
 			info  'valid textx value'
 		else 
 			info 'invalid input'

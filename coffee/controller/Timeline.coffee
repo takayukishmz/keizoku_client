@@ -34,9 +34,10 @@ class Timeline extends BaseWindow
 			# separatorColor:'#390A0E'
 			
 		@view.add @tableview
-
+		
 		@win.add @view
-			
+	
+
 	setButton :() ->
 		$.Util.setRightButton @win, () ->
 			# when dialog already opened
@@ -75,7 +76,6 @@ class Timeline extends BaseWindow
 			info 'focus - Timeline'
 			if Ti.App.update_tl
 				Ti.App.update_tl = false
-				alert 'focus'
 				@loadTimeline()
 		### eventListener ####################################################
 		@tableview.addEventListener 'click',(e) =>
@@ -156,14 +156,16 @@ class Timeline extends BaseWindow
 		return
 		
 		
-		
+	
+
 	execLike : (report_id, user_id, unDo) ->
 		info '--------------------execLike--------------------'
 		api = if unDo then "cancelLike" else "execLike"
 		
 		params = 
-			user_id:user_id,
-			report_id:report_id,
+			user_id:Ti.App.user_id
+			report_id:report_id
+			notice_user_id : user_id
 		
 		$.API.callAPI 'GET',api,params, (json) ->			
 			if json.success
@@ -215,7 +217,7 @@ class Timeline extends BaseWindow
 			font: {fontFamily: 'Helvetica', fontSize: 12}
 		
 		name.text = report.nickname
-
+			
 		# header.add icon 			
 		row.add name
 		
@@ -243,25 +245,25 @@ class Timeline extends BaseWindow
 				width: 11,
 				height: 11,
 				backgroundImage:"images/UI/dot.png"
-			
 			row.add dot
+		
 		else
 			star_shadow.add star 
-		
 			row.add star_shadow			
 			
-		time = Titanium.UI.createLabel
-			left: 77,
-			bottom:5 ,
-			width: 222,
-			height: 17,
+		date = Titanium.UI.createLabel
+			left: 125
+			bottom:5
+			width: 222
+			height: 10
 			text: '~ min ago',
 			textAlign:'left'
 			# color:S.FONTCOLOR
 			color:"#999"
 			font: {fontFamily: 'Helvetica', fontSize: 12}
 		
-		row.add time 
+		row.add date 
+		date.text = report.date
 		
 		message = Titanium.UI.createLabel
 			color:Const.FONTCOLOR
@@ -269,11 +271,15 @@ class Timeline extends BaseWindow
 			top: 30,
 			width: 200,
 			height: 44,
-			text: 'learned 15 min & get 15pt'
 			font: {fontFamily: 'Helvetica', fontSize: 12}
-						
-		row.add message 
-		isComment = 1 #Math.floor(Math.random() * 2)
+
+		message.text = 'learned '+ report.time + ' min & get ' + report.point + ' pt!'
+		row.add message
+		 
+
+		
+		
+		isComment = if report.comment then 1 else 0
 		
 		if isComment
 			commentBox = Titanium.UI.createView
@@ -287,7 +293,7 @@ class Timeline extends BaseWindow
 			comment = Titanium.UI.createLabel
 				left: 15,
 				top: 4,
-				width: 190,
+				width: 180,
 				height: 21,
 				color: '#4c4c4c'
 				font: {fontFamily: 'Helvetica', fontSize: 12},
@@ -299,7 +305,6 @@ class Timeline extends BaseWindow
 		
 		if !isComment
 			row.height -= 33
-		
 		
 		color = if Number report.day_first then report.color_id else 3
 		
@@ -323,9 +328,34 @@ class Timeline extends BaseWindow
 		ribon.add dayCnt 
 		row.add ribon
 		
+		
+		
+		@likeStar = Titanium.UI.createView
+			left:85
+			bottom: 5
+			width: 15
+			height: 15
+			backgroundImage: 'images/star/like.png'
+			clickName:'star'
+		
+		row.add @likeStar
+		
+		@likeCnt = Titanium.UI.createLabel
+			left: 105
+			bottom: 5
+			width: 20
+			height: 12
+			text:"0"
+			color: '#b3b3b3'
+			# textAlign:'center'
+			font: {fontFamily: 'Helvetica-Bold', fontSize: 10}
+		
+		row.add @likeCnt
+		@likeCnt.text = Number(report.likeCount)
+		
 		return row
 	
-
+	
 	createListViewRow : (report, pushLikeButton, responseFlg)=>
 		info 'createListViewRow'
 		#create like button
@@ -344,7 +374,6 @@ class Timeline extends BaseWindow
 				report.likeCount = Number(report.likeCount)-1
 		
 		#create row
-		likeButton.likeCnt.setText(Number(report.likeCount))
 		#switch view
 		likeButton.switchView isLike		
 		
@@ -357,13 +386,14 @@ class Timeline extends BaseWindow
 	rowEventController : (e) =>	
 		switch e.source.clickName
 			when 'likebutton'
+					
 					@SelectedIndex = e.index
 					@SelectedRow = e.rowData.report
 					pushLikeButton = true
 					row = @createListViewRow(e.rowData.report, pushLikeButton)
 					@tableview.updateRow e.index, row					
 					unDo = if e.rowData.report.isLike then true else false
-					@execLike e.rowData.report.report_id, Ti.App.user_id, unDo
+					@execLike e.rowData.report.report_id, e.rowData.report.user_id, unDo
 					
 			when 'icon'
 				info 'icon ckicked'

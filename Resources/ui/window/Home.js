@@ -1,4 +1,4 @@
-var BaseWindow, CheckIn, Home, PointBar, UserInfo, WeeklyResult, styles;
+var BaseWindow, CheckIn, Counter, Home, PointBar, UserInfo, WeeklyResult, styles;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -11,6 +11,7 @@ BaseWindow = require('ui/common/BaseWindow').BaseWindow;
 PointBar = require('ui/home/PointBar').PointBar;
 UserInfo = require('ui/home/UserInfo').UserInfo;
 WeeklyResult = require('ui/home/WeeklyResult').WeeklyResult;
+Counter = require('ui/home/Counter').Counter;
 CheckIn = require('ui/window/CheckIn').CheckIn;
 styles = require('styles/Home_style').styles;
 Home = (function() {
@@ -21,19 +22,17 @@ Home = (function() {
     };
     Home.__super__.constructor.call(this, this.params);
     this.userInfo = new UserInfo();
+    this.counter = new Counter();
     this.pointBar = new PointBar();
     this.weeklyResult = new WeeklyResult();
     this.win.add(this.userInfo.getNodeView());
+    this.win.add(this.counter.getNodeView());
     this.win.add(this.pointBar.getNodeView());
     this.win.add(this.weeklyResult.getNodeView());
     return this.win;
   }
   Home.prototype.setView = function() {
-    var checkin_question, checkin_text, ribbon;
-    ribbon = Titanium.UI.createView(styles.ribbon);
-    this.win.add(ribbon);
-    this.dayOnRibbon = Titanium.UI.createLabel(styles.dayOnRibbon);
-    this.win.add(this.dayOnRibbon);
+    var checkin_question, checkin_text;
     checkin_question = Titanium.UI.createLabel(styles.checkin_question);
     this.win.add(checkin_question);
     this.button_checkin = Titanium.UI.createButton(styles.button_checkin);
@@ -45,7 +44,8 @@ Home = (function() {
     $.API.callAPI('GET', 'getUserData', {
       user_id: Ti.App.user_id
     }, __bind(function(json) {
-      this.dayOnRibbon.text = json.profile.day_total + ' days ';
+      this.counter.update(json.profile.day_total);
+      this.pointBar.update(json.profile.weekly_total_point, json.profile.point_hiscore);
       this.userInfo.setUserData(json.profile);
       this.weeklyResult.update(json.weekly_record);
     }, this));

@@ -74,7 +74,6 @@ Timeline = (function() {
       info('focus - Timeline');
       if (Ti.App.update_tl) {
         Ti.App.update_tl = false;
-        alert('focus');
         return this.loadTimeline();
       }
     }, this));
@@ -156,8 +155,9 @@ Timeline = (function() {
     info('--------------------execLike--------------------');
     api = unDo ? "cancelLike" : "execLike";
     params = {
-      user_id: user_id,
-      report_id: report_id
+      user_id: Ti.App.user_id,
+      report_id: report_id,
+      notice_user_id: user_id
     };
     $.API.callAPI('GET', api, params, function(json) {
       var row;
@@ -183,7 +183,7 @@ Timeline = (function() {
     });
   };
   Timeline.prototype.createRowContent = function(report) {
-    var color, comment, commentBox, dayCnt, dot, icon, isComment, message, name, ribon, row, star, starID, star_shadow, time;
+    var color, comment, commentBox, date, dayCnt, dot, icon, isComment, message, name, ribon, row, star, starID, star_shadow;
     info('createRowContent');
     row = Titanium.UI.createTableViewRow(styles.row);
     row.report = report;
@@ -237,11 +237,11 @@ Timeline = (function() {
       star_shadow.add(star);
       row.add(star_shadow);
     }
-    time = Titanium.UI.createLabel({
-      left: 77,
+    date = Titanium.UI.createLabel({
+      left: 125,
       bottom: 5,
       width: 222,
-      height: 17,
+      height: 10,
       text: '~ min ago',
       textAlign: 'left',
       color: "#999",
@@ -250,21 +250,22 @@ Timeline = (function() {
         fontSize: 12
       }
     });
-    row.add(time);
+    row.add(date);
+    date.text = report.date;
     message = Titanium.UI.createLabel({
       color: Const.FONTCOLOR,
       left: 86,
       top: 30,
       width: 200,
       height: 44,
-      text: 'learned 15 min & get 15pt',
       font: {
         fontFamily: 'Helvetica',
         fontSize: 12
       }
     });
+    message.text = 'learned ' + report.time + ' min & get ' + report.point + ' pt!';
     row.add(message);
-    isComment = 1;
+    isComment = report.comment ? 1 : 0;
     if (isComment) {
       commentBox = Titanium.UI.createView({
         left: 63,
@@ -276,7 +277,7 @@ Timeline = (function() {
       comment = Titanium.UI.createLabel({
         left: 15,
         top: 4,
-        width: 190,
+        width: 180,
         height: 21,
         color: '#4c4c4c',
         font: {
@@ -313,6 +314,29 @@ Timeline = (function() {
     });
     ribon.add(dayCnt);
     row.add(ribon);
+    this.likeStar = Titanium.UI.createView({
+      left: 85,
+      bottom: 5,
+      width: 15,
+      height: 15,
+      backgroundImage: 'images/star/like.png',
+      clickName: 'star'
+    });
+    row.add(this.likeStar);
+    this.likeCnt = Titanium.UI.createLabel({
+      left: 105,
+      bottom: 5,
+      width: 20,
+      height: 12,
+      text: "0",
+      color: '#b3b3b3',
+      font: {
+        fontFamily: 'Helvetica-Bold',
+        fontSize: 10
+      }
+    });
+    row.add(this.likeCnt);
+    this.likeCnt.text = Number(report.likeCount);
     return row;
   };
   Timeline.prototype.createListViewRow = function(report, pushLikeButton, responseFlg) {
@@ -328,7 +352,6 @@ Timeline = (function() {
         report.likeCount = Number(report.likeCount) - 1;
       }
     }
-    likeButton.likeCnt.setText(Number(report.likeCount));
     likeButton.switchView(isLike);
     row = this.createRowContent(report);
     row.add(likeButton.button);
@@ -344,7 +367,7 @@ Timeline = (function() {
         row = this.createListViewRow(e.rowData.report, pushLikeButton);
         this.tableview.updateRow(e.index, row);
         unDo = e.rowData.report.isLike ? true : false;
-        return this.execLike(e.rowData.report.report_id, Ti.App.user_id, unDo);
+        return this.execLike(e.rowData.report.report_id, e.rowData.report.user_id, unDo);
       case 'icon':
         return info('icon ckicked');
       default:

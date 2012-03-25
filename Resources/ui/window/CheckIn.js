@@ -75,7 +75,7 @@ CheckIn = (function() {
   CheckIn.prototype.execCountUp = function() {
     var params;
     info('tt/execCountUp');
-    if ($.Util.validateText(this.text.value, 0, 141, 'not_null')) {
+    if ($.Util.validateText(this.text.value, 0, 141)) {
       info('valid textx value');
     } else {
       info('invalid input');

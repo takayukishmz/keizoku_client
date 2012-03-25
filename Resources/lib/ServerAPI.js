@@ -18,9 +18,22 @@ API = (function() {
     }
     url = Request.getRequestURL(requestType, params);
     xhr = Titanium.Network.createHTTPClient();
+    xhr.onreadystatechange = function(e) {
+      info('onreadystatechange');
+      info_obj(e);
+    };
+    xhr.ondatastream = function(e) {
+      info('ondatastream');
+      info_obj(e);
+    };
+    xhr.onsendstream = function(e) {
+      info('onsendstream');
+      info_obj(e);
+    };
     xhr.open(method, url, false);
     xhr.onload = function() {
       var json;
+      info('onload');
       indicator.hide();
       json = 　JSON.parse(xhr.responseText);
       Ti.API.info('requestType:' + requestType + '\n' + 'responseText:' + xhr.responseText);

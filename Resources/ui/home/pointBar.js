@@ -1,7 +1,7 @@
 var styles;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 exports.PointBar = function() {
-  var bointbar_max_text, point_base, point_title, pointbar_max, pointbar_now, pointbar_now_text;
+  var point_base, point_title;
   this.view = Ti.UI.createView({
     top: 0,
     width: 320,
@@ -9,19 +9,23 @@ exports.PointBar = function() {
   });
   point_title = Titanium.UI.createLabel(styles.point_title);
   point_base = Titanium.UI.createView(styles.point_base);
-  pointbar_max = Titanium.UI.createView(styles.pointbar_max);
-  pointbar_now = Titanium.UI.createView(styles.pointbar_now);
-  pointbar_now_text = Titanium.UI.createLabel(styles.pointbar_now_text);
-  bointbar_max_text = Titanium.UI.createLabel(styles.bointbar_max_text);
-  pointbar_now.add(pointbar_now_text);
-  pointbar_max.add(pointbar_now);
-  pointbar_max.add(bointbar_max_text);
-  point_base.add(pointbar_max);
+  this.pointbar_max = Titanium.UI.createView(styles.pointbar_max);
+  this.pointbar_now = Titanium.UI.createView(styles.pointbar_now);
+  this.pointbar_now_text = Titanium.UI.createLabel(styles.pointbar_now_text);
+  this.bointbar_max_text = Titanium.UI.createLabel(styles.bointbar_max_text);
+  this.pointbar_now.add(this.pointbar_now_text);
+  this.pointbar_max.add(this.pointbar_now);
+  this.pointbar_max.add(this.bointbar_max_text);
+  point_base.add(this.pointbar_max);
   this.view.add(point_title);
   this.view.add(point_base);
-  this.update = function(args) {
-    return alert('update');
-  };
+  this.update = __bind(function(current, max) {
+    var width;
+    width = Number(this.pointbar_max.width) * (current / max);
+    $.Util.move(this.pointbar_now, 0, width);
+    this.pointbar_now_text.text = current;
+    this.bointbar_max_text.text = max;
+  }, this);
   this.getNodeView = __bind(function() {
     return this.view;
   }, this);

@@ -22,7 +22,6 @@ do->
 	 
 	$.API = new api()
 	
-	
 	$.tabs = new TabGroup(
 		title: "Todo"
 		icon: "images/KS_nav_ui.png"

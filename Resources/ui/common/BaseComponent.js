@@ -1,19 +1,20 @@
 var BaseComponent;
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 BaseComponent = (function() {
   function BaseComponent(param) {
     this.param = param;
+    this.getNodeView = __bind(this.getNodeView, this);
     info_obj(this.param);
     if (!this.param) {
       throw Error('ERR! @param is undefined!');
     }
-    info('1');
     this.view = Ti.UI.createView(this.param);
-    info('2');
     this.setView();
-    info_obj(this.view);
-    return this.view;
   }
   BaseComponent.prototype.setView = function() {};
+  BaseComponent.prototype.getNodeView = function() {
+    return this.view;
+  };
   return BaseComponent;
 })();
 exports.BaseComponent = BaseComponent;

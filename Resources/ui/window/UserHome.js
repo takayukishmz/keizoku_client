@@ -97,6 +97,7 @@ UserHome = (function() {
         this.rightButton.title = setTT("SUPPORTING");
         this.user.isSupport = true;
       }
+      this.pointBar.update(json.profile.weekly_total_point, json.profile.point_hiscore);
       this.userInfo.setUserData(json.profile);
       this.weeklyResult.update(json.weekly_record);
     }, this));

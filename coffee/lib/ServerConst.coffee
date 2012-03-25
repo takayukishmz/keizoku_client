@@ -5,12 +5,14 @@ Request ={}
 
 Request =
 	HOST:
-		sakuraVPS:'http://49.212.124.181:5000/'
+		# sakuraVPS:'http://49.212.124.181:5000/'
+		sakuraVPS:'http://sakura:5000/'
 		localhost:'http://192.168.56.101:5000/'
 	
 	
+	
 	getRequestURL:(api,params) ->
-		url = @HOST.localhost+ api + "?" + @parseParams params
+		url = @HOST.sakuraVPS+ api + "?" + @parseParams params
 		Ti.API.info 'HOST:'+ url
 		return url
 	

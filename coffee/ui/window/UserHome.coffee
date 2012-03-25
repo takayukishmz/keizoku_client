@@ -83,9 +83,11 @@ class UserHome extends BaseWindow
 		$.API.callAPI 'GET','getUserData',{user_id:user_id, selected_user_id:selected_user_id}, (json) =>
 			if json.isSupport and Number user_id != Number selected_user_id
 				info_obj @rightButton
+
 				@rightButton.title = setTT("SUPPORTING")
 				@user.isSupport = true
 			
+			@pointBar.update json.profile.weekly_total_point, json.profile.point_hiscore #current , max
 			@userInfo.setUserData json.profile
 			@weeklyResult.update json.weekly_record 
 			

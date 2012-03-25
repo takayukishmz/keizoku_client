@@ -10,6 +10,12 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 BaseListView = require('ui/common/BaseListView').BaseListView;
 Notice = (function() {
   __extends(Notice, BaseListView);
+  Notice.prototype.TYPE = {
+    SHARE: 1,
+    SUPPORT: 2,
+    LIKE: 3,
+    COMMENT: 4
+  };
   function Notice() {
     this.setEvent = __bind(this.setEvent, this);
     this.createListView = __bind(this.createListView, this);    this.apiURL = 'getNotice';
@@ -30,19 +36,24 @@ Notice = (function() {
     message = Titanium.UI.createLabel(this.styles.title);
     row.notice = notice;
     icon.image = notice.picture_url;
-    notice.type = "support";
+    info('-------------------NOTICE TYPE' + notice.type + '------------------');
     switch (notice.type) {
-      case 'share':
+      case this.TYPE.SHARE:
         message.text = setTT('NOTICE_SHARE', [notice.nickname, notice.point]);
         message.clickName = 'share';
         row.clickName = 'share';
         break;
-      case 'support':
+      case this.TYPE.SUPPORT:
         message.text = setTT('NOTICE_SUPPORT', [notice.nickname]);
         message.clickName = 'support';
         row.clickName = 'support';
         break;
-      case 'like':
+      case this.TYPE.LIKE:
+        message.text = setTT('NOTICE_LIKE', [notice.nickname]);
+        message.clickName = 'like';
+        row.clickName = 'like';
+        break;
+      case this.TYPE.COMMENT:
         message.text = 'like your puroject:' + notice.pjt_name;
     }
     row.add(icon);
@@ -58,6 +69,9 @@ Notice = (function() {
         case 'share':
           info('share');
           break;
+        case 'like':
+          info('like');
+          break;
         case 'support':
           info('support');
           $.tabs.currentTab.open($.Util.createUserHomeView(e.rowData.notice.user_id, {
@@ -68,6 +82,9 @@ Notice = (function() {
           info('else');
       }
     }, this));
+  };
+  Notice.prototype.createDetailWindow = function() {
+    return info('createDetailWindow');
   };
   return Notice;
 })();

@@ -2,6 +2,7 @@ BaseWindow 		= require('ui/common/BaseWindow').BaseWindow
 PointBar 		= require('ui/home/PointBar').PointBar
 UserInfo 		= require('ui/home/UserInfo').UserInfo
 WeeklyResult 	= require('ui/home/WeeklyResult').WeeklyResult
+Counter 		= require('ui/home/Counter').Counter
 CheckIn 		= require('ui/window/CheckIn').CheckIn
 styles 			= require('styles/Home_style').styles
 
@@ -13,31 +14,31 @@ class Home extends BaseWindow
 		super @params
 		
 		@userInfo = new UserInfo()		
+		@counter = new Counter()
 		@pointBar = new PointBar()
 		@weeklyResult = new WeeklyResult()		
 		
+		
 		@win.add @userInfo.getNodeView()
+		@win.add @counter.getNodeView()
 		@win.add @pointBar.getNodeView()
 		@win.add @weeklyResult.getNodeView()
 		
 		return @win
 		
 	setView: () -> 
-		ribbon = Titanium.UI.createView styles.ribbon
-		@win.add ribbon
-		@dayOnRibbon = Titanium.UI.createLabel styles.dayOnRibbon
-		@win.add @dayOnRibbon
 		checkin_question = Titanium.UI.createLabel styles.checkin_question 
 		@win.add checkin_question
 		@button_checkin = Titanium.UI.createButton styles.button_checkin
 		checkin_text = Titanium.UI.createLabel styles.checkin_text
 		@button_checkin.add checkin_text
 		@win.add @button_checkin 
-		
-		
+	
+	
 	updateView : () =>
 		$.API.callAPI 'GET','getUserData',{user_id:Ti.App.user_id}, (json) =>
-			@dayOnRibbon.text =  json.profile.day_total + ' days '
+			@counter.update json.profile.day_total
+			@pointBar.update json.profile.weekly_total_point, json.profile.point_hiscore #current , max
 			@userInfo.setUserData json.profile
 			@weeklyResult.update json.weekly_record
 			return

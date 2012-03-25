@@ -133,25 +133,25 @@ exports.Util = {
     newWindow = new UserHome(user_id);
     return newWindow;
   },
-  move: function(targetBar, startWidth, endWidth) {
+  move: function(target, startWidth, endWidth) {
     var move;
     info('--------move---------');
-    while (targetBar.width > startWidth) {
-      targetBar.width = startWidth;
+    while (target.width > startWidth) {
+      target.width = startWidth;
     }
-    info(targetBar.width);
+    info(target.width);
     info(startWidth);
     info(endWidth);
     move = function() {
       var limit, rest, speed;
-      if (targetBar.width >= endWidth) {
+      if (target.width >= endWidth) {
         info('----------move complete----------');
         return;
       }
       speed = 50;
       limit = Number(endWidth);
       rest = endWidth - startWidth;
-      targetBar.width += rest / speed;
+      target.width += rest / speed;
       setTimeout(move, 10);
     };
     move();

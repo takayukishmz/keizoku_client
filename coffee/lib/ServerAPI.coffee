@@ -4,8 +4,6 @@ Titanium.include 'lib/ActivityIndicator.js'
 API ={}
 
 
-
-
 class API  
 	costructor : () ->
 	callAPI :(method,requestType, params, callbackOnLoad) ->
@@ -18,10 +16,30 @@ class API
 		if Titanium.Network.online == false
 		  	alert('オフラインなのでデータを取得できません。')
 		  	return
+		
 		url = Request.getRequestURL requestType, params
 		xhr = Titanium.Network.createHTTPClient()
-		xhr.open(method, url, false);
+		
+		xhr.onreadystatechange = (e) ->
+			info 'onreadystatechange'
+			info_obj e
+			return 
+			
+		xhr.ondatastream = (e) ->
+			info 'ondatastream'
+			info_obj e
+			return
+			
+		xhr.onsendstream = (e) ->
+			info 'onsendstream'
+			info_obj e
+			return
+		
+		xhr.open(method, url, false)
+		
+			
 		xhr.onload = ()->
+			info 'onload'
 			indicator.hide()
 			json =　JSON.parse xhr.responseText
 			#update cache data
@@ -31,6 +49,7 @@ class API
 			# callbackOnLoad xhr.staatus, json  
 			callbackOnLoad json 
 			return
+		
 		xhr.onerror = (error) ->
 				indicator.hide()
 				alert TEXT.ERROR_MESSAGE.SERVER
