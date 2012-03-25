@@ -77,6 +77,7 @@ class Timeline extends BaseWindow
 			if Ti.App.update_tl
 				Ti.App.update_tl = false
 				@loadTimeline()
+				return
 		### eventListener ####################################################
 		@tableview.addEventListener 'click',(e) =>
 			info JSON.stringify e
@@ -99,8 +100,8 @@ class Timeline extends BaseWindow
 			
 			if (distance < lastDistance)
 				info_obj e
-	
-	
+			return
+			
 	loadTimeline : ()=>
 		params = 
 			# category:Ti.App.timeline_type

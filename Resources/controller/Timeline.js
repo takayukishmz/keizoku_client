@@ -74,7 +74,7 @@ Timeline = (function() {
       info('focus - Timeline');
       if (Ti.App.update_tl) {
         Ti.App.update_tl = false;
-        return this.loadTimeline();
+        this.loadTimeline();
       }
     }, this));
     /* eventListener */
@@ -92,7 +92,7 @@ Timeline = (function() {
       theEnd = e.contentSize.height;
       distance = theEnd - total;
       if (distance < lastDistance) {
-        return info_obj(e);
+        info_obj(e);
       }
     }, this));
   };

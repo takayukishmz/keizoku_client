@@ -36,9 +36,6 @@ exports.styles =
 		width:Const.ICON*3/4
 		height:Const.ICON*3/4
 		clickName:'counter'
-		# backgroundGradient:
-		# 	type:'linear',
-		# 	colors:[{color:'#d4d4d4', position:0.0}, {color:'#c4c4c4', position:0.50}, {color:'#e4e4e4', position:1.0}]					
 	counter_text:
 		text:'1'
 		fontsize:25
@@ -79,10 +76,6 @@ exports.styles =
 		top:0
 		clickName:'view'
 		borderRadius:0
-		backgroundGradient:
-			type:'linear',
-			colors:[{color:'#d4d4d4', position:0.0}, {color:'#c4c4c4', position:0.50}, {color:'#e4e4e4', position:1.0}]			
-	
 	icon:
 		# backgroundImage:'images/user.png'
 		top:Const.MARGIN

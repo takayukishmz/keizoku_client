@@ -12,22 +12,7 @@ styles = {
     height: row_height,
     width: S.WIDTH,
     top: 0,
-    borderRadius: 0,
-    backgroundGradient: {
-      type: 'linear',
-      colors: [
-        {
-          color: '#d4d4d4',
-          position: 0.0
-        }, {
-          color: '#c4c4c4',
-          position: 0.50
-        }, {
-          color: '#e4e4e4',
-          position: 1.0
-        }
-      ]
-    }
+    borderRadius: 0
   },
   message: {
     color: '#576996',
