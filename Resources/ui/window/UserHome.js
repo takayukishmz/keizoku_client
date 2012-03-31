@@ -137,21 +137,6 @@ UserHome = (function() {
     newWindow = new RecordList(user_id);
     return newWindow;
   };
-  UserHome.prototype.createSuppotListView = function(listType, user_id) {
-    var newWindow;
-    Ti.API.info("createSupportListWindow");
-    newWindow = Ti.UI.createWindow({
-      title: listType,
-      backgroundColor: '#fff',
-      url: '../controller/SupportList.js',
-      barColor: Const.BARCOLOR,
-      data: {
-        listType: listTypes,
-        user_id: user_id
-      }
-    });
-    return newWindow;
-  };
   return UserHome;
 })();
 exports.UserHome = UserHome;
