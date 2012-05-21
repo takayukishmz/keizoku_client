@@ -17,6 +17,7 @@ styles = require('styles/Home_style').styles;
 Home = (function() {
   __extends(Home, BaseWindow);
   function Home() {
+    this.setButton = __bind(this.setButton, this);
     this.updateView = __bind(this.updateView, this);    this.params = {
       title: '1 Week English'
     };
@@ -50,6 +51,7 @@ Home = (function() {
       this.weeklyResult.update(json.weekly_record);
     }, this));
   };
+  Home.prototype.setButton = function() {};
   Home.prototype.setEvent = function() {
     this.button_checkin.addEventListener('click', __bind(function(e) {
       var newWindow;

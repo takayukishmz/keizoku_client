@@ -13,7 +13,14 @@ class BaseWindow
 	setButton: () ->
 	setEvent: () ->
 	
-	
-	
+	open :(args) ->
+		@win.open(args)
+		return
+		
+	close : (args) ->
+		@win.close(args)
+		return
+		
+		
 		
 exports.BaseWindow = BaseWindow

@@ -13,10 +13,10 @@ class Home extends BaseWindow
 		@params = title:'1 Week English'
 		super @params
 		
-		@userInfo = new UserInfo()		
+		@userInfo = new UserInfo()
 		@counter = new Counter()
 		@pointBar = new PointBar()
-		@weeklyResult = new WeeklyResult()		
+		@weeklyResult = new WeeklyResult()
 		
 		
 		@win.add @userInfo.getNodeView()
@@ -41,9 +41,11 @@ class Home extends BaseWindow
 			@pointBar.update json.profile.weekly_total_point, json.profile.point_hiscore #current , max
 			@userInfo.setUserData json.profile
 			@weeklyResult.update json.weekly_record
-			return
-		
+			return		
 		return
+	
+	setButton : () =>
+
 	
 	setEvent : () ->
 		@button_checkin.addEventListener 'click', (e)=>

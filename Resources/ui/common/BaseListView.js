@@ -15,7 +15,10 @@ BaseListView = (function() {
     this.windowProperty = windowProperty;
     this.createListView = __bind(this.createListView, this);
     this.loadListView = __bind(this.loadListView, this);
-    this.tableview = Titanium.UI.createTableView();
+    this.tableview = Titanium.UI.createTableView({
+      separatorColor: '#000',
+      backgroundColor: 'transparent'
+    });
     BaseListView.__super__.constructor.call(this, this.windowProperty);
     this.loadListView();
     this.win.add(this.tableview);
@@ -46,7 +49,7 @@ BaseListView = (function() {
   BaseListView.prototype.styles = {
     row: {
       height: row_height,
-      backgroundImage: 'images/UI/base_pink.png'
+      backgroundImage: Const.BACKGROUND
     },
     view: {
       height: row_height,
@@ -55,7 +58,7 @@ BaseListView = (function() {
       borderRadius: 0
     },
     message: {
-      color: '#576996',
+      color: Const.FONTCOLOR,
       font: {
         fontSize: 12,
         fontFamily: 'Arial'
@@ -85,7 +88,8 @@ BaseListView = (function() {
       height: Const.ICON,
       width: 'auto',
       clickName: 'text',
-      textAlign: 'left'
+      textAlign: 'left',
+      color: Const.FONTCOLOR
     }
   };
   return BaseListView;

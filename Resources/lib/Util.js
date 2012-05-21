@@ -1,9 +1,6 @@
 var UserHome;
 UserHome = require('ui/window/UserHome').UserHome;
 exports.Util = {
-  alert: function(args) {
-    return alert(args);
-  },
   setRightButton: function(win, callback, style) {
     var activity, rightButton;
     if (!callback) {
@@ -32,7 +29,6 @@ exports.Util = {
         };
       }
     } else {
-      info("### style ### ");
       rightButton = Titanium.UI.createButton(style);
       win.rightNavButton = rightButton;
       rightButton.addEventListener('click', function() {

@@ -1,11 +1,7 @@
 UserHome = require('ui/window/UserHome').UserHome
 
 
-
-exports.Util = 
-	alert : (args) ->
-	  alert args
-	
+exports.Util = 	
 	setRightButton : (win,callback,style) ->
 			if !callback
 				alert 'You have to set callback func '
@@ -29,8 +25,6 @@ exports.Util =
 							return
 						return
 			else
-			
-				info "### style ### "
 				rightButton = Titanium.UI.createButton style
 				win.rightNavButton = rightButton
 				rightButton.addEventListener 'click', () ->

@@ -38,8 +38,8 @@ styles =
 		top: 16,
 		width: 200,
 		height: 21,
-		text: 'person1',
-		color: '#000000'
+		text: 'person',
+		color: '#fff'
 
 # BaseComponent 	= require('ui/common/BaseComponent').BaseComponent
 # 

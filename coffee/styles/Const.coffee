@@ -2,11 +2,14 @@
 
 
 Const = 
-	BACKGROUND:"images/UI/base_pink.png"
-	ROWBACKGROUND:"timeline_bg.png"
+	REPORT_TYPE_SHARE : 3
+	
+	BACKGROUND:"images/UI/dark_bg.png"
+	ROWBACKGROUND:"images/UI/timeline_bg_black.png"
 	# ROWBACKGROUND:""
-	BARCOLOR:' #555'	
-	FONTCOLOR:"#222"
+	BARCOLOR:' #333'	
+	BUTTONBARCOLOR:' #555'	
+	FONTCOLOR:"#ccc"
 	
 	wday :
 		Sun:0

@@ -66,9 +66,8 @@ exports.styles =
 	### row ###
 	row:
 		height:row_height
-		# hasChild:true
-		backgroundColor:Const.rowColor
-		backgroundImage:'images/UI/'+Const.ROWBACKGROUND
+		# backgroundColor:Const.rowColor
+		backgroundImage:Const.ROWBACKGROUND
 		selectionStyle:Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
 	view:
 		height:header_height

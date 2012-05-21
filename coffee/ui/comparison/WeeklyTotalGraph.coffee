@@ -10,12 +10,13 @@ styles =
 		width: 28,
 		height: 28,
 		textAlign:'center'
+		color:Const.FONTCOLOR
 	per_num:
 		right: 5,
 		width: 35,
 		height: 28,
 		textAlign: "right"
-		
+		color:Const.FONTCOLOR
 
 
 
@@ -29,7 +30,7 @@ graphSpace = {
 	top:0
 	left:35
 	width:200
-	height:220	
+	height:215	
 }
 
 class WeeklyTotalGraph
@@ -49,7 +50,7 @@ class WeeklyTotalGraph
 			top:100
 			left:0
 			width:320
-			height:220
+			height:225
 		
 		@getWeeklyTotalData()
 		
@@ -65,8 +66,7 @@ class WeeklyTotalGraph
 	updateWeeklyTotalData : () =>
 		@updateGraph()
 		$.API.callAPI 'GET','getWeeklyTotalData',{week_id:week_id}, (json) =>
-			info '1'			
-			total_data = json.weekly_total_data;
+			total_data = json.weekly_total_data
 			@updateGraph(total_data)
 			return
 			

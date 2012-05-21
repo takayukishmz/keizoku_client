@@ -1,12 +1,11 @@
-exports.PointBar = () ->
-	
+exports.PointBar = () ->	
 	@view = Ti.UI.createView 
 		top:0
 		width:320
-		height:100
-	
+		height:150
 	
 	point_title = Titanium.UI.createLabel styles.point_title
+	hiscore_text = Titanium.UI.createLabel styles.hiscore_text
 	point_base = Titanium.UI.createView styles.point_base	
 	@pointbar_max = Titanium.UI.createView styles.pointbar_max	
 	@pointbar_now = Titanium.UI.createView styles.pointbar_now	
@@ -15,9 +14,10 @@ exports.PointBar = () ->
 	
 	@pointbar_now.add @pointbar_now_text 
 	@pointbar_max.add @pointbar_now 
-	@pointbar_max.add @bointbar_max_text 
+	point_base.add @bointbar_max_text 
 	point_base.add @pointbar_max 
-
+	point_base.add hiscore_text 
+	
 	@view.add point_title
 	@view.add point_base
 	
@@ -43,27 +43,27 @@ styles =
 		width:114
 		height:20
 		text: 'Weekly Point'
-		color: '#777'
+		color: '#fff'
 		font: {fontFamily: 'Helvetica', fontSize: 14}
 	point_base:
 		left: 5
 		top: 80
 		width: 310
 		height: 40
-		backgroundImage:'images/UI/point_base.png'
+		backgroundImage:'images/UI/point_base_black.png'
 	pointbar_max:
 		left: 10
 		top: 12
-		width: 290	
+		width: 260	
 		height: 16
-		backgroundColor: '#f2f2f2f0'
+		backgroundColor: '#000000'
 	pointbar_now:
 		left:0,
 		width: 10,
 		height: 16,
-		backgroundColor: '#008aff'
+		backgroundColor:'#3871c8'
 	pointbar_now_text:
-		right:2
+		right:10
 		top: 0
 		width: 42,
 		height: 16,
@@ -72,12 +72,20 @@ styles =
 		font: {fontFamily: 'Helvetica', fontSize: 14},
 		color: '#ffffff'
 	bointbar_max_text:
-		right: 2,
-		top: 0,
-		width: 290,
+		right: 0,
+		top: 12,
+		width: 40,
 		height: 16,
-		text: 'record:99',
-		textAlign:'right'
+		text: '00',
+		textAlign:'center'
 		font: {fontFamily: 'Helvetica', fontSize: 14},
-		color: '#555'
-	
+		color: '#999'
+	hiscore_text:
+		right: 0,
+		top: 1,
+		width: 40,
+		height: 10,
+		text: 'record',
+		textAlign:'center'
+		font: {fontFamily: 'Helvetica', fontSize: 10},
+		color: '#999'

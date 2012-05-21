@@ -1,5 +1,6 @@
 BaseWindow 	= require('ui/common/BaseWindow').BaseWindow
 GetPointWindow = require('ui/window/GetPoint').GetPoint
+Facebook = require('lib/Facebook').Facebook
 
 
 class CheckIn extends BaseWindow
@@ -7,13 +8,15 @@ class CheckIn extends BaseWindow
 		share_facebook = false
 		share_twitter = false
 		
+		@fb = new Facebook()
+		
 		@params = 
 			title:'rootWindow'
 			navBarHidden:true
 			modal:true
 			
+		super @params
 		
-		super @params		
 		Ti.App.rootWindow = @win		
 		return @win
 		
@@ -79,6 +82,7 @@ class CheckIn extends BaseWindow
 		params  =
 			user_id:Ti.App.user_id
 			comment:@text.value
+			type:Const.REPORT_TYPE_SHARE
 			time:10
 			challenge_flg:0
 			
@@ -111,7 +115,7 @@ class CheckIn extends BaseWindow
 		
 		
 	
-	setEvent: () ->
+	setEvent: () =>
 		@subWin.addEventListener 'focus',(e)->
 			Ti.API.info 'CheckIn focus'
 			indicator.setStatus(false)
@@ -123,15 +127,16 @@ class CheckIn extends BaseWindow
 			return# body...
 		
 		#facebook
-		@switch_fb.addEventListener 'change',(e) ->
+		@switch_fb.addEventListener 'change',(e) =>
 			info 'change switch_fb'
 			if Ti.Facebook.loggedIn
 				info 'fb already login'
-				# tt.FB.getFriends()
-				tt.FB.getProfile()
+				@fb.getProfile()
+				return
 			else
 				info 'fb login'
-				Ti.Facebook.authorize();
+				Ti.Facebook.authorize()
+				return
 						
 		#twitter
 		@switch_tw.addEventListener 'change',(e) ->
@@ -142,7 +147,8 @@ class CheckIn extends BaseWindow
 				info 'twitter login'
 				Ti.App.twitterLogin = true
 				Ti.App.twitterApi.init()
-		
+				return
+						
 		@term_content.addEventListener 'click', (e)->
 			info_obj e
 			info e.source.labels[e.index]

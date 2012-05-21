@@ -10,8 +10,12 @@ BaseComponent = (function() {
     }
     this.view = Ti.UI.createView(this.param);
     this.setView();
+    this.setEvent();
+    this.setButton();
   }
   BaseComponent.prototype.setView = function() {};
+  BaseComponent.prototype.setEvent = function() {};
+  BaseComponent.prototype.setButton = function() {};
   BaseComponent.prototype.getNodeView = function() {
     return this.view;
   };

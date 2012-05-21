@@ -1,13 +1,14 @@
 var styles;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 exports.PointBar = function() {
-  var point_base, point_title;
+  var hiscore_text, point_base, point_title;
   this.view = Ti.UI.createView({
     top: 0,
     width: 320,
-    height: 100
+    height: 150
   });
   point_title = Titanium.UI.createLabel(styles.point_title);
+  hiscore_text = Titanium.UI.createLabel(styles.hiscore_text);
   point_base = Titanium.UI.createView(styles.point_base);
   this.pointbar_max = Titanium.UI.createView(styles.pointbar_max);
   this.pointbar_now = Titanium.UI.createView(styles.pointbar_now);
@@ -15,8 +16,9 @@ exports.PointBar = function() {
   this.bointbar_max_text = Titanium.UI.createLabel(styles.bointbar_max_text);
   this.pointbar_now.add(this.pointbar_now_text);
   this.pointbar_max.add(this.pointbar_now);
-  this.pointbar_max.add(this.bointbar_max_text);
+  point_base.add(this.bointbar_max_text);
   point_base.add(this.pointbar_max);
+  point_base.add(hiscore_text);
   this.view.add(point_title);
   this.view.add(point_base);
   this.update = __bind(function(current, max) {
@@ -37,7 +39,7 @@ styles = {
     width: 114,
     height: 20,
     text: 'Weekly Point',
-    color: '#777',
+    color: '#fff',
     font: {
       fontFamily: 'Helvetica',
       fontSize: 14
@@ -48,23 +50,23 @@ styles = {
     top: 80,
     width: 310,
     height: 40,
-    backgroundImage: 'images/UI/point_base.png'
+    backgroundImage: 'images/UI/point_base_black.png'
   },
   pointbar_max: {
     left: 10,
     top: 12,
-    width: 290,
+    width: 260,
     height: 16,
-    backgroundColor: '#f2f2f2f0'
+    backgroundColor: '#000000'
   },
   pointbar_now: {
     left: 0,
     width: 10,
     height: 16,
-    backgroundColor: '#008aff'
+    backgroundColor: '#3871c8'
   },
   pointbar_now_text: {
-    right: 2,
+    right: 10,
     top: 0,
     width: 42,
     height: 16,
@@ -77,16 +79,29 @@ styles = {
     color: '#ffffff'
   },
   bointbar_max_text: {
-    right: 2,
-    top: 0,
-    width: 290,
+    right: 0,
+    top: 12,
+    width: 40,
     height: 16,
-    text: 'record:99',
-    textAlign: 'right',
+    text: '00',
+    textAlign: 'center',
     font: {
       fontFamily: 'Helvetica',
       fontSize: 14
     },
-    color: '#555'
+    color: '#999'
+  },
+  hiscore_text: {
+    right: 0,
+    top: 1,
+    width: 40,
+    height: 10,
+    text: 'record',
+    textAlign: 'center',
+    font: {
+      fontFamily: 'Helvetica',
+      fontSize: 10
+    },
+    color: '#999'
   }
 };

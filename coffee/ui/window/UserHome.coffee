@@ -49,7 +49,7 @@ class UserHome extends BaseWindow
 		@view.add @supporting 
 		@view.add @history 
 		@view.add @history_title
-		@view.add @like
+		# @view.add @like
 		
 		scrollView.add @view
 		@win.add scrollView
@@ -156,35 +156,34 @@ styles =
 		text: 'person1',
 		color: '#000000'
 	base:
-		backgroundImage:'images/UI/base_pink.png'
+		backgroundImage:Const.BACKGROUND
 	supporter:
 		left: 5,
 		top: 310,
-		width: 100,
+		width: 150,
 		height: 44,
 		color: '#324f85'
-		backgroundImage:'images/UI/bar_white_short_155x44.png'
+		backgroundImage:'images/UI/record_bg_black155x44.png'
 	supporting:
-		left: 110,
+		left: 160,
 		top: 310,
-		width: 100,
+		width: 150,
 		height: 44,
 		color: '#324f85'
-		backgroundImage:'images/UI/bar_white_short_155x44.png'
+		backgroundImage:'images/UI/record_bg_black155x44.png'
 	like:
 		left: 214,
 		top: 310,
 		width: 100,
 		height: 44,
 		color: '#324f85'
-		backgroundImage:'images/UI/bar_white_short_155x44.png'
+		backgroundImage:'images/UI/record_bg_black155x44.png'
 	history:
 		left: 5,
 		top: 250,
 		width: 310,
 		height: 44,
-		color: '#324f85'
-		backgroundImage:'images/UI/bar_white_310x44.png'
+		backgroundImage:'images/UI/record_bg_black.png'
 	history_title:
 		left:5,
 		top: 230,
@@ -192,7 +191,7 @@ styles =
 		height: 16,
 		text: 'Learning History'
 		textAlign:'left'
-		color: '#777'
+		color: Const.FONTCOLOR
 		font: {fontFamily: 'Helvetica', fontSize: 14}
 	history_text:
 		left: 20,
@@ -200,6 +199,7 @@ styles =
 		width: 127,
 		height: 44,
 		text: '-- Records'
+		color: Const.FONTCOLOR
 	supporter_text:
 		left: 0,
 		top: 11,
@@ -207,6 +207,7 @@ styles =
 		height: 22,
 		textAlign:'center'
 		text: 'Supporter'
+		color: Const.FONTCOLOR
 		font: {fontFamily: 'Helvetica', fontSize: 14}
 	supporting_text:
 		left: 0,
@@ -215,6 +216,7 @@ styles =
 		height: 22,
 		textAlign:'center'
 		text: 'Support'
+		color: Const.FONTCOLOR
 		font: {fontFamily: 'Helvetica', fontSize: 14}	
 	like_text:
 		left: 0,

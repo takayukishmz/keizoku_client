@@ -13,6 +13,12 @@ BaseWindow = (function() {
   BaseWindow.prototype.setView = function() {};
   BaseWindow.prototype.setButton = function() {};
   BaseWindow.prototype.setEvent = function() {};
+  BaseWindow.prototype.open = function(args) {
+    this.win.open(args);
+  };
+  BaseWindow.prototype.close = function(args) {
+    this.win.close(args);
+  };
   return BaseWindow;
 })();
 exports.BaseWindow = BaseWindow;

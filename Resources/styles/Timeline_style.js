@@ -68,8 +68,7 @@ exports.styles = {
   /* row */
   row: {
     height: row_height,
-    backgroundColor: Const.rowColor,
-    backgroundImage: 'images/UI/' + Const.ROWBACKGROUND,
+    backgroundImage: Const.ROWBACKGROUND,
     selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
   },
   view: {

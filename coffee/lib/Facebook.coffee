@@ -1,10 +1,10 @@
-Ti.Facebook.appid = '203800316311425';
-Ti.Facebook.permissions = ['publish_stream','manage_friendlists'];
 
 
-tt.FB = {}
-do->
-	tt.FB.postWall = (msg) ->
+exports.Facebook = () ->
+	Ti.Facebook.appid = '203800316311425'
+	Ti.Facebook.permissions = ['publish_stream','manage_friendlists']	
+	
+	@postWall = (msg) ->
 		info 'start postWall'
 		
 		requestData = {
@@ -22,7 +22,8 @@ do->
 					info 'post success.'+ e.result
 					return
 		return
-	tt.FB.getFriends = (msg) ->
+	
+	@getFriends = (msg) ->
 		info 'start fb getFriends'
 		info Ti.Facebook.accessToken
 		requestData = {	
@@ -41,7 +42,8 @@ do->
 				else
 					info 'not success'
 		return
-	tt.FB.getProfile = (callback)->
+	
+	@getProfile = (callback)->
 		#run query, populate table view and open window
 		query = "SELECT uid, name, pic_square, status,email FROM user WHERE uid = me()"
 		# query +=  "where uid IN (SELECT uid2 FROM friend WHERE uid1 = " + Titanium.Facebook.uid + ")"
@@ -58,5 +60,5 @@ do->
 			
 			info_obj json
 			callback json
-		
-	return
+			return
+	return this

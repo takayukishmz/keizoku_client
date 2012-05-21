@@ -10,7 +10,10 @@ class BaseListView extends BaseWindow
 	
 	constructor : (@windowProperty) ->	
 		#set layout
-		@tableview = Titanium.UI.createTableView()
+		@tableview = Titanium.UI.createTableView(
+			separatorColor:'#000'
+			backgroundColor:'transparent'
+			)
 		super @windowProperty
 		
 		#loadList
@@ -51,14 +54,14 @@ class BaseListView extends BaseWindow
 		row:
 			# hasChild:true
 			height:row_height
-			backgroundImage:'images/UI/base_pink.png'
+			backgroundImage:Const.BACKGROUND
 		view:
 			height:row_height
 			width:Const.WIDTH
 			top:0
 			borderRadius:0
 		message:
-			color:'#576996'
+			color:Const.FONTCOLOR
 			font:{fontSize:12,fontFamily:'Arial'}
 			left:Const.MARGIN*2+Const.ICON
 			top:Const.MARGIN
@@ -81,6 +84,7 @@ class BaseListView extends BaseWindow
 			width:'auto'
 			clickName:'text'
 			textAlign:'left'
+			color:Const.FONTCOLOR
 	
 
 exports.BaseListView = BaseListView

@@ -12,13 +12,15 @@ styles = {
     left: 5,
     width: 28,
     height: 28,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: Const.FONTCOLOR
   },
   per_num: {
     right: 5,
     width: 35,
     height: 28,
-    textAlign: "right"
+    textAlign: "right",
+    color: Const.FONTCOLOR
   }
 };
 week_id = 0;
@@ -29,7 +31,7 @@ graphSpace = {
   top: 0,
   left: 35,
   width: 200,
-  height: 220
+  height: 215
 };
 WeeklyTotalGraph = (function() {
   function WeeklyTotalGraph() {
@@ -46,7 +48,7 @@ WeeklyTotalGraph = (function() {
       top: 100,
       left: 0,
       width: 320,
-      height: 220
+      height: 225
     });
     this.getWeeklyTotalData();
   }
@@ -64,7 +66,6 @@ WeeklyTotalGraph = (function() {
       week_id: week_id
     }, __bind(function(json) {
       var total_data;
-      info('1');
       total_data = json.weekly_total_data;
       this.updateGraph(total_data);
     }, this));

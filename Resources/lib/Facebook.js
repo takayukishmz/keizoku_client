@@ -1,8 +1,7 @@
-Ti.Facebook.appid = '203800316311425';
-Ti.Facebook.permissions = ['publish_stream', 'manage_friendlists'];
-tt.FB = {};
-(function() {
-  tt.FB.postWall = function(msg) {
+exports.Facebook = function() {
+  Ti.Facebook.appid = '203800316311425';
+  Ti.Facebook.permissions = ['publish_stream', 'manage_friendlists'];
+  this.postWall = function(msg) {
     var requestData;
     info('start postWall');
     requestData = {
@@ -20,7 +19,7 @@ tt.FB = {};
       }
     });
   };
-  tt.FB.getFriends = function(msg) {
+  this.getFriends = function(msg) {
     var requestData;
     info('start fb getFriends');
     info(Ti.Facebook.accessToken);
@@ -36,7 +35,7 @@ tt.FB = {};
       }
     });
   };
-  tt.FB.getProfile = function(callback) {
+  this.getProfile = function(callback) {
     var query;
     query = "SELECT uid, name, pic_square, status,email FROM user WHERE uid = me()";
     Ti.API.info('user id ' + Titanium.Facebook.uid);
@@ -52,7 +51,8 @@ tt.FB = {};
         return;
       }
       info_obj(json);
-      return callback(json);
+      callback(json);
     });
   };
-})();
+  return this;
+};

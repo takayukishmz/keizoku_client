@@ -1,4 +1,4 @@
-var BaseWindow, CheckIn, GetPointWindow, styles;
+var BaseWindow, CheckIn, Facebook, GetPointWindow, styles;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -9,13 +9,16 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 BaseWindow = require('ui/common/BaseWindow').BaseWindow;
 GetPointWindow = require('ui/window/GetPoint').GetPoint;
+Facebook = require('lib/Facebook').Facebook;
 CheckIn = (function() {
   __extends(CheckIn, BaseWindow);
   function CheckIn() {
+    this.setEvent = __bind(this.setEvent, this);
     this.execCountUp = __bind(this.execCountUp, this);
     var share_facebook, share_twitter;
     share_facebook = false;
     share_twitter = false;
+    this.fb = new Facebook();
     this.params = {
       title: 'rootWindow',
       navBarHidden: true,
@@ -85,6 +88,7 @@ CheckIn = (function() {
     params = {
       user_id: Ti.App.user_id,
       comment: this.text.value,
+      type: Const.REPORT_TYPE_SHARE,
       time: 10,
       challenge_flg: 0
     };
@@ -124,16 +128,16 @@ CheckIn = (function() {
       Ti.API.info('CheckIn blur');
       indicator.setStatus(true);
     });
-    this.switch_fb.addEventListener('change', function(e) {
+    this.switch_fb.addEventListener('change', __bind(function(e) {
       info('change switch_fb');
       if (Ti.Facebook.loggedIn) {
         info('fb already login');
-        return tt.FB.getProfile();
+        this.fb.getProfile();
       } else {
         info('fb login');
-        return Ti.Facebook.authorize();
+        Ti.Facebook.authorize();
       }
-    });
+    }, this));
     this.switch_tw.addEventListener('change', function(e) {
       info('change switch_tw');
       if (Ti.App.twitterLogin) {
@@ -141,7 +145,7 @@ CheckIn = (function() {
       } else {
         info('twitter login');
         Ti.App.twitterLogin = true;
-        return Ti.App.twitterApi.init();
+        Ti.App.twitterApi.init();
       }
     });
     return this.term_content.addEventListener('click', function(e) {

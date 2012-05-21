@@ -8,9 +8,12 @@ class BaseComponent
 		@view = Ti.UI.createView @param 	
 		
 		@setView()
+		@setEvent()
+		@setButton()
 		
 	setView: () ->
-	
+	setEvent:() ->
+	setButton:() ->
 	getNodeView : () =>
 		return @view
 		

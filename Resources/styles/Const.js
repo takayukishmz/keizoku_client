@@ -1,9 +1,11 @@
 var Const, STYLE;
 Const = {
-  BACKGROUND: "images/UI/base_pink.png",
-  ROWBACKGROUND: "timeline_bg.png",
-  BARCOLOR: ' #555',
-  FONTCOLOR: "#222",
+  REPORT_TYPE_SHARE: 3,
+  BACKGROUND: "images/UI/dark_bg.png",
+  ROWBACKGROUND: "images/UI/timeline_bg_black.png",
+  BARCOLOR: ' #333',
+  BUTTONBARCOLOR: ' #555',
+  FONTCOLOR: "#ccc",
   wday: {
     Sun: 0,
     Mon: 1,

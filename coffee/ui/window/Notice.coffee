@@ -3,10 +3,10 @@ BaseListView 	= require('ui/common/BaseListView').BaseListView
 class Notice extends BaseListView
 	
 	TYPE : 
-		SHARE:1
-		SUPPORT:2
-		LIKE:3
-		COMMENT:4
+		SHARE:"1"
+		SUPPORT:"2"
+		LIKE:"3"
+		COMMENT:"4"
 		
 	constructor : () ->
 		@apiURL = 'getNotice'
@@ -16,6 +16,7 @@ class Notice extends BaseListView
 		
 	createListView : (notice) =>
 		log 'createListView'
+		info_obj notice
 		section = Ti.UI.createTableViewSection()
 		
 		row = Titanium.UI.createTableViewRow @styles.row
@@ -24,6 +25,9 @@ class Notice extends BaseListView
 		#debug
 		row.notice = notice
 		icon.image = notice.picture_url
+		
+		date = new Date()
+		date.setTime notice.reg_date
 		
 		info '-------------------NOTICE TYPE'+ notice.type+'------------------'
 		switch notice.type
@@ -36,7 +40,9 @@ class Notice extends BaseListView
 				message.clickName = 'support'
 				row.clickName = 'support'
 			when @TYPE.LIKE
-				message.text = setTT('NOTICE_LIKE', [notice.nickname])
+				info '############LIKE'
+				message.text = date + setTT('NOTICE_LIKE', [notice.nickname])
+				info message.text
 				message.clickName = 'like'
 				row.clickName = 'like'
 			when @TYPE.COMMENT
@@ -48,6 +54,10 @@ class Notice extends BaseListView
 		section.add row
 		
 		return section
+	
+	setButton : () =>
+		$.Util.setRightButton @win, @loadListView
+		return
 	
 	setEvent: () =>
 		@tableview.addEventListener 'click',(e) =>

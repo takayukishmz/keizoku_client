@@ -57,7 +57,6 @@ UserHome = (function() {
     this.view.add(this.supporting);
     this.view.add(this.history);
     this.view.add(this.history_title);
-    this.view.add(this.like);
     scrollView.add(this.view);
     return this.win.add(scrollView);
   };
@@ -158,23 +157,23 @@ styles = {
     color: '#000000'
   },
   base: {
-    backgroundImage: 'images/UI/base_pink.png'
+    backgroundImage: Const.BACKGROUND
   },
   supporter: {
     left: 5,
     top: 310,
-    width: 100,
+    width: 150,
     height: 44,
     color: '#324f85',
-    backgroundImage: 'images/UI/bar_white_short_155x44.png'
+    backgroundImage: 'images/UI/record_bg_black155x44.png'
   },
   supporting: {
-    left: 110,
+    left: 160,
     top: 310,
-    width: 100,
+    width: 150,
     height: 44,
     color: '#324f85',
-    backgroundImage: 'images/UI/bar_white_short_155x44.png'
+    backgroundImage: 'images/UI/record_bg_black155x44.png'
   },
   like: {
     left: 214,
@@ -182,15 +181,14 @@ styles = {
     width: 100,
     height: 44,
     color: '#324f85',
-    backgroundImage: 'images/UI/bar_white_short_155x44.png'
+    backgroundImage: 'images/UI/record_bg_black155x44.png'
   },
   history: {
     left: 5,
     top: 250,
     width: 310,
     height: 44,
-    color: '#324f85',
-    backgroundImage: 'images/UI/bar_white_310x44.png'
+    backgroundImage: 'images/UI/record_bg_black.png'
   },
   history_title: {
     left: 5,
@@ -199,7 +197,7 @@ styles = {
     height: 16,
     text: 'Learning History',
     textAlign: 'left',
-    color: '#777',
+    color: Const.FONTCOLOR,
     font: {
       fontFamily: 'Helvetica',
       fontSize: 14
@@ -210,7 +208,8 @@ styles = {
     top: 0,
     width: 127,
     height: 44,
-    text: '-- Records'
+    text: '-- Records',
+    color: Const.FONTCOLOR
   },
   supporter_text: {
     left: 0,
@@ -219,6 +218,7 @@ styles = {
     height: 22,
     textAlign: 'center',
     text: 'Supporter',
+    color: Const.FONTCOLOR,
     font: {
       fontFamily: 'Helvetica',
       fontSize: 14
@@ -231,6 +231,7 @@ styles = {
     height: 22,
     textAlign: 'center',
     text: 'Support',
+    color: Const.FONTCOLOR,
     font: {
       fontFamily: 'Helvetica',
       fontSize: 14

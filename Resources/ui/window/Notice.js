@@ -11,13 +11,14 @@ BaseListView = require('ui/common/BaseListView').BaseListView;
 Notice = (function() {
   __extends(Notice, BaseListView);
   Notice.prototype.TYPE = {
-    SHARE: 1,
-    SUPPORT: 2,
-    LIKE: 3,
-    COMMENT: 4
+    SHARE: "1",
+    SUPPORT: "2",
+    LIKE: "3",
+    COMMENT: "4"
   };
   function Notice() {
     this.setEvent = __bind(this.setEvent, this);
+    this.setButton = __bind(this.setButton, this);
     this.createListView = __bind(this.createListView, this);    this.apiURL = 'getNotice';
     this.apiParams = {
       user_id: Ti.App.user_id
@@ -28,14 +29,17 @@ Notice = (function() {
     return this.win;
   }
   Notice.prototype.createListView = function(notice) {
-    var icon, message, row, section;
+    var date, icon, message, row, section;
     log('createListView');
+    info_obj(notice);
     section = Ti.UI.createTableViewSection();
     row = Titanium.UI.createTableViewRow(this.styles.row);
     icon = Ti.UI.createImageView(this.styles.icon);
     message = Titanium.UI.createLabel(this.styles.title);
     row.notice = notice;
     icon.image = notice.picture_url;
+    date = new Date();
+    date.setTime(notice.reg_date);
     info('-------------------NOTICE TYPE' + notice.type + '------------------');
     switch (notice.type) {
       case this.TYPE.SHARE:
@@ -49,7 +53,9 @@ Notice = (function() {
         row.clickName = 'support';
         break;
       case this.TYPE.LIKE:
-        message.text = setTT('NOTICE_LIKE', [notice.nickname]);
+        info('############LIKE');
+        message.text = date + setTT('NOTICE_LIKE', [notice.nickname]);
+        info(message.text);
         message.clickName = 'like';
         row.clickName = 'like';
         break;
@@ -60,6 +66,9 @@ Notice = (function() {
     row.add(message);
     section.add(row);
     return section;
+  };
+  Notice.prototype.setButton = function() {
+    $.Util.setRightButton(this.win, this.loadListView);
   };
   Notice.prototype.setEvent = function() {
     return this.tableview.addEventListener('click', __bind(function(e) {

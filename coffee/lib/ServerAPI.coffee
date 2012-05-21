@@ -20,21 +20,6 @@ class API
 		url = Request.getRequestURL requestType, params
 		xhr = Titanium.Network.createHTTPClient()
 		
-		xhr.onreadystatechange = (e) ->
-			info 'onreadystatechange'
-			info_obj e
-			return 
-			
-		xhr.ondatastream = (e) ->
-			info 'ondatastream'
-			info_obj e
-			return
-			
-		xhr.onsendstream = (e) ->
-			info 'onsendstream'
-			info_obj e
-			return
-		
 		xhr.open(method, url, false)
 		
 			
@@ -46,7 +31,6 @@ class API
 			# @filter(json)
 			
 			Ti.API.info 'requestType:'+requestType+'\n'+'responseText:'+xhr.responseText
-			# callbackOnLoad xhr.staatus, json  
 			callbackOnLoad json 
 			return
 		
